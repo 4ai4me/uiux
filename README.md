@@ -1,11 +1,153 @@
-<div align="center">
+# 📘 UI/UX Glossary Encyclopedia for AI Prompt Engineering
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+> **총 636개 UI/UX 컴포넌트 & 인터랙션 디자인 용어 사전 및 AI 프롬프트 엔지니어링 인터랙티브 백과사전**  
+> AI 코딩 어시스턴트(Gemini, Claude, ChatGPT, v0 등)에게 정확하고 전문적인 UI/UX 요구사항을 지시할 수 있도록 지원하는 실시간 인터랙티브 레퍼런스 플랫폼입니다.
 
-  <h1>Built with AI Studio</h2>
+---
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## 🌟 프로젝트 개요 (Overview)
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+현대 웹/앱 디자인과 엔지니어링에 필요한 **24개 카테고리, 총 636개 전문 UI/UX 용어**를 체계적으로 분류하고, 각 용어마다 **고유한 인터랙티브 실습 랩(Live Interactive Lab)**, **구조적 다이어그램(Schematic)**, 그리고 **AI 프롬프트 생성기(Prompt Template)**를 제공합니다.
 
-</div>
+- 🎯 **정확한 AI 프롬프트 생성**: 추상적인 설명 대신 정확한 디자인 토큰과 산업 표준 기술 용어로 AI에게 프롬프트를 전달
+- 🧪 **1:1 실시간 인터랙티브 랩**: 636개 모든 용어에 대해 실제 동작하는 React + Tailwind CSS 라이브 샌드박스 제공
+- 📐 **정밀 아키텍처 다이어그램**: 각 컴포넌트의 레이아웃 구조, 계층, 패딩, Z-인덱스 등을 시각적으로 명확히 전달
+- 💾 **데이터 내보내기 & 북마크**: JSON, CSV, 마크다운 내보내기 및 즐겨찾기 관리 지원
+
+---
+
+## ✨ 주요 기능 (Key Features)
+
+### 1. 24개 핵심 카테고리 (Total 636 Terms)
+| # | 카테고리명 | 영문 카테고리 | 주요 구성 내용 |
+|---|---|---|---|
+| 01 | 기본 입력 컨트롤 | Basic Inputs | 텍스트, 숫자, 날짜, 스위치, 슬라이더 등 |
+| 02 | 버튼 및 액션 | Buttons & Actions | Primary, Ghost, Split, FAB, 토글 버튼 등 |
+| 03 | 내비게이션 및 메뉴 | Navigation & Menus | Navbar, Sidebar, Tabs, Breadcrumb, Mega Menu 등 |
+| 04 | 레이아웃 및 컨테이너 | Layout & Containers | Grid, Split Pane, Masonry, Card, Drawer 등 |
+| 05 | 스크롤 및 위치 지정 | Scrolling & Positioning | Sticky, Virtual Scroll, Scroll Snap, Affix 등 |
+| 06 | 테이블 및 데이터 그리드 | Tables & Data Grids | Data Grid, Tree Grid, Column Resizing, Paging 등 |
+| 07 | 모달 및 다이얼로그 | Modals & Dialogs | Modal, Alert, Bottom Sheet, Lightbox 등 |
+| 08 | 팝오버 및 툴팁 | Popovers & Tooltips | Context Menu, Hover Card, Dropdown 등 |
+| 09 | 피드백 및 알림 | Feedback & Notifications | Toast, Banner, Snackbar, Inline Alert 등 |
+| 10 | 로딩 및 프로그레스 | Loading & Progress | Skeleton, Spinner, Step Wizard, Shimmer 등 |
+| 11 | 데이터 시각화 | Data Visualization | Sparkline, Gauge, Heatmap, Sankey, Treemap 등 |
+| 12 | 검색 및 필터링 | Search & Filtering | Autocomplete, Faceted Search, Filter Chips 등 |
+| 13 | 폼 검증 및 상태 | Form Validation & States | Inline Error, Password Strength, Dirty State 등 |
+| 14 | 파일 및 미디어 | File & Media Upload | Dropzone, Chunk Upload, Image Cropper 등 |
+| 15 | 인터랙션 및 제스처 | Interactions & Gestures | Drag & Drop, Swipe, Pinch Zoom, Long Press 등 |
+| 16 | 캔버스 및 다이어그램 | Canvas & Nodes | Infinite Canvas, Node Graph, Minimap, Rulers 등 |
+| 17 | 애니메이션 및 트랜지션 | Motion & Transitions | Accordion, Flip Card, Ripple, Parallax 등 |
+| 18 | 접근성 및 국제화 | A11y & i18n | Focus Ring, Screen Reader Announcer, RTL 등 |
+| 19 | 대시보드 위젯 | Dashboard Widgets | KPI Card, Activity Feed, Metric Counter 등 |
+| 20 | 코드 및 에디터 | Code & Rich Editors | Markdown, Monaco, Diff Viewer, Syntax Token 등 |
+| 21 | 테마 및 커스터마이징 | Theming & Tokens | Dark/Light Mode, Density Switcher, Accent Colors 등 |
+| 22 | 모바일 네이티브 UX | Mobile Native UX | Pull-to-Refresh, Safe Area, Haptic, Bottom Nav 등 |
+| 23 | 텍스트 힌트 및 마이크로카피 | Text Hints & Microcopy | Ghost Text, Floating Label, Range Limit, Shortcut Pill 등 |
+| 24 | 오버레이 및 투명도 | Overlays & Transparency | Z-Index Layer, Glassmorphism, Dimmed Scrim, Portal 등 |
+
+### 2. 636개 전 항목 라이브 인터랙티브 랩 (Live Interactive Lab)
+- 슬라이더, 입력 필드, 토글, 드래그, 애니메이션을 브라우저에서 직접 조작
+- React 19 + Tailwind CSS + Motion(Framer Motion) 기반 즉각 반응
+
+### 3. AI 프롬프트 생성기 (AI Prompt Generator)
+- 복사 한 번으로 최적화된 시스템 프롬프트 및 구현 가이드 복사
+- 한국어 / 영어 프롬프트 템플릿 및 관련 Tailwind 클래스 토큰 자동 추천
+
+### 4. 고유 진단 다이어그램 (Diagnostic Schematics)
+- 단순 텍스트 설명이 아닌 컴포넌트의 기하학적 구조 및 박스 모델 시각화
+
+### 5. 검색, 필터 및 내보내기 (Search & Export Suite)
+- 한글/영문 키워드, 번호(#001~#636), 카테고리 태그 실시간 검색
+- 즐겨찾기(Bookmark) 및 최근 본 항목 관리
+- JSON, CSV 데이터셋 내보내기 지원
+
+---
+
+## 🛠 기술 스택 (Tech Stack)
+
+- **Frontend**: React 19, TypeScript
+- **Bundler & Tooling**: Vite 6, TSX
+- **Styling**: Tailwind CSS v4, PostCSS
+- **Animation**: Motion (`motion/react`)
+- **Icons**: Lucide React
+- **Typography**: Pretendard / JetBrains Mono
+
+---
+
+## 🚀 시작하기 (Getting Started)
+
+### 사전 요구사항 (Prerequisites)
+- [Node.js](https://nodejs.org/) (v18.0.0 이상 권장)
+- npm 또는 yarn / pnpm / bun
+
+### 설치 및 로컬 실행 (Installation & Run)
+
+```bash
+# 1. 저장소 클론
+git clone https://github.com/YOUR_USERNAME/ui-ux-glossary-encyclopedia.git
+
+# 2. 프로젝트 디렉터리 이동
+cd ui-ux-glossary-encyclopedia
+
+# 3. 의존성 패키지 설치
+npm install
+
+# 4. 로컬 개발 서버 실행
+npm run dev
+```
+
+브라우저에서 `http://localhost:3000` 접속하여 애플리케이션을 확인하실 수 있습니다.
+
+### 프로덕션 빌드 (Production Build)
+
+```bash
+# 프로덕션 빌드 생성
+npm run build
+
+# 빌드 결과물 로컬 미리보기
+npm run preview
+```
+
+---
+
+## 📁 디렉터리 구조 (Directory Structure)
+
+```text
+├── src/
+│   ├── components/         # UI 컴포넌트 및 라이브 랩 렌더러
+│   │   ├── LiveDemoRenderer.tsx          # 636개 실시간 데모 통합 렌더러
+│   │   ├── TermSchematic.tsx             # 636개 구조적 스키매틱 다이어그램
+│   │   ├── LiveTextHintLabs.tsx          # Cat 23 전용 라이브 랩
+│   │   ├── LiveOverlayTransparencyLabs.tsx # Cat 24 전용 라이브 랩
+│   │   └── ...
+│   ├── data/               # 636개 UI/UX 용어 데이터셋
+│   │   ├── categories.ts                 # 24개 카테고리 메타데이터
+│   │   ├── allTerms.ts                   # 통합 인덱스
+│   │   ├── termsCat1To5.ts ~ termsCat24.ts
+│   ├── types.ts            # TypeScript 인터페이스 정의
+│   ├── App.tsx             # 메인 레이아웃 및 뷰 컨트롤러
+│   ├── main.tsx            # 엔트리 포인트
+│   └── index.css           # 글로벌 스타일 및 테마 정의
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
+```
+
+---
+
+## 💡 활용 예시 (Use Cases)
+
+1. **AI 프롬프트 엔지니어링**:  
+   - "카테고리 23의 #551 Ghost Text Autocomplete 사양대로 검색창에 탭 키 수락형 인라인 추천 UI를 만들어줘"와 같이 명확한 명세 작성
+2. **디자인 시스템 구축 및 팀 커뮤니케이션**:  
+   - 기획자, 디자이너, 개발자 간 용어 불일치 해소 (예: Scrim vs Dimmed vs Backdrop의 명확한 정의 공유)
+3. **인터랙션 패턴 학습 & 레퍼런스**:  
+   - 가상화 스크롤, 무한 캔버스, 리액트 포탈, 스태킹 컨텍스트 등 고급 프론트엔드 인터랙션 구현 기법 탐색
+
+---
+
+## 📄 라이선스 (License)
+
+이 프로젝트는 [MIT License](LICENSE)를 따릅니다. 자유롭게 수정하고 활용하실 수 있습니다.

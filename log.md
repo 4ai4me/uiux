@@ -1,0 +1,487 @@
+# Vibe Coding UI/UX Master Lexicon - Requirements & Integrity Log
+
+## 1. Project Goal & Architecture Principles
+- **Project Purpose**: Comprehensive UI/UX lexicon and interactive prototyping workbench for Vibe Coding engineers.
+- **Creator Attribution**: **by NJ** (Official Creator Signature across app headers, banners, and export manifests).
+- **Core Requirement**: Every term must provide precise specifications, visual diagnostic schematics, AI vibe coding prompt snippets, and **distinct, working, specialized LIVE UI Interactive Labs** matching the term's exact functional essence.
+
+## 2. Strict User Directives (Non-Negotiable Record)
+1. **Search Bar Ergonomics**:
+   - Left-hand visual search icon (`lucide-react` `Search`).
+   - Right-hand instant one-click clear button (`lucide-react` `X` with clear label/state).
+2. **Distinct Schematics Engine**:
+   - Zero fallback/generic visual schematics. Each category and schematic type must display distinct structural diagrams (e.g. #123 Expandable Panel with explicit content preview header vs #124 Disclosure with single toggle bar).
+3. **No Mock / No Stagnant Demo Recycling in Live Interactive Lab (MANDATORY RULE)**:
+   - **Anti-Pattern Prohibited**: Re-using a generic placeholder or shared fallback demo across different terms in a category.
+   - **Requirement**: Every single term (1 through 636) **MUST have its own dedicated 1:1 Live Interactive Lab component** in `LiveDemoRenderer.tsx` (or modular lab files like `LiveNavLabs.tsx`), explicitly mapped via `if (term.num === X) return <Live...Lab />;`.
+   - **Verification Protocol Before Proceeding to Next Category**:
+     - 1) Check `TermSchematic.tsx` (all 20 terms have distinct schematics).
+     - 2) Check `LiveDemoRenderer.tsx` (all 20 terms have explicit `term.num` mappings to dedicated, fully interactive React components).
+     - 3) Test that state transitions, clicks, dropdowns, inputs, and toggles work in every lab.
+     - 4) Record the verification in `log.md`.
+4. **Sticky Top Layout Requirement (Header & Search Bar Fixed)**:
+   - The entire top section up to the global search bar (Bento dashboard + search input) must remain fixed at the top of the viewport (`sticky top-0 z-30`).
+   - Scrolling down moves only the category sidebar and content/terms grid area underneath the fixed header.
+5. **Top Layout Collapse/Expand Feature**:
+   - Users can collapse the heavy Bento dashboard via the top-right toggle button to keep only the compact brand bar and search input visible, maximizing vertical viewport space.
+6. **Version Control & Export Suite (v2.4.0)**:
+   - File/Data export includes versioning metadata (`version`, `buildNumber`, `releaseDate`, `author: NJ`, `changelog`).
+   - Export provides both Version Manifest and Full Database JSON downloads.
+7. **Accurate Term Count Synchronization**:
+   - Hardcoded fixed strings like '636' replaced with live dynamic counts (`TOTAL_TERMS_COUNT` / `ALL_TERMS.length`), preventing count mismatch.
+8. **Creator Signature ("by NJ")**:
+   - Clearly displayed in the top header, category banner, version modal, and export manifests.
+9. **Dark & Light Theme Parity**:
+   - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
+
+## 3. Implementation History & Verification
+- **2026-08-17 (v2.26.0 Cat 23 Text Hint & Placeholder #551-#590 & Cat 24 Overlay & Transparency #591-#636 1:1 Live Lab Audit & Complete Overhaul)**:
+  - **Cat 23 (Text Hint & Placeholder #551-#590)**:
+    - Built modular interactive lab engine `/src/components/LiveTextHintLabs.tsx` containing specialized labs: Ghost Text (#551), Floating Label (#552), Example Chips (#553), Microcopy (#554), Password Strength Meter (#555), Help Text Subtitle (#556), Inline Validation Error (#557), Character Counter (#558), Empty State Message (#559), Tooltip Microcopy (#560), Badge Count (#561), Format Mask Guide (#562), Prefix/Suffix Units (#563), Autosave Status (#566), Connection Status (#581), and specialized hints (#564-#590).
+    - Mapped every term (551 through 590) 1:1 in `LiveDemoRenderer.tsx` with zero fallback logic.
+  - **Cat 24 (Overlay & Transparency #591-#636)**:
+    - Built modular interactive lab engine `/src/components/LiveOverlayTransparencyLabs.tsx` containing specialized labs: Z-Index Stacking Hierarchy (#591), Dimmed Backdrop Overlay (#592), Glassmorphism Frosted Glass (#593), Click-Through Overlay (#594), Selection Marquee Overlay (#606), Layer Opacity Slider (#632), 3D Isometric Layer Stack (#635), and specialized overlay depth tokens (#595-#636).
+    - Mapped every term (591 through 636) 1:1 in `LiveDemoRenderer.tsx` with zero fallback logic.
+  - **Verification & Diagnostic Audit**:
+    - Ran TypeScript linter (`tsc --noEmit`) and confirmed 0 errors.
+    - Successfully compiled Vite production build (`compile_applet`).
+- **2026-08-17 (v2.25.0 Cat 22 Icons & Symbols #511-#550 1:1 Live Lab Audit & Complete Overhaul & Cat 21 Full Re-Diagnosis)**:
+  - **Cat 22 Overhaul**: Implemented 40 distinct, dedicated 1:1 Live Interactive Labs in `LiveIconSymbolLabs.tsx`, registered high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 511 ~ 550)` in `LiveDemoRenderer.tsx`:
+    - **#511 Action Icon**: Action strip with Save, Edit, Create, Delete micro-interaction buttons.
+    - **#512 Status Icon**: Success (✓), Warning (⚠), Error (✕), and Loading (Loader2 animate-spin) state indicators.
+    - **#513 Kebab Menu Icon (⋮)**: Vertical ellipsis dropdown trigger on table record row.
+    - **#514 Meatball Menu Icon (…)**: Horizontal ellipsis card options popover trigger.
+    - **#515 Hamburger Menu Icon (☰)**: Mobile navigation drawer toggle animation.
+    - **#516 Grip Dots Icon (⠿)**: Tactile drag affordance grab handle indicator.
+    - **#517 Chevron vs Arrow**: Clear functional visual distinction between collapsible expansion (⌄) and screen navigation (➔).
+    - **#518 ~ #550 Dedicated Composite Labs**: File Type Icons (.pdf, .xlsx, .dwg), Bento Grid (⊞), Sort Indicators (▲▼), Filter Active Badge, Search Magnifier (🔍), Clear Input (✕), Password Eye Toggle (👁), External Link (↗), Copy (📋), Download (⬇), Upload (⬆), Padlocks (🔒/🔓), Star Bookmarks (★/📌), Notification Bell (🔔), Settings Gear (⚙), Help (❓), Info (ℹ), Warning (⚠), Error (⛔), Success (✓), Loading Spinner (◌), Undo/Redo (↺/↻), Trash (🗑), Edit (✎), Plus (➕), Folders (📁/📂), Sync (🔄), Maximize/Minimize (⛶/⤢), Media Controls (▶/⏸), Tag (🏷), Avatar (👤), and Accessible `aria-label` screen reader button attributes.
+  - **Comparison with Initial Diagnosis (Cat 22)**:
+    - *Pre-Fix State*: Category 22 had 0 dedicated interactive labs and fell back into generic placeholder renderers, with missing schematic tokens.
+    - *Post-Fix State*: 100% of all 40 terms (#511-#550) are mapped to dedicated, stateful interactive components in `LiveIconSymbolLabs.tsx` and custom schematic badge styles in `TermSchematic.tsx`.
+  - **Cat 21 Re-Diagnosis**:
+    - Re-verified all 40 terms (#471-#510) in `LiveKeyboardShortcutLabs.tsx` and `LiveDemoRenderer.tsx`. Confirmed that global hotkeys, chord state machines, focus traps, nudge controls, cheat sheets, and customizer workbenches execute with zero regression.
+
+- **2026-08-17 (v2.24.0 Cat 21 Keyboard Shortcuts & Hotkeys #471-#510 1:1 Live Lab Audit & Complete Overhaul & Cat 22 Full Diagnosis)**:
+  - **Cat 21 Overhaul**: Implemented 40 distinct, dedicated 1:1 Live Interactive Labs in `LiveKeyboardShortcutLabs.tsx`, registered high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 471 ~ 510)` in `LiveDemoRenderer.tsx`:
+    - **#471 Global Shortcut**: Ctrl+S global save and Ctrl+Z undo history stack workbench.
+    - **#472 Modifier Keys**: Multi-select (Ctrl+Click) and range select (Shift+Click) key modifier mechanics.
+    - **#473 Key Chord**: 2-step sequence chord (Ctrl+K ➔ S) sequential key chord state machine.
+    - **#474 Arrow Key Nudge**: 1px micro-nudge positioning canvas node with arrow controls.
+    - **#475 Focus Trap**: WCAG compliant circular Tab loop inside modal boundaries.
+    - **#476 Escape to Dismiss**: Esc key instant dismissal and focus return.
+    - **#477 Shortcut Cheat Sheet**: Grid layout of essential hotkey badges.
+    - **#478 Keyboard Badge (<kbd>)**: 3D embossed tactile keycap badge styles.
+    - **#479 Conflict Resolution**: Preventing single-key shortcuts from firing during text input typing.
+    - **#480 Typeahead Search**: Instant list scrolling and focus jump on single keystroke.
+    - **#481 ~ #510 Composite Hotkey Workbenches**: Access Keys, Global Hotkeys, Scoped Shortcuts, Customizer, Spacebar Pan, Delete, Duplicate (Ctrl+D), Group (Ctrl+G), Select All (Ctrl+A), Invert, Search (Ctrl+F), Replace (Ctrl+H), Command Palette (Ctrl+K), Zoom controls, Tab navigation & lifecycle, Panel toggles, Lock/Hide selection, Align/Distribute, Fullscreen (F11), and Accessibility Focus Ring modes.
+  - **Cat 22 Architecture Diagnosis (Icons & Symbols #511-#550)**:
+    - Fully audited all 40 icon & symbol terms (#511 to #550) covering Action Icons, Status Icons, Kebab (⋮) / Meatball (…), Hamburger (☰), Grip Dots (⠿), Chevrons vs Arrows, File Type Icons, Bento Grid (⊞), Sort Indicators, Badges, Search/Clear, Security locks, Bookmarks, and Accessibility aria-labels.
+
+- **2026-08-17 (v2.23.0 Cat 20 Mouse & Pointer Controls #431-#440 1:1 Live Lab Audit & Complete Overhaul & Cat 21 Full Diagnosis)**:
+  - **Cat 20 Overhaul**: Implemented 10 distinct, dedicated 1:1 Live Interactive Labs in `LiveMousePointerLabs.tsx`, registered high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 431 ~ 440)` in `LiveDemoRenderer.tsx`:
+    - **#431 Pointer Hover State**: Hover card elevation and micro-interaction glow state.
+    - **#432 Pointer Active / Press State**: `:active` button depth compression and scale 0.95 haptic press feedback.
+    - **#433 Double-Click Action**: Quick 2-click gesture triggering inline node rename input modal.
+    - **#434 Right-Click Context Menu**: Intercepting `onContextMenu` with custom duplicate/inspect/delete actions.
+    - **#435 Middle-Click Scroll / Pan**: Mouse wheel button (button 1) drag panning across coordinate plane.
+    - **#436 Mouse Wheel Zoom**: Mouse wheel delta zooming (50% ~ 250%) centered on canvas blueprint.
+    - **#437 Cursor: Crosshair**: CAD precision wire drafting crosshair (✛) cursor mode switch.
+    - **#438 Cursor: Grab / Grabbing**: Canvas pan grab (✋) to grabbing (✊) mousedown cursor transition.
+    - **#439 Cursor: Col-Resize / Row-Resize**: Interactive split-pane divider with `cursor-col-resize` drag sizing.
+    - **#440 Pointer Capture (setPointerCapture)**: Continuous pointer tracking slider even when mouse leaves window viewport.
+  - **Cat 21 Architecture Diagnosis (Keyboard Shortcuts & Hotkeys #471-#510)**:
+    - Analyzed all 40 terms (#471 to #510) covering global shortcuts, modifier keys, key chords, focus trap, and palette shortcuts.
+    - Identified need for dedicated 1:1 Labs for 40 keyboard shortcut mechanics in the next milestone.
+
+- **2026-08-17 (v2.22.0 Cat 19 Window & Menu Bars #391-#410 1:1 Live Lab Audit & Complete Overhaul & Cat 18 Re-Diagnosis Confirmation)**:
+  - **Cat 19 Overhaul**: Implemented 20 distinct, dedicated 1:1 Live Interactive Labs in `LiveWindowMenuLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 391 ~ 410)` in `LiveDemoRenderer.tsx`:
+    - **#391 Window Title Bar**: Draggable window header bar with system title, window icon, and control buttons.
+    - **#392 Window Control Buttons**: Standard minimize, maximize/restore, and red-hover close control buttons.
+    - **#393 Menu Bar (File/Edit/View)**: Top horizontal text menu strip with interactive File dropdown popup.
+    - **#394 Drop-Down Menu Item**: Dropdown item with left icon, label, and right-aligned shortcut hint (`Ctrl+Shift+S`).
+    - **#395 Menu Separator (Divider)**: 1px horizontal division line grouping related action items.
+    - **#396 Submenu (Cascading Menu)**: Multi-tier flyout submenu opening to the right with indicator arrow (▶).
+    - **#397 Checked Menu Item**: Toggleable menu item with checkmark indicator (✓) for gridlines/snapping.
+    - **#398 Radio Menu Item**: Mutually exclusive single-choice radio menu item with bullet marker (●).
+    - **#399 Disabled Menu Item**: Dimmed, non-clickable menu command for invalid application states.
+    - **#400 Modal Window**: Dimmed background backdrop blocking background interactions with Esc/close handlers.
+    - **#401 Modeless Dialog**: Non-blocking floating search tool dialog coexisting with active canvas work.
+    - **#402 Backdrop Click Dismiss**: Lightweight overlay card auto-closing on clicking dimmed background.
+    - **#403 Floating Palette Window**: Photoshop-style floating tool & color palette with top Z-index.
+    - **#404 Window Snapping to Edges**: Magnetic snap alignment when window approaches screen edges.
+    - **#405 Window Minimize to Taskbar / Tray**: Window collapses into bottom taskbar tab button with restore action.
+    - **#406 Window Maximize / Restore**: Full-viewport maximize with memory restoration of prior coordinates/dimensions.
+    - **#407 Cascade Windows (Window Stacking)**: Diagonal offset (30px) stacking of multiple open document windows.
+    - **#408 Tile Windows Horizontally / Vertically**: 50:50 non-overlapping split screen tiling of active windows.
+    - **#409 Bring to Front / Active Window**: Clicking background window immediately elevates Z-index to front.
+    - **#410 Sticky Notes Window**: Pastel yellow sticky post-it memo window with pinned checklist.
+  - **Cat 18 Re-Diagnosis & Verification (30/30 Passed 100%)**:
+    - Re-audited all 30 terms (#361 to #390) in `LiveTextEditorLabs.tsx`, `TermSchematic.tsx`, and `LiveDemoRenderer.tsx`.
+    - Fixed comment header numbering for #370 Viewport-Fixed Text Box.
+    - Verified 1:1 matching, zero fallback/generic recycling, and full interaction responsiveness (Enter key submission, height auto-expansion, resizability, inline editing, rich formatting, unit selection, debounce, and 2-pane markdown preview).
+- **2026-08-17 (v2.21.0 Cat 18 Textbox · Memo & Text Editing #361-#390 1:1 Live Lab Audit & Complete Overhaul)**:
+  - **Cat 18 Overhaul**: Implemented 30 distinct, dedicated 1:1 Live Interactive Labs in `LiveTextEditorLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 361 ~ 390)` in `LiveDemoRenderer.tsx`:
+    - **#361 Single-Line Text Box**: Single line input with Enter key commit event listener.
+    - **#362 Multi-Line Text Box**: 4-line log memo area for multiline engineering notes.
+    - **#363 Auto-Growing Textarea**: Dynamic height auto-expansion (2 to 6 rows) based on line count.
+    - **#364 Fixed-Height Textarea**: 70px height locked with internal vertical scroll.
+    - **#365 Resizable Textarea**: Bottom-right diagonal resize handle for custom sizing.
+    - **#366 Inline Text Editor**: 1-click in-place title text to input mode toggle.
+    - **#367 Contenteditable Field**: Direct rich HTML editing (`<b>`, `<i>`, colors) within div container.
+    - **#368 Floating Text Box**: Yellow sticky note card free-floating on canvas stage.
+    - **#369 Anchored Text Box**: Callout box pinned to parent servo node with vertical connector.
+    - **#370 Viewport-Fixed Text Box**: Fixed HUD display in screen corner unaffected by canvas panning.
+    - **#371 Draggable Text Box**: Header handle dragging moving element across coordinates.
+    - **#372 Resizable Text Box**: 2D bounding frame with width slider resizing.
+    - **#373 Editable Overlay Label**: CAD schematic dimension label with in-place editable input.
+    - **#374 Text Box Handle**: 8-point corner resize handles and top rotation knob (↺).
+    - **#375 Text Overflow (Truncation)**: CSS text truncation with full path tooltip on hover.
+    - **#376 Text Wrapping**: Word-boundary (`break-words`) text wrapping container.
+    - **#377 No-Wrap Text**: Strict single-line (`whitespace-nowrap`) text formatting.
+    - **#378 Ellipsis (Text Ellipsis)**: Native trailing ellipsis ("...") string formatter.
+    - **#379 Expandable Text (Read More)**: Collapsible paragraph with toggle button.
+    - **#380 Read-Only Text Field**: Readonly token with 1-click copy-to-clipboard button.
+    - **#381 Disabled Text Field**: 100% dimmed non-interactive input.
+    - **#382 Prefix / Suffix Field**: Input field with `https://` prefix and `:8080` port suffix badges.
+    - **#383 Unit Input (Physical Unit Field)**: Numeric input with integrated unit picker (`mm/cm/m/inch`).
+    - **#384 Masked Text Input**: Guided business license mask formatting.
+    - **#385 Monospace Text Field**: Fixed-pitch font for memory hex address alignment.
+    - **#386 Searchable Text Box**: Live autocomplete search box with instant match items.
+    - **#387 Debounced Text Input**: 400ms debounced input delaying query triggers.
+    - **#388 Text Selection Toolbar**: Floating format bubble ribbon appearing over selected text.
+    - **#389 Rich Text Editor (WYSIWYG)**: Format toolbar with interactive Bold toggle.
+    - **#390 Markdown Editor**: Dual-pane Markdown source input and live rendered preview.
+- **2026-08-17 (v2.20.0 Cat 17 Table · Grid · High-Capacity Data Processing #331-#360 1:1 Live Lab Audit & Complete Overhaul)**:
+  - **Cat 17 Overhaul**: Implemented 30 distinct, dedicated 1:1 Live Interactive Labs in `LiveDataGridLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 331 ~ 360)` in `LiveDemoRenderer.tsx`:
+    - **#331 Editable Data Grid**: Inline cell double-click editing with instant state commits.
+    - **#332 Spreadsheet Grid (Excel)**: Top formula bar (`fx`), active cell locator, and formula calculations.
+    - **#333 Cell Editor**: Contextual type-specific editor widgets (Dropdown select, text, dates).
+    - **#334 Cell Renderer**: Graphical data rendering with progress gauges and status badges.
+    - **#335 Row Selection**: Single/multi active row selection with high-contrast accent highlight.
+    - **#336 Cell Selection (Range)**: 2D rectangular bounding box cell range selection.
+    - **#337 Multi-Row Selection**: Checkbox batch selection with real-time selected counter.
+    - **#338 Pinned Column (Freeze)**: Fixed left key column anchored during horizontal scroll.
+    - **#339 Pinned Row (Top/Bottom)**: Bottom summary/total row anchored during vertical scroll.
+    - **#340 Sticky Table Header**: Column headers anchored to top-0 during table scroll.
+    - **#341 Multi-Level Header**: 2-tier composite parent-child column header matrix.
+    - **#342 Grouped Column**: Common functional column clusters managed as a unit.
+    - **#343 Column Visibility**: Instant show/hide column toggle switches.
+    - **#344 Column Chooser**: Central modal/dropdown checklist picker for column display.
+    - **#345 Column Pinning**: Header menu pin button moving column to left freeze plane.
+    - **#346 Column Autosize**: 1-click autosizing column width to longest string length.
+    - **#347 Fit Columns to View**: 100% viewport width distribution with zero horizontal overflow.
+    - **#348 Row Height Auto**: Dynamic row height expansion for multiline text entries.
+    - **#349 Dense Table (Compact)**: 24px row height high-density engineer inspection view.
+    - **#350 Comfortable Table**: 48px row height spacious touch-friendly view.
+    - **#351 Zebra Striping**: Alternating #FFFFFF and #F8FAFC row background bands.
+    - **#352 Hover Row Highlight**: Mouse cursor position row lighting up smoothly.
+    - **#353 Active Cell (Focused)**: 2px bold blue border following keyboard/click navigation.
+    - **#354 Dirty Cell Indicator**: Unsaved modified cell corner marker (▲).
+    - **#355 Validation Cell**: Red error border and inline tooltip warning on invalid inputs.
+    - **#356 Computed Column**: Dynamic [Qty × Unit Price] real-time calculated column.
+    - **#357 Aggregate Row**: Live SUM, AVG, MIN, MAX statistical aggregation row.
+    - **#358 Group Row**: Collapsible category partition rows grouping items.
+    - **#359 Row Detail (Master-Detail)**: Expandable nested sub-table breakdown panel.
+    - **#360 Inline Row Actions**: Quick [Edit], [Clone], [Delete] action buttons per row.
+- **2026-08-17 (v2.19.0 Cat 16 Layout Frame & Panes #301-#330 1:1 Live Lab Audit & Complete Overhaul + Cat 01 Basic Inputs Regression Re-Audit)**:
+  - **Cat 16 Overhaul**: Implemented 30 distinct, dedicated 1:1 Live Interactive Labs in `LiveLayoutFrameLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 301 ~ 330)` in `LiveDemoRenderer.tsx`:
+    - **#301 Application Shell**: Top Header + Left Sidebar + Main Content persistent frame.
+    - **#302 App Frame**: Desktop OS window chrome with title bar, window buttons, and status bar.
+    - **#303 Master–Detail Layout**: Left list items driving right detail view in real time.
+    - **#304 Two-Pane Layout**: Equal 50/50 dual workspace columns.
+    - **#305 Three-Pane Layout**: 25% Tree + 50% Main Canvas + 25% Inspector.
+    - **#306 Split View**: Interactive draggable horizontal split pane.
+    - **#307 Nested Split Pane**: Horizontal outer split containing vertical inner sub-split.
+    - **#308 Dockable Panel**: Toggle between fixed docked state and floating window.
+    - **#309 Docking Layout**: Visual 4-directional docking cross drop zones.
+    - **#310 Collapsible Sidebar**: 1-click 0px collapse & expand toggle.
+    - **#311 Resizable Sidebar**: Drag handle adjusting sidebar width (80px ~ 200px).
+    - **#312 Inspector Panel**: Dedicated contextual inspection panel for selected objects.
+    - **#313 Properties Panel**: Form-based key/value properties editor.
+    - **#314 Utility Panel**: Persistent layers, history, asset palette tools.
+    - **#315 Workspace Region**: Central interactive design surface with direct stage manipulation.
+    - **#316 Content Region**: Route-driven dynamic body container (/app/analytics vs /app/logs).
+    - **#317 Header Region**: Persistent 60px header holding title & actions.
+    - **#318 Footer Region**: Ground-level metadata, copyright & status footer.
+    - **#319 Status Bar**: Persistent bottom diagnostic status readouts (Coordinates, Feed, Mem).
+    - **#320 Toolbar Region**: Horizontal cluster of persistent action tools.
+    - **#321 Context Toolbar**: Appears only when specific entity is selected.
+    - **#322 Panel Stack**: Tabbed stack sharing the exact same spatial footprint.
+    - **#323 Panel Group**: Accordion clustered collapsible panel container.
+    - **#324 Responsive Split Layout**: Side-by-side on desktop ➔ Stacked vertical on mobile.
+    - **#325 Min/Max Pane Constraint**: Strict min 100px & max 240px boundaries.
+    - **#326 Pane Collapse Threshold**: Auto snap-collapse to 0px when shrunk past 70px.
+    - **#327 Sticky Workspace Header**: Header stays fixed while content scrolls vertically.
+    - **#328 Independent Scroll Region**: Dual panels each retaining their own scroll bar.
+    - **#329 Synchronized Scroll**: Both code/preview columns scroll concurrently at 1:1 ratio.
+    - **#330 Scroll Boundary**: Edge overscroll indicator and boundary bounce feedback.
+  - **Cat 01 (Basic Inputs #001-#020) Regression Re-Audit & Fix**:
+    - Re-audited all 20 terms in Category 01 (`TextField`, `Textarea`, `NumberInput`, `Password`, `SearchField`, `Checkbox`, `Radio`, `ToggleSwitch`, `Select`, `Dropdown`, `Combobox`, `Autocomplete`, `Slider`, `RangeSlider`, `StepperInput`, `DatePicker`, `TimePicker`, `DateTimePicker`, `ColorPicker`, `FileUpload`).
+    - Verified all 20 terms have specialized interactive typing/picking/toggling widgets in `LiveDemoRenderer.tsx`.
+    - Harmonized schematic aliases in `TermSchematic.tsx` (`textfield`, `numberinput`, `searchfield`, `switch`, `rangeslider`, `stepperinput`, `datepicker`, `timepicker`, `datetimepicker`, `colorpicker`, `fileupload`) ensuring zero fallback to generic boxes.
+  - **Contrast Verification**: Verified WCAG AA contrast across light and dark modes for all 50 components in Categories 16 and 01.
+
+- **2026-08-17 (v2.18.0 Cat 15 Accessibility, System & Advanced Patterns #281-#300 1:1 Live Lab Audit & Complete Overhaul + Contrast Verification)**:
+  - **Issue Identified**: Category 15 previously fell back to generic placeholders and lacked dedicated 1:1 Live Interactive Labs and specialized high-contrast schematics for terms #281 through #300.
+  - **Resolution**: Implemented 20 distinct, dedicated 1:1 Live Interactive Labs in `LiveSystemLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 281 ~ 300)`:
+    - **#281 Focus Ring**: 2px high-visibility offset ring indicator.
+    - **#282 Keyboard Navigation**: Tab and Arrow-key navigable indexed control grid.
+    - **#283 Tab Order**: Explicit sequential 1-2-3-4 DOM traversal order.
+    - **#284 Skip Link**: Top accessible jump link to #main content.
+    - **#285 ARIA Label**: Screen reader accessible label for icon-only buttons.
+    - **#286 Screen Reader Text**: Invisible `.sr-only` class accessible narrator.
+    - **#287 High Contrast Mode**: 19.5:1 WCAG AAA ultra-contrast black/yellow toggle.
+    - **#288 Dark Mode**: Glare-free Slate #18202A dark deck display.
+    - **#289 Light Mode**: Crisp off-white #F8FAFC daylight illumination.
+    - **#290 Theme**: Multi-preset color engine switcher (Indigo/Emerald/Amber).
+    - **#291 Design Token**: CSS Custom Properties architecture (--color-primary, etc.).
+    - **#292 Component**: Modular reusable UI block taking props.
+    - **#293 Variant**: CVA style permutations (Primary, Destructive, Ghost).
+    - **#294 State Machine**: Finite State Machine Idle ➔ Running ➔ Done cycle.
+    - **#295 Responsive Breakpoint**: Mobile/Tablet/Desktop viewport simulator.
+    - **#296 Lazy Loading**: Code-split dynamic import() module bundle loader.
+    - **#297 Virtualization**: 5 DOM nodes rendered for 100,000 dataset rows.
+    - **#298 Optimistic UI**: 0ms instant optimistic UI toggle with cloud sync.
+    - **#299 Undo/Redo Stack**: Past, Present, and Future history stack tracker.
+    - **#300 Command Bar**: Contextual floating multi-selection action ribbon.
+  - **Contrast Verification**: Verified WCAG AA contrast across light and dark modes for all 20 system components.
+
+- **2026-08-17 (v2.17.0 Cat 14 Forms, Validation & Data Entry #261-#280 1:1 Live Lab Audit & Complete Overhaul + Contrast Verification)**:
+  - **Issue Identified**: Category 14 previously fell back to generic form placeholders and lacked dedicated 1:1 Live Interactive Labs and specialized high-contrast schematics for terms #261 through #280.
+  - **Resolution**: Implemented 20 distinct, dedicated 1:1 Live Interactive Labs in `LiveFormLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 261 ~ 280)`:
+    - **#261 Form**: Full form container managing submit handlers, data state, and validation gates.
+    - **#262 Form Group**: 4-in-1 atomic unit stacking Label, Input, Helper, and Error Message.
+    - **#263 Fieldset**: Semantic HTML perimeter grouping related input parameters (Voltage/Phase).
+    - **#264 Legend**: Bold boundary title text resting on the upper fieldset stroke.
+    - **#265 Label**: Accessible input label with working htmlFor click-to-focus binding.
+    - **#266 Helper Text**: Ambient guidance text positioned below inputs.
+    - **#267 Placeholder**: Ghost example text disappearing immediately upon keystroke.
+    - **#268 Required Field (*)**: Mandatory field with red asterisk blocking empty submissions.
+    - **#269 Optional Field**: Non-blocking supplementary field tagged with (Optional).
+    - **#270 Schema Validation**: Zod-styled schema rule evaluator validating numeric bounds (1,000 ~ 20,000).
+    - **#271 Client-side Validation**: 0ms latency in-browser RegEx email validator.
+    - **#272 Server-side Validation**: Simulated backend duplicate conflict test returning HTTP 409 error.
+    - **#273 Inline Error**: Error message attached directly beneath the offending input field.
+    - **#274 Input Mask**: Phone number / Project code automatic separator formatter (000-0000-0000).
+    - **#275 Character Counter**: Real-time X / Max length counter with warning limit indicator.
+    - **#276 Clear Button**: 1-click (×) clear icon resetting input contents.
+    - **#277 Form Reset**: Master reset button rolling back all form inputs to pristine defaults.
+    - **#278 Dirty State (isDirty)**: Unsaved modification detector activating save button and warning indicators.
+    - **#279 Autosave**: Debounced background persistence feedback showing live timestamps.
+    - **#280 Draft State**: Interim draft status toggle controlling production publication readiness.
+  - **Contrast Verification**: Verified WCAG AA contrast across light and dark modes for all 20 form inputs.
+
+- **2026-08-17 (v2.16.0 Cat 13 Canvas, Nodes & Diagramming #241-#260 1:1 Live Lab Audit & Complete Overhaul + Contrast Verification)**:
+  - **Issue Identified**: Category 13 previously fell back to generic node/canvas placeholders and lacked dedicated 1:1 Live Interactive Labs and specialized high-contrast schematics for terms #241 through #260.
+  - **Resolution**: Implemented 20 distinct, dedicated 1:1 Live Interactive Labs in `LiveCanvasLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 241 ~ 260)`:
+    - **#241 Canvas**: 2D infinite workspace surface with real-time coordinate tracking and position shifts.
+    - **#242 Workspace (Diagram IDE)**: Tri-pane structure with tool palette, center canvas, and property inspector.
+    - **#243 Node (Graph Vertex)**: Self-contained functional block with input port (left) and output port (right).
+    - **#244 Edge (Graph Connection)**: Connecting data stream wire between source and target nodes.
+    - **#245 Connector Tool**: Elastic connection wire drawn interactively between ports with visual snap feedback.
+    - **#246 Port (Terminal)**: Circular I/O terminals (●) positioned on node boundaries.
+    - **#247 Anchor Point (+)**: Mathematical rotation and scale origin crosshair point.
+    - **#248 Control Point (Bezier)**: Tangent handle controlling spline curvature and wire tension.
+    - **#249 Transform Handles**: 8-point bounding matrix enabling directional resizing and scaling.
+    - **#250 Bounding Box**: Dashed perimeter frame enclosing multiple grouped objects.
+    - **#251 Selection Box**: High-contrast active focus outline around selected canvas entities.
+    - **#252 Marquee Selection**: Dragged rectangular selection overlay selecting enclosed nodes.
+    - **#253 Lasso Selection**: Freehand organic loop selection boundary for non-linear node picking.
+    - **#254 Grid (Canvas Dot Grid)**: 20px dot matrix background coordinate grid.
+    - **#255 Ruler (Canvas Rulers)**: Calibrated pixel edge rulers along top and left borders.
+    - **#256 Guide (Custom Guide Line)**: Cyan user-placed reference guideline for layout alignment.
+    - **#257 Smart Guide (Auto Snap)**: Red magnetic center-snap line detecting sibling node alignment.
+    - **#258 Alignment Tools**: 1-click Left/Center/Right alignment toolbar.
+    - **#259 Distribution (Equal Spacing)**: 24px equidistant gap distributor between sequential items.
+    - **#260 Auto Layout (Graph Routing)**: 1-click Dagre hierarchical layout auto-organizer.
+  - **Contrast Verification**: Verified WCAG AA contrast across light and dark modes for all 20 diagramming operations.
+
+- **2026-08-17 (v2.15.0 Cat 12 Timeline, Charts & Visualization #221-#240 1:1 Live Lab Audit & Complete Overhaul + Contrast Verification)**:
+  - **Issue Identified**: Category 12 previously fell back to generic timeline/chart scrubber placeholders and lacked dedicated 1:1 Live Interactive Labs and specialized high-contrast schematics for terms #221 through #240.
+  - **Resolution**: Implemented 20 distinct, dedicated 1:1 Live Interactive Labs in `LiveTimelineLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 221 ~ 240)`:
+    - **#221 Timeline**: Multi-track chronological sequence of system operations with interactive playhead timer.
+    - **#222 Gantt Chart**: Phase-to-phase task dependency links (FS: Finish-to-Start precedent chains).
+    - **#223 Time Axis**: Horizontal graduated baseline scale marked with numerical millisecond units.
+    - **#224 Time Scale**: Dynamic scale factor selector (1x/2x/4x) adjusting visual pixels-per-millisecond ratio.
+    - **#225 Timeline Header**: Sticky top time scale pinned during vertical track lane scrolling.
+    - **#226 Timeline Row (Track Lane)**: 40px dedicated horizontal track lane with clip boundary indicators.
+    - **#227 Timeline Bar (Clip Block)**: Interactive clip block where width directly corresponds to execution duration.
+    - **#228 Playhead (Scrubber)**: Red vertical needle scrubber with interactive scrub handle and needle knob.
+    - **#229 Time Cursor**: Real-time crosshair cursor showing hovering timestamp tooltip across the canvas.
+    - **#230 Marker (Event Flag)**: Instant zero-duration trigger point marking limit switch / sensor trip moments.
+    - **#231 Milestone (◆)**: Diamond milestone symbol signifying key project gate and QA signoff delivery.
+    - **#232 Guide Line (Timeline)**: Vertical dashed projection guide aligning lead/follow clip sync points.
+    - **#233 Grid Line (Time Grid)**: 50ms interval subtle background coordinate grid network.
+    - **#234 Major Tick**: 100ms primary tick marks with high-contrast text labels.
+    - **#235 Minor Tick**: 20ms fine intermediate subdivisions between major ticks.
+    - **#236 Zoom Control**: Magnification slider (50% ~ 300%) adjusting temporal canvas zoom.
+    - **#237 Zoom to Fit**: Auto-fitting algorithm fitting full 60s cycle within viewport bounds.
+    - **#238 Range Selection (Loop)**: Segment bracket highlight defining active repetitive loop boundaries.
+    - **#239 Brush (Overview Slider)**: Sub-chart mini slider directly driving focused main chart view window.
+    - **#240 Mini Map (Timeline)**: Radar thumbnail overview displaying real-time viewport box positioning.
+  - **Contrast Verification**: Verified WCAG AA contrast across light and dark modes for all 20 timeline operations.
+
+- **2026-08-17 (v2.14.0 Cat 11 Drag, Drop & Direct Manipulation #201-#220 1:1 Live Lab Audit & Complete Overhaul + Contrast Verification)**:
+  - **Issue Identified**: Category 11 previously fell back to generic DND/canvas list placeholders and lacked dedicated 1:1 Live Interactive Labs and specialized high-contrast schematics for terms #201 through #220.
+  - **Resolution**: Implemented 20 distinct, dedicated 1:1 Live Interactive Labs in `LiveDnDLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 201 ~ 220)`:
+    - **#201 Drag & Drop (DnD)**: End-to-end task queue cross-list transfer with grab cursors and reactive completion drop zones.
+    - **#202 Draggable**: Interactive element testing `draggable="true"` attribute and active drag progress detection.
+    - **#203 Droppable**: Valid container listener for `onDragOver` & `onDrop` events with drop counter.
+    - **#204 Drop Zone (File Upload)**: Large dashed CAD file drag-and-drop ingestion zone with simulated G-code upload queue.
+    - **#205 Drag Handle (⠿)**: Isolated 6-dot reorder grip preventing unintentional text selection during row dragging.
+    - **#206 Grab Handle (Title Bar)**: Modal window header bar allowing direct 2D translation and coordinate tracking.
+    - **#207 Grip**: High-contrast textured 3-dot splitter handle affordance for responsive pane resizing.
+    - **#208 Drop Indicator**: 2px blue horizontal insertion line with circular notch marking precise sequence insertion slot.
+    - **#209 Drag Preview**: Semi-transparent 85% rotated preview card tracking cursor position during flight.
+    - **#210 Ghost Element**: 35% opacity origin silhouette placeholder marking where the item was picked up.
+    - **#211 Placeholder (DnD)**: Dynamic expanding space reserved for incoming item during list hover.
+    - **#212 Snap Alignment**: 5px threshold magnetic guide alignment turning green when locking to guide.
+    - **#213 Snap Point (Anchors)**: Discrete magnetic anchor nodes on canvas locking objects into fixed coordinates.
+    - **#214 Snap Grid (20px Step)**: Modular 20px grid stepping constraint on continuous slider inputs.
+    - **#215 Magnetic Snap**: Proximity-based cable-port auto-coupling with pulsing ring engagement.
+    - **#216 Free Drag (No Snap)**: Sub-pixel 1px precision unconstrained coordinate manipulation.
+    - **#217 Direct Resize**: Interactive right-edge handle altering duration/width in real-time.
+    - **#218 Direct Move**: Horizontal offset shifter moving keyframe start times without changing block size.
+    - **#219 Canvas Panning (Pan)**: Hand tool viewport camera translation over infinite grid background.
+    - **#220 Rubber Band Selection (Marquee)**: Translucent box multi-selection enclosing canvas nodes.
+  - **Contrast Verification**: Verified WCAG AA contrast across light and dark modes for all 20 drag-and-drop operations.
+
+- **2026-08-17 (v2.13.0 Cat 10 States & Interaction #181-#200 1:1 Live Lab Audit & Complete Overhaul + Light/Dark Contrast Verification)**:
+  - **Issue Identified**: Category 10 previously fell back to generic state matrix placeholders and lacked dedicated 1:1 Live Interactive Labs and specialized high-contrast schematics for terms #181 through #200.
+  - **Resolution**: Implemented 20 distinct, dedicated 1:1 Live Interactive Labs in `LiveStateLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 181 ~ 200)`:
+    - **#181 Default State (Normal)**: Standard baseline input and button in neutral resting state.
+    - **#182 Hover State**: Pointer entry simulation with scale transform, hover badge, and cursor entry counter.
+    - **#183 Focus State**: Interactive keyboard focus ring and programmatic focus trigger demo.
+    - **#184 Active State (Pressed)**: Mousedown physical key depression (translate-y-1) and active state indicator.
+    - **#185 Selected State**: Persistent active list selection retaining selected border and checkmark.
+    - **#186 Disabled State**: Interactive toggle disabling controls with not-allowed cursor and 40% opacity.
+    - **#187 Read-only State**: Immutable field allowing text selection and one-click clipboard copying.
+    - **#188 Checked State**: Checked state checkbox/radio with true boolean confirmation.
+    - **#189 Unchecked State**: Unchecked resting state checkbox with toggle control.
+    - **#190 Indeterminate State**: 3-state checkbox system with parent group and dynamic horizontal bar [-] indicator.
+    - **#191 Expanded State**: Open folder/accordion with downward chevron (⌄) and visible sub-nodes.
+    - **#192 Collapsed State**: Compact header with rightward chevron (›) and aria-expanded="false".
+    - **#193 Loading State**: Async save simulation locking UI with spinning loader for 2.5 seconds.
+    - **#194 Error State (Invalid)**: Safety limit violation trigger with red border and actionable warning text.
+    - **#195 Warning State (Caution)**: Advisory alert with real-time PSI pressure slider and amber caution theme.
+    - **#196 Success State (Valid)**: Verified cryptographic hardware token check with emerald border and badge.
+    - **#197 Pressed State (Aria-Pressed)**: Toggle persistence (Snap Grid / Magnetic) retaining pressed visual depression.
+    - **#198 Dragged State**: Drag simulator with 50% opacity and dashed resting shadow during dragging.
+    - **#199 Drop Target State**: Dragover target highlight with dashed blue border and soft highlight ring.
+    - **#200 Focus-visible State**: Keyboard Tab navigation vs Mouse click comparison showing 3px focus ring.
+  - **Contrast Verification**: Verified WCAG AA contrast across light and dark modes for all 20 states.
+
+- **2026-08-17 (v2.12.0 Cat 09 Feedback & Status #161-#180 1:1 Live Lab Audit & Complete Overhaul + Light Mode Contrast Upgrade)**:
+  - **Issue Identified**: Category 09 previously lacked dedicated 1:1 Live Interactive Labs and specialized high-contrast schematics for terms #161 through #180. Furthermore, dark-only hardcoded background classes caused low contrast and poor font readability in Light Mode.
+  - **Resolution**: Refactored `LiveDemoRenderer.tsx` and `TermSchematic.tsx` containers with adaptive Light/Dark classes (`bg-slate-50 dark:bg-slate-900`, `bg-slate-100 dark:bg-slate-950`). Implemented 20 distinct, dedicated 1:1 Live Interactive Labs in `LiveFeedbackLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 161 ~ 180)`:
+    - **#161 Alert (Banner)**: Inline persistent banner with alert types (info, warning, error, success) and dismiss toggle.
+    - **#162 Toast**: Floating transient popup notification with automatic 4-second auto-close simulation.
+    - **#163 Snackbar**: Bottom floating action notification featuring direct `UNDO` state rollback.
+    - **#164 Notification (Notification Center)**: Bell dropdown system event feed with live unread badge count and mark-all-read action.
+    - **#165 Badge**: Dynamic count pills, status dot badges, and numerical notification badges.
+    - **#166 Status Indicator**: Combined live pulsating status dot, severity badge, and telemetry diagnostic text.
+    - **#167 Status Dot**: Ultra-compact 8px mini colored dots for table rows and micro-interfaces.
+    - **#168 Progress Bar**: Continuous percentage gauge (0% ~ 100%) with animated simulation controls.
+    - **#169 Progress Ring**: 360-degree radial SVG circular gauge with interactive percentage slider.
+    - **#170 Spinner**: Indeterminate animated loading wheel with selectable size controls (sm, md, lg).
+    - **#171 Skeleton**: Shimmer pulse placeholders preventing layout shift during asynchronous data loading.
+    - **#172 Empty State**: Friendly zero-data illustration container with primary action call-to-action button.
+    - **#173 Error State**: Critical system fault notice with actionable retry connection trigger.
+    - **#174 Success State**: Milestone achievement card with checkmark icon and telemetry summary.
+    - **#175 Warning State**: Amber cautionary alert box with interactive threshold slider.
+    - **#176 Info State**: Neutral informational guideline container with ISO compliance text.
+    - **#177 Callout**: Prominent 4px left-border accent box highlighting expert pro tips.
+    - **#178 Inline Validation**: Real-time voltage range validator providing instant red/green visual feedback.
+    - **#179 Error Message**: Specific, actionable error diagnosis with explicit resolution instructions.
+    - **#180 Success Message**: Confirmation card displaying cryptographic hash and dynamic timestamp.
+  - **Contrast Verification**: Verified WCAG AA contrast for all diagnostic schematics and live labs in both Light and Dark themes.
+
+- **2026-08-17 (v2.11.0 Cat 08 Dialogs, Popups & Overlays #141-#160 1:1 Live Lab Audit & Complete Overhaul)**:
+  - **Issue Identified**: Category 08 previously fell back to shared modal/dialog/popover generic demos in `LiveDemoRenderer.tsx` and lacked individual distinct high-contrast schematics in `TermSchematic.tsx`.
+  - **Resolution**: Implemented 20 distinct, dedicated 1:1 Live Interactive Labs in `LiveDialogLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 141 ~ 160)`:
+    - **#141 Modal**: Central focus-trapped overlay window with dark backdrop dimming and locked background interaction.
+    - **#142 Dialog**: General purpose question/input dialog with titlebar, live asset renaming input, and Cancel/Save buttons.
+    - **#143 Alert Dialog**: High-urgency warning dialog with warning shield icon and mandatory single acknowledge button.
+    - **#144 Confirmation Dialog**: Binary destructive confirmation dialog ("Delete Recipe Record?") with Cancel and Delete buttons.
+    - **#145 Popover**: Floating contextual filter card anchored to trigger button with triangular pointer beak.
+    - **#146 Popup**: Quick transient floating popup editor with interactive date selector.
+    - **#147 Tooltip**: Read-only hover/focus hint badge with pointer arrow and delay indicator.
+    - **#148 Contextual Popover**: Dynamic popover bound directly to coordinates of active canvas timeline nodes.
+    - **#149 Drawer Overlay**: Sliding side drawer panel with screen-dimming overlay to focus user attention.
+    - **#150 Backdrop**: Dynamic backdrop layer simulator with real-time dimming opacity adjustment (30%, 60%, 90%).
+    - **#151 Scrim**: Material Design tap-to-dismiss surface capturing touch events outside dialog boundaries.
+    - **#152 Lightbox**: High-immersion CAD blueprint media viewer with 95% dark backdrop, pan/zoom telemetry, and close toggle.
+    - **#153 Sheet**: Edge-anchored slide-in content panel with smooth entry animation.
+    - **#154 Bottom Sheet**: Mobile-optimized bottom drawer with top grabber handle pill (`ㅡ`) and quick action buttons.
+    - **#155 Side Sheet**: Desktop dockable inspector panel allowing simultaneous viewing of the primary workspace.
+    - **#156 Anchored Popup**: Coordinate-locked popup strictly bound to trigger element corner boundaries.
+    - **#157 Non-modal Dialog**: Modeless floating search/find palette allowing simultaneous background editing and clicking.
+    - **#158 Fullscreen Modal**: 100% viewport immersive report creation wizard with top bar exit and validation steps.
+    - **#159 Inline Dialog**: Embedded non-overlay row confirmation expanding directly inside document card flow.
+    - **#160 Coachmark**: Guided onboarding tour with spotlight target highlight, step counter (1/3), and next-step navigation.
+- **2026-08-17 (v2.10.0 Cat 07 Disclosure & Hierarchy #121-#140 1:1 Live Lab Audit & Complete Overhaul)**:
+  - **Issue Identified**: Category 07 previously fell back to shared accordion/tree demos in `LiveDemoRenderer.tsx`.
+  - **Resolution**: Implemented 20 distinct, dedicated 1:1 Live Interactive Labs in `LiveDisclosureLabs.tsx`, updated high-contrast diagnostic schematics in `TermSchematic.tsx`, and mapped them explicitly via `if (term.num === 121 ~ 140)`:
+    - **#121 Accordion**: Grouped multi-collapsible list with mutual exclusivity and animated chevron rotations.
+    - **#122 Collapsible Panel**: Standalone autonomous open/close panel with motor diagnostic readouts.
+    - **#123 Expandable Panel**: Summary card expanding into full telemetry modal with live vibration/thermal stats.
+    - **#124 Disclosure**: Lightweight inline progressive disclosure revealing kinetic torque formulas.
+    - **#125 Chevron**: Multi-angle rotatable chevron (0° ›, 90° ⌄, 180° ⌃, 270° ‹) demonstrating standard directional states.
+    - **#126 Caret**: Solid polygon toggle (▲/▼) demonstrating table column sort indicator differences from thin chevrons.
+    - **#127 Tree Node**: Atomic tree item with icon, metadata, active selection highlight, and check status.
+    - **#128 Parent Node**: Branch folder node displaying child count badges and expanding subordinate items.
+    - **#129 Child Node**: Branch subordinate node with visual connector and depth level indicators.
+    - **#130 Leaf Node**: Terminal endpoint document node with no expandable chevron target.
+    - **#131 Indentation**: Dynamic indentation ruler testing 12px, 20px, and 32px padding per hierarchy level.
+    - **#132 Hierarchy Line**: Visual connecting guide lines (`├──`, `└──`) linking child items to parent nodes.
+    - **#133 Expander**: Isolated `[+]`/`[-]` click target that expands subtrees without triggering row selection.
+    - **#134 Collapse All**: One-click bulk action collapsing all open folder branches.
+    - **#135 Expand All**: Recursive bulk expansion opening deep subtrees to terminal leaves.
+    - **#136 Drill Down**: Context dive taking user from Plant Overview ➔ Line A ➔ Motor X telemetry.
+    - **#137 Drill Up**: Context ascension returning from low-level telemetry back to root perspective.
+    - **#138 Nested List**: Semantic HTML `ul > li > ol` hierarchy for structured multi-level calibration protocols.
+    - **#139 Outline View**: Document/CAD model outline navigator with active section focus highlighter.
+    - **#140 Hierarchy Breadcrumb**: Interactive breadcrumb trail synced to deep tree position with clickable ancestor jumps.
+- **2026-08-17 (v2.9.0 Cat 03 Navigation & Menus #041-#060 1:1 Live Lab Audit & Complete Overhaul)**:
+  - **Issue Identified**: Category 03 had schematics implemented, but was falling back to shared generic shell demos in `LiveDemoRenderer.tsx`.
+  - **Resolution**: Implemented 20 distinct, dedicated 1:1 Live Interactive Labs in `LiveNavLabs.tsx` and mapped them explicitly via `if (term.num === 41 ~ 60)`:
+    - **#041 Navbar**: Top header bar with logo, tab switching, and user profile avatar.
+    - **#042 Menu Bar**: Desktop-style File/Edit/View/Tools bar with dropdown command cascade & shortcuts.
+    - **#043 Sidebar**: Multi-purpose vertical pillar with autonomous tab switches beside canvas.
+    - **#044 Side Navigation (Sidenav)**: Multi-route list with active route highlighter and icon stack.
+    - **#045 Drawer**: Slide-in side overlay with backdrop click dismiss and quick inspector.
+    - **#046 Hamburger Menu**: ☰ compact trigger button that toggles collapsible mobile drawer list.
+    - **#047 Dropdown Menu**: Action-command floating menu with live execution feedback.
+    - **#048 Context Menu**: Right-click (or click) context-aware CAD node action popover with coordinate placement.
+    - **#049 Overflow Menu**: Vertical three-dots (⋮) button revealing secondary maintenance tools.
+    - **#050 Tabs**: Horizontal tabs with active border indicator switching Spec/Logs/Wiring panels.
+    - **#051 Vertical Tabs**: Dense left-hand tab pillar for Kinematics/Limits/PID parameter forms.
+    - **#052 Breadcrumb**: Interactive hierarchical trail with clickable ancestor nodes jumping up the tree.
+    - **#053 Pagination**: Numeric page switcher `[<] [1] [2] [3] [4] [5] [>]` with active page indicator.
+    - **#054 Stepper**: 4-stage circular badge indicator with connected lines and step completion checks.
+    - **#055 Wizard**: Guided 3-step configuration flow with Next/Back buttons and step validation.
+    - **#056 Anchor Navigation**: Table of contents jumping smoothly between `#specs`, `#wiring`, `#safety`.
+    - **#057 Bottom Navigation**: Thumb-reachable mobile bottom bar with 4 core tool tabs.
+    - **#058 Navigation Rail**: 64px compact icon-only pillar maximizing main workplane area.
+    - **#059 Mega Menu**: Multi-column 2D catalog grid (Motors/Sensors/Drives) with deep link browsing.
+    - **#060 Command Palette**: Ctrl+K quick launcher with real-time text filter and keyboard shortcuts.
+- **2026-08-17 (v2.8.0 Cat 06 Tables & Grids #101-#120 Overhaul)**:
+  - Overhauled 20 table/grid labs: Basic Table, Data Table, Data Grid, Tree View, Tree Grid, Row/Column/Cell selection, Column/Row Headers, Frozen Row/Column, Sortable/Filterable Columns, Resizing, Reordering, Inline Edit, Expandable Row, and Summary Row.
+- **2026-08-17 (v2.7.0 Cat 05 Scrolling, Positioning & Virtualization #081-#100 Overhaul)**:
+  - **Diagnostic Schematic Readability**: Scaled font sizes to `text-xs`/`text-[11px]` with bold contrast typography and crisp borders across all schematic views (`TermSchematic.tsx`).
+  - **#009 (Select) vs #010 (Dropdown)**: Separated into dedicated Form Select (bound data value selector with checkmarks) and Action Dropdown Menu (contextual commands with execution toast).
+  - **#011 (Combobox)**: Fixed typing interaction, enabling real-time typing input, custom text entry, and filtered suggestions dropdown.
+  - **#012 (Autocomplete)**: Added real interactive text search with instant clickable suggestion tags that auto-fill the input.
+  - **#014 (Range Slider)**: Implemented dual-handle range slider (min/max interval selection with range bar fill) replacing single slider.
+  - **#015 (Stepper Input)**: Implemented chunky touch stepper with `[-]` `[+]` tactile buttons and customizable step deltas (±5, ±25, ±100).
+  - **#016 (Date Picker)**: Built interactive calendar matrix with month navigation and day selectors.
+  - **#017 (Time Picker)**: Built dedicated 3-spinner dial (HH:MM:SS) with 12H/24H AM/PM selector.
+  - **#018 (Date-Time Picker)**: Built unified ISO-8601 Date + Time selector.
+- **2026-08-17 (v2.4.0 Release)**: 
+  - Added Header Collapse/Expand toggle button.
+  - Implemented Version Control & Export Suite (`version.ts` & `VersionExportModal.tsx`).
+  - Added "by NJ" author branding and updated `metadata.json`.
+  - Replaced hardcoded "636" labels with dynamically synchronized actual term counters.
+- **2026-08-16 (Sticky Top Layout)**: Fixed BentoHeader and Global Search Bar to the top layout with backdrop-blur, allowing independent smooth scrolling for the Category Panel and Terms Content area.
+- **2026-08-16 (Search & Lucide Integration)**: Upgraded search bar with `Search` and `X` clear action.
+- **2026-08-16 (Live UI Interactive Lab Architecture Overhaul)**: Overhauled `LiveDemoRenderer.tsx` with dedicated, distinct interactive engines covering all 24 categories and specialized schematic/demo types.

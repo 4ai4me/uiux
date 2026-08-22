@@ -1,0 +1,6 @@
+{
+  "name": "UI/UX Glossary Encyclopedia by NJ",
+  "description": "Comprehensive UI/UX glossary and interactive component encyclopedia for AI prompt engineering with live interactive demos, distinct schematics, version control, and export suite.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
