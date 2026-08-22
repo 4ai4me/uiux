@@ -35,6 +35,21 @@
    - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
 
 ## 3. Implementation History & Verification
+- **2026-08-21 (Vite Entry Path & GitHub Pages Deployment Guide)**:
+  - **Issue Identified**: `index.html` was temporarily edited to `./src/main.tsx`, which can cause module resolution issues in standard Vite builds (Vite requires `/src/main.tsx` as root-relative entry during transformation, while `base: './'` in `vite.config.ts` handles the output bundle relativity).
+  - **Resolution**:
+    - Restored `/src/main.tsx` in `index.html`.
+    - Confirmed `.github/workflows/deploy.yml` is ready for GitHub Actions CI/CD.
+    - Verified compilation passes with zero errors.
+- **2026-08-21 (Compilation & TypeScript Duplicate Identifier Resolution)**:
+  - **Issue Identified**: 
+    - `TermSchematic.tsx`: Encountered syntax build error on duplicate `case 'inline_error':` caused by redundant switch cases block in Category 23.
+    - `LiveDemoRenderer.tsx`: TypeScript linter (`tsc --noEmit`) threw `TS2300: Duplicate identifier` errors for components exported with colliding names across modules (`LiveEmptyStateLab`, `LiveTooltipLab`, `LiveBreadcrumbLab`, `LivePaginationLab`, `LiveLightboxLab`, `LiveContextMenuLab`, `LiveStickyTableHeaderLab`).
+  - **Resolution**:
+    - Removed duplicate Category 23 schematic cases in `TermSchematic.tsx`.
+    - Renamed duplicated labs in `LiveTextHintLabs.tsx` (`LiveTextHintEmptyStateLab`, `LiveTextHintTooltipLab`, `LiveTextHintBreadcrumbLab`, `LiveTextHintPaginationLab`) and `LiveOverlayTransparencyLabs.tsx` (`LiveOverlayLightboxLab`, `LiveOverlayContextMenuLab`, `LiveOverlayStickyTableHeaderLab`).
+    - Updated imports and dispatch calls in `LiveDemoRenderer.tsx` accordingly.
+    - Verified with `lint_applet` (`tsc --noEmit`: 0 errors) and `compile_applet` (`npm run build`: Success).
 - **2026-08-21 (GitHub Pages Subpath Hosting Resolution & Relative Asset Base Config)**:
   - **Issue Identified**: When hosting on GitHub Pages with project subpath (e.g. `https://4ai4me.github.io/uiux/`), Vite's default absolute asset path (`/assets/...`) resulted in 404 errors for JS/CSS chunks (`https://4ai4me.github.io/assets/...`), causing a blank white screen.
   - **Resolution**:

@@ -354,7 +354,7 @@ export const LiveCharCounterLab: React.FC = () => {
 };
 
 // #559 Empty State Placeholder Message
-export const LiveEmptyStateLab: React.FC = () => {
+export const LiveTextHintEmptyStateLab: React.FC = () => {
   const [items, setItems] = useState<string[]>([]);
   return (
     <div className="w-full max-w-md bg-slate-100 dark:bg-slate-950 border-2 border-indigo-400/80 dark:border-indigo-500 rounded-xl p-3 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-md">
@@ -394,7 +394,7 @@ export const LiveEmptyStateLab: React.FC = () => {
 };
 
 // #560 Tooltip Microcopy
-export const LiveTooltipLab: React.FC = () => {
+export const LiveTextHintTooltipLab: React.FC = () => {
   const [hovered, setHovered] = useState(false);
   return (
     <div className="w-full max-w-md bg-slate-100 dark:bg-slate-950 border-2 border-indigo-400/80 dark:border-indigo-500 rounded-xl p-3 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-md">
@@ -525,7 +525,7 @@ export const LivePrefixSuffixLab: React.FC = () => {
 };
 
 // #564 Breadcrumb Path Hint
-export const LiveBreadcrumbLab: React.FC = () => {
+export const LiveTextHintBreadcrumbLab: React.FC = () => {
   const [path, setPath] = useState(['Factory A', 'Line 3', 'Servo 04']);
   return (
     <div className="w-full max-w-md bg-slate-100 dark:bg-slate-950 border-2 border-indigo-400/80 dark:border-indigo-500 rounded-xl p-3 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-md">
@@ -805,7 +805,7 @@ export const LiveSearchHighlightLab: React.FC = () => {
 };
 
 // #574 Pagination Status Microcopy
-export const LivePaginationLab: React.FC = () => {
+export const LiveTextHintPaginationLab: React.FC = () => {
   const [page, setPage] = useState(1);
   const total = 636;
   const perPage = 20;

@@ -584,7 +584,7 @@ export const LiveFullScreenLoadingLab: React.FC = () => {
 };
 
 // #610 Lightbox Media Viewer
-export const LiveLightboxLab: React.FC = () => {
+export const LiveOverlayLightboxLab: React.FC = () => {
   const [open, setOpen] = useState(false);
   return (
     <div className="w-full max-w-md bg-slate-100 dark:bg-slate-950 border-2 border-indigo-400/80 dark:border-indigo-500 rounded-xl p-3 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-md">
@@ -610,7 +610,7 @@ export const LiveLightboxLab: React.FC = () => {
 };
 
 // #611 Context Menu Overlay
-export const LiveContextMenuLab: React.FC = () => {
+export const LiveOverlayContextMenuLab: React.FC = () => {
   const [menu, setMenu] = useState<{ x: number; y: number } | null>(null);
   return (
     <div className="w-full max-w-md bg-slate-100 dark:bg-slate-950 border-2 border-indigo-400/80 dark:border-indigo-500 rounded-xl p-3 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-md">
@@ -885,7 +885,7 @@ export const LiveTargetSpotlightLab: React.FC = () => {
 };
 
 // #623 Transparent Sticky Table Header
-export const LiveStickyTableHeaderLab: React.FC = () => {
+export const LiveOverlayStickyTableHeaderLab: React.FC = () => {
   return (
     <div className="w-full max-w-md bg-slate-100 dark:bg-slate-950 border-2 border-indigo-400/80 dark:border-indigo-500 rounded-xl p-3 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-md">
       <div className="flex justify-between items-center border-b border-slate-300 dark:border-slate-800 pb-2">

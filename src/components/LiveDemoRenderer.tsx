@@ -401,12 +401,12 @@ import {
   LiveHelpTextLab,
   LiveTextHintInlineErrorLab,
   LiveCharCounterLab,
-  LiveEmptyStateLab,
-  LiveTooltipLab,
+  LiveTextHintEmptyStateLab,
+  LiveTextHintTooltipLab,
   LiveBadgeCountLab,
   LiveFormatMaskLab,
   LivePrefixSuffixLab,
-  LiveBreadcrumbLab,
+  LiveTextHintBreadcrumbLab,
   LiveShortcutPillLab,
   LiveTextHintAutosaveLab,
   LiveRequiredAsteriskLab,
@@ -416,7 +416,7 @@ import {
   LiveDropzoneLab,
   LiveDestructiveWarningLab,
   LiveSearchHighlightLab,
-  LivePaginationLab,
+  LiveTextHintPaginationLab,
   LiveUndoToastLab,
   LiveVersionTagLab,
   LiveStepProgressLab,
@@ -454,8 +454,8 @@ import {
   LiveSmartGuidesLab,
   LiveWatermarkLab,
   LiveFullScreenLoadingLab,
-  LiveLightboxLab,
-  LiveContextMenuLab,
+  LiveOverlayLightboxLab,
+  LiveOverlayContextMenuLab,
   LiveSpotlightSearchLab,
   LiveResizerGhostLab,
   LiveTourSpotlightLab,
@@ -467,7 +467,7 @@ import {
   LiveFABLab,
   LiveCurtainSwipeLab,
   LiveTargetSpotlightLab,
-  LiveStickyTableHeaderLab,
+  LiveOverlayStickyTableHeaderLab,
   LiveCanvasRulerLab,
   LiveCursorCoordsLab,
   LiveMultiModalDepthLab,
@@ -1173,12 +1173,12 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 556) return <LiveHelpTextLab />;
   if (term.num === 557) return <LiveTextHintInlineErrorLab />;
   if (term.num === 558) return <LiveCharCounterLab />;
-  if (term.num === 559) return <LiveEmptyStateLab />;
-  if (term.num === 560) return <LiveTooltipLab />;
+  if (term.num === 559) return <LiveTextHintEmptyStateLab />;
+  if (term.num === 560) return <LiveTextHintTooltipLab />;
   if (term.num === 561) return <LiveBadgeCountLab />;
   if (term.num === 562) return <LiveFormatMaskLab />;
   if (term.num === 563) return <LivePrefixSuffixLab />;
-  if (term.num === 564) return <LiveBreadcrumbLab />;
+  if (term.num === 564) return <LiveTextHintBreadcrumbLab />;
   if (term.num === 565) return <LiveShortcutPillLab />;
   if (term.num === 566) return <LiveTextHintAutosaveLab />;
   if (term.num === 567) return <LiveRequiredAsteriskLab />;
@@ -1188,7 +1188,7 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 571) return <LiveDropzoneLab />;
   if (term.num === 572) return <LiveDestructiveWarningLab />;
   if (term.num === 573) return <LiveSearchHighlightLab />;
-  if (term.num === 574) return <LivePaginationLab />;
+  if (term.num === 574) return <LiveTextHintPaginationLab />;
   if (term.num === 575) return <LiveUndoToastLab />;
   if (term.num === 576) return <LiveVersionTagLab />;
   if (term.num === 577) return <LiveStepProgressLab />;
@@ -1228,8 +1228,8 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 607) return <LiveSmartGuidesLab />;
   if (term.num === 608) return <LiveWatermarkLab />;
   if (term.num === 609) return <LiveFullScreenLoadingLab />;
-  if (term.num === 610) return <LiveLightboxLab />;
-  if (term.num === 611) return <LiveContextMenuLab />;
+  if (term.num === 610) return <LiveOverlayLightboxLab />;
+  if (term.num === 611) return <LiveOverlayContextMenuLab />;
   if (term.num === 612) return <LiveSpotlightSearchLab />;
   if (term.num === 613) return <LiveResizerGhostLab />;
   if (term.num === 614) return <LiveTourSpotlightLab />;
@@ -1241,7 +1241,7 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 620) return <LiveFABLab />;
   if (term.num === 621) return <LiveCurtainSwipeLab />;
   if (term.num === 622) return <LiveTargetSpotlightLab />;
-  if (term.num === 623) return <LiveStickyTableHeaderLab />;
+  if (term.num === 623) return <LiveOverlayStickyTableHeaderLab />;
   if (term.num === 624) return <LiveCanvasRulerLab />;
   if (term.num === 625) return <LiveCursorCoordsLab />;
   if (term.num === 626) return <LiveMultiModalDepthLab />;
