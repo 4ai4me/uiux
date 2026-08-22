@@ -35,6 +35,11 @@
    - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
 
 ## 3. Implementation History & Verification
+- **2026-08-21 (GitHub Pages Subpath Hosting Resolution & Relative Asset Base Config)**:
+  - **Issue Identified**: When hosting on GitHub Pages with project subpath (e.g. `https://4ai4me.github.io/uiux/`), Vite's default absolute asset path (`/assets/...`) resulted in 404 errors for JS/CSS chunks (`https://4ai4me.github.io/assets/...`), causing a blank white screen.
+  - **Resolution**:
+    - Configured `base: './'` in `/vite.config.ts` to output relative asset paths (`./assets/...`) during `npm run build`.
+    - Tested production compilation (`npm run build`) and verified that assets and index.html resolve properly in all subpath environments (e.g. `/uiux/`).
 - **2026-08-17 (v2.26.0 Cat 23 Text Hint & Placeholder #551-#590 & Cat 24 Overlay & Transparency #591-#636 1:1 Live Lab Audit & Complete Overhaul)**:
   - **Cat 23 (Text Hint & Placeholder #551-#590)**:
     - Built modular interactive lab engine `/src/components/LiveTextHintLabs.tsx` containing specialized labs: Ghost Text (#551), Floating Label (#552), Example Chips (#553), Microcopy (#554), Password Strength Meter (#555), Help Text Subtitle (#556), Inline Validation Error (#557), Character Counter (#558), Empty State Message (#559), Tooltip Microcopy (#560), Badge Count (#561), Format Mask Guide (#562), Prefix/Suffix Units (#563), Autosave Status (#566), Connection Status (#581), and specialized hints (#564-#590).

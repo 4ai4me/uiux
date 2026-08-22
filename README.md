@@ -102,12 +102,26 @@ npm run dev
 ### 프로덕션 빌드 (Production Build)
 
 ```bash
-# 프로덕션 빌드 생성
+# 프로덕션 빌드 생성 (dist/ 폴더 생성)
 npm run build
 
 # 빌드 결과물 로컬 미리보기
 npm run preview
 ```
+
+### 🌐 GitHub Pages 배포 가이드 (GitHub Pages Deployment)
+
+본 프로젝트는 GitHub Pages의 저장소 서브경로(예: `https://4ai4me.github.io/uiux/`)를 지원하도록 `vite.config.ts`에 `base: './'` 설정이 적용되어 있습니다.
+
+#### 방법 1: GitHub Actions 자동 배포 (권장)
+1. 코드를 GitHub 저장소의 `main` 브랜치에 푸시합니다.
+2. GitHub 저장소의 **Settings** ➔ **Pages** 메뉴로 이동합니다.
+3. **Build and deployment** > **Source** 항목을 **`GitHub Actions`**로 선택합니다.
+4. `.github/workflows/deploy.yml` 워크플로우가 자동으로 실행되어 몇 분 내에 배포가 완료됩니다.
+
+#### 방법 2: 수동 빌드 후 배포 (dist 폴더 업로드)
+1. 로컬에서 `npm run build`를 실행하여 최신 `dist` 폴더를 생성합니다.
+2. `dist` 폴더 내의 파일들을 저장소의 `gh-pages` 브랜치에 푸시하거나, GitHub Pages 배포 브랜치 루트로 설정합니다.
 
 ---
 
