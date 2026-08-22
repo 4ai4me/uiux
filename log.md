@@ -35,6 +35,11 @@
    - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
 
 ## 3. Implementation History & Verification
+- **2026-08-21 (GitHub Actions CI/CD Workflow Fix - npm install & lockfile resilience)**:
+  - **Issue Identified**: In GitHub Actions (`Deploy to GitHub Pages`), workflows failed with red 'X' in ~17-20 seconds because `deploy.yml` was executing `npm ci` with `cache: 'npm'`, which strictly requires an existing committed `package-lock.json`. Without `package-lock.json`, `npm ci` terminates immediately with an error.
+  - **Resolution**:
+    - Updated `.github/workflows/deploy.yml` to use `npm install` and removed strict lockfile cache dependency.
+    - Verified compilation passes cleanly.
 - **2026-08-21 (Vite Entry Path & GitHub Pages Deployment Guide)**:
   - **Issue Identified**: `index.html` was temporarily edited to `./src/main.tsx`, which can cause module resolution issues in standard Vite builds (Vite requires `/src/main.tsx` as root-relative entry during transformation, while `base: './'` in `vite.config.ts` handles the output bundle relativity).
   - **Resolution**:
