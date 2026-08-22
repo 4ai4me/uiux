@@ -25,7 +25,7 @@ export const CATEGORIES: Category[] = [
     title: '03. Navigation & Menus',
     koreanTitle: '내비게이션 및 메뉴',
     description: 'Navbar, Sidebar, Tabs, Breadcrumb, Mega Menu 등 화면 및 계층 이동 구조',
-    count: 20,
+    count: 22,
     iconName: 'Compass',
   },
   {

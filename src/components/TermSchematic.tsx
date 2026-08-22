@@ -5386,7 +5386,72 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
       return (
         <div className="w-48 bg-gradient-to-r from-indigo-900 via-purple-900 to-slate-900 border-2 border-indigo-400 rounded-lg p-2 z-10 font-mono shadow-2xl flex flex-col items-center gap-1 text-center">
           <span className="text-[8.5px] font-black text-white">Lexicon Design System</span>
-          <span className="text-[7px] text-indigo-300 font-bold">636 Tokens & Labs Master Engine</span>
+          <span className="text-[7px] text-indigo-300 font-bold">638 Tokens & Labs Master Engine</span>
+        </div>
+      );
+
+    case 'document_tab_bar':
+    case 'browser_tab_strip':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl overflow-hidden z-10 shadow-lg font-mono flex flex-col">
+          {/* Tab Strip Bar */}
+          <div className="flex items-center bg-slate-950 px-1.5 pt-1.5 gap-1 border-b border-slate-800">
+            {/* Active Tab */}
+            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800 border-t-2 border-indigo-500 rounded-t-md text-[10px] text-white font-bold shadow-sm">
+              <span className="text-indigo-400 text-[9px]">📄</span>
+              <span className="truncate max-w-[65px]">Main.tsx</span>
+              <span className="text-slate-400 hover:text-white text-[9px] font-black cursor-pointer">✕</span>
+            </div>
+            {/* Inactive Tab */}
+            <div className="flex items-center gap-1 px-2 py-1 bg-slate-900/60 rounded-t-md text-[9.5px] text-slate-400">
+              <span className="truncate max-w-[55px]">Style.css</span>
+              <span className="text-slate-500 text-[8.5px]">✕</span>
+            </div>
+            {/* Add Tab Button */}
+            <div className="w-5 h-5 flex items-center justify-center rounded hover:bg-slate-800 text-slate-400 text-[11px] font-bold cursor-pointer">
+              ＋
+            </div>
+          </div>
+          {/* Document Body Viewport */}
+          <div className="p-2 text-[9px] text-slate-400 bg-slate-900/90 flex flex-col gap-1">
+            <div className="flex justify-between items-center text-slate-300 font-semibold border-b border-slate-800/80 pb-1">
+              <span>Viewport: Main.tsx</span>
+              <span className="text-[8px] bg-indigo-500/20 text-indigo-300 px-1 rounded">Active Buffer</span>
+            </div>
+            <div className="text-[8px] text-slate-500 font-mono">1 export default function App() &#123; ... &#125;</div>
+          </div>
+        </div>
+      );
+
+    case 'omnibar_breadcrumb_search':
+    case 'explorer_address_search':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-lg font-mono flex flex-col gap-1.5">
+          {/* Bar with Nav controls + Breadcrumb + Scoped Search */}
+          <div className="flex items-center gap-1.5 bg-slate-950 border border-slate-800 rounded-lg p-1.5">
+            {/* History arrows */}
+            <div className="flex items-center gap-0.5 text-slate-400 text-[9px] font-bold shrink-0">
+              <span className="w-4 h-4 rounded bg-slate-900 flex items-center justify-center cursor-pointer hover:text-white">◀</span>
+              <span className="w-4 h-4 rounded bg-slate-900 flex items-center justify-center cursor-pointer hover:text-white">▶</span>
+              <span className="w-4 h-4 rounded bg-slate-900 flex items-center justify-center cursor-pointer hover:text-white">▲</span>
+            </div>
+            {/* Breadcrumb Path Segment */}
+            <div className="flex items-center gap-0.5 text-[8.5px] bg-slate-900 border border-slate-700/80 rounded px-1.5 py-0.5 text-slate-200 truncate flex-1 font-semibold">
+              <span className="text-indigo-400">PC</span>
+              <span className="text-slate-500">❯</span>
+              <span>UIUX</span>
+              <span className="text-slate-500">❯</span>
+              <span className="text-indigo-300">Cat 03▾</span>
+            </div>
+          </div>
+          {/* Scoped Instant Search Field */}
+          <div className="flex items-center justify-between bg-slate-950 border border-indigo-500/60 rounded-md px-2 py-1 text-[9px]">
+            <div className="flex items-center gap-1 text-slate-400">
+              <span className="text-indigo-400 text-[10px]">🔍</span>
+              <span className="text-slate-200">Search in Cat 03...</span>
+            </div>
+            <span className="text-[8px] bg-slate-800 text-slate-400 px-1 rounded font-bold">Ctrl+F</span>
+          </div>
         </div>
       );
 

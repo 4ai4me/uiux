@@ -21,6 +21,8 @@ import {
   LiveNavRailLab,
   LiveMegaMenuLab,
   LiveCommandPaletteLab,
+  LiveDocumentTabBarLab,
+  LiveOmnibarBreadcrumbSearchLab,
 } from './LiveNavLabs';
 import {
   LiveAccordionLab,
@@ -1255,6 +1257,8 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 634) return <LiveHoverGlowLab />;
   if (term.num === 635) return <LiveZIndex3DVisualizerLab />;
   if (term.num === 636) return <LiveUniversalSystemLab />;
+  if (term.num === 637) return <LiveDocumentTabBarLab />;
+  if (term.num === 638) return <LiveOmnibarBreadcrumbSearchLab />;
 
   // 4. Fallback for Layout & Panes (Cat 4 & Cat 16)
   if (cat === 4 || cat === 16 || sch.includes('pane') || sch.includes('split') || sch.includes('layout')) {

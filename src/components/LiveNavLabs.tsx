@@ -22,6 +22,11 @@ import {
   CheckCircle2,
   ArrowRight,
   ArrowLeft,
+  ArrowUp,
+  Plus,
+  X,
+  RotateCcw,
+  FileText,
 } from 'lucide-react';
 
 // #041 Navbar (Global horizontal navigation with brand, links, and action)
@@ -817,3 +822,382 @@ export const LiveCommandPaletteLab = () => {
     </div>
   );
 };
+
+// #637 Document Tab Bar (Browser Style Tab Strip with dynamic add, close, active tab states)
+export const LiveDocumentTabBarLab = () => {
+  interface TabDoc {
+    id: string;
+    title: string;
+    icon: string;
+    isDirty: boolean;
+    content: string;
+  }
+
+  const [tabs, setTabs] = useState<TabDoc[]>([
+    {
+      id: 'doc-1',
+      title: 'App.tsx',
+      icon: '⚛️',
+      isDirty: true,
+      content: '// Main Application Engine\nexport default function App() {\n  return <LexiconWorkbench />;\n}',
+    },
+    {
+      id: 'doc-2',
+      title: 'styles.css',
+      icon: '🎨',
+      isDirty: false,
+      content: ':root {\n  --brand-primary: #6366f1;\n  --surface-ground: #020617;\n}',
+    },
+    {
+      id: 'doc-3',
+      title: 'schema.json',
+      icon: '📋',
+      isDirty: false,
+      content: '{\n  "$schema": "http://json-schema.org/draft-07/schema#",\n  "termsCount": 638\n}',
+    },
+  ]);
+
+  const [activeTabId, setActiveTabId] = useState<string>('doc-1');
+  const [tabCounter, setTabCounter] = useState<number>(4);
+
+  const activeTab = tabs.find((t) => t.id === activeTabId) || tabs[0];
+
+  const handleCloseTab = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    const remaining = tabs.filter((t) => t.id !== id);
+    setTabs(remaining);
+    if (activeTabId === id && remaining.length > 0) {
+      setActiveTabId(remaining[remaining.length - 1].id);
+    }
+  };
+
+  const handleAddTab = () => {
+    const newId = `doc-${tabCounter}`;
+    const newTab: TabDoc = {
+      id: newId,
+      title: `Buffer-${tabCounter}.tsx`,
+      icon: '📄',
+      isDirty: false,
+      content: `// New workspace buffer created at ${new Date().toLocaleTimeString()}\nexport const Buffer${tabCounter} = () => {\n  return <div>New Tab Content</div>;\n};`,
+    };
+    setTabs([...tabs, newTab]);
+    setActiveTabId(newId);
+    setTabCounter((c) => c + 1);
+  };
+
+  const toggleDirty = () => {
+    if (!activeTab) return;
+    setTabs(
+      tabs.map((t) =>
+        t.id === activeTab.id ? { ...t, isDirty: !t.isDirty } : t
+      )
+    );
+  };
+
+  return (
+    <div className="w-full max-w-sm flex flex-col gap-2 font-mono text-xs">
+      <div className="flex justify-between items-center">
+        <span className="text-slate-300 font-bold flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+          Document Tab Bar:
+        </span>
+        <span className="text-indigo-400 font-bold text-[10px]">
+          {tabs.length} Open Tabs
+        </span>
+      </div>
+
+      <div className="w-full bg-slate-950 border-2 border-indigo-500 rounded-xl overflow-hidden shadow-2xl flex flex-col">
+        {/* Horizontal Tab Strip */}
+        <div className="flex items-end bg-slate-900/90 px-1 pt-1.5 gap-1 border-b border-slate-800 overflow-x-auto no-scrollbar">
+          {tabs.map((t) => {
+            const isActive = t.id === activeTabId;
+            return (
+              <div
+                key={t.id}
+                onClick={() => setActiveTabId(t.id)}
+                className={`group flex items-center gap-1.5 px-2.5 py-1.5 rounded-t-lg text-[10px] cursor-pointer transition-all border-t-2 select-none shrink-0 ${
+                  isActive
+                    ? 'bg-slate-950 border-indigo-500 text-white font-bold shadow-md'
+                    : 'bg-slate-900/60 border-transparent text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+                }`}
+              >
+                <span className="text-[10px]">{t.icon}</span>
+                <span className="truncate max-w-[85px]">{t.title}</span>
+                {t.isDirty && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" title="Unsaved changes" />
+                )}
+                <button
+                  onClick={(e) => handleCloseTab(e, t.id)}
+                  className="w-3.5 h-3.5 rounded hover:bg-red-500/20 hover:text-red-400 text-slate-500 flex items-center justify-center text-[9px] transition-colors ml-0.5"
+                  title="Close tab"
+                >
+                  <X className="w-2.5 h-2.5" />
+                </button>
+              </div>
+            );
+          })}
+
+          {/* New Tab Button */}
+          <button
+            onClick={handleAddTab}
+            className="p-1.5 mb-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 text-[10px] font-bold transition flex items-center justify-center shrink-0"
+            title="Open new tab (Ctrl+T)"
+          >
+            <Plus className="w-3.5 h-3.5 text-indigo-400" />
+          </button>
+        </div>
+
+        {/* Tab Document Body Viewport */}
+        {activeTab ? (
+          <div className="p-3 bg-slate-950 flex flex-col gap-2">
+            <div className="flex justify-between items-center pb-1.5 border-b border-slate-800 text-[10px]">
+              <div className="flex items-center gap-1.5 text-slate-300">
+                <span>📄 Active Buffer:</span>
+                <span className="text-indigo-400 font-bold">{activeTab.title}</span>
+                {activeTab.isDirty && (
+                  <span className="bg-amber-500/20 text-amber-300 text-[8.5px] px-1 py-0.2 rounded">
+                    Modified
+                  </span>
+                )}
+              </div>
+              <button
+                onClick={toggleDirty}
+                className="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[9px] font-semibold transition"
+              >
+                {activeTab.isDirty ? 'Save Buffer' : 'Touch (Mark Dirty)'}
+              </button>
+            </div>
+            <pre className="text-[9px] font-mono text-emerald-400 bg-slate-900/80 p-2 rounded-lg border border-slate-800 overflow-x-auto leading-relaxed max-h-20">
+              {activeTab.content}
+            </pre>
+          </div>
+        ) : (
+          <div className="p-6 text-center text-slate-500 text-[11px] flex flex-col items-center gap-2">
+            <span>No open documents in workspace.</span>
+            <button
+              onClick={handleAddTab}
+              className="px-3 py-1 bg-indigo-600 text-white rounded-lg text-xs font-bold flex items-center gap-1 hover:bg-indigo-500 transition"
+            >
+              <Plus className="w-3.5 h-3.5" /> Open New Tab
+            </button>
+          </div>
+        )}
+      </div>
+      <span className="text-[9px] text-slate-400 text-center">
+        Independent multi-document view strip with dynamic spawn, close, and state tracking.
+      </span>
+    </div>
+  );
+};
+
+// #638 Omnibar with Breadcrumb Search (Explorer Style Address + Scoped Search Bar)
+export const LiveOmnibarBreadcrumbSearchLab = () => {
+  const [history, setHistory] = useState<string[]>([
+    'This PC > UIUX Master > Cat 03. Navigation',
+  ]);
+  const [historyIndex, setHistoryIndex] = useState<number>(0);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const currentPathString = history[historyIndex] || 'This PC > UIUX Master > Cat 03. Navigation';
+  const pathSegments = currentPathString.split(' > ');
+
+  const currentFolderFiles: Record<string, string[]> = {
+    'This PC': ['Drive (C:)', 'Data (D:)', 'Network Shares'],
+    'UIUX Master': ['Cat 01. Basic Inputs', 'Cat 02. Buttons', 'Cat 03. Navigation', 'Cat 24. Overlays'],
+    'Cat 03. Navigation': [
+      'Navbar.tsx',
+      'Sidebar.tsx',
+      'DocumentTabBar.tsx',
+      'BreadcrumbOmnibar.tsx',
+      'MegaMenu.tsx',
+      'CommandPalette.tsx',
+      'Pagination.tsx',
+    ],
+  };
+
+  const currentFolderName = pathSegments[pathSegments.length - 1];
+  const items = currentFolderFiles[currentFolderName] || [
+    'DocumentTabBar.tsx',
+    'BreadcrumbOmnibar.tsx',
+    'NavigationMenu.tsx',
+  ];
+
+  const filteredItems = items.filter((item) =>
+    item.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const navigateTo = (newPath: string) => {
+    const updatedHistory = history.slice(0, historyIndex + 1);
+    updatedHistory.push(newPath);
+    setHistory(updatedHistory);
+    setHistoryIndex(updatedHistory.length - 1);
+    setSearchQuery('');
+  };
+
+  const handleBack = () => {
+    if (historyIndex > 0) {
+      setHistoryIndex(historyIndex - 1);
+      setSearchQuery('');
+    }
+  };
+
+  const handleForward = () => {
+    if (historyIndex < history.length - 1) {
+      setHistoryIndex(historyIndex + 1);
+      setSearchQuery('');
+    }
+  };
+
+  const handleUpLevel = () => {
+    if (pathSegments.length > 1) {
+      const upPath = pathSegments.slice(0, -1).join(' > ');
+      navigateTo(upPath);
+    }
+  };
+
+  const handleSegmentClick = (idx: number) => {
+    const clickedPath = pathSegments.slice(0, idx + 1).join(' > ');
+    if (clickedPath !== currentPathString) {
+      navigateTo(clickedPath);
+    }
+  };
+
+  return (
+    <div className="w-full max-w-sm flex flex-col gap-2 font-mono text-xs">
+      <div className="flex justify-between items-center">
+        <span className="text-slate-300 font-bold flex items-center gap-1.5">
+          <Folder className="w-3.5 h-3.5 text-indigo-400" />
+          Explorer Omnibar & Scoped Search:
+        </span>
+        <span className="text-emerald-400 font-bold text-[10px]">
+          {filteredItems.length} of {items.length} items
+        </span>
+      </div>
+
+      <div className="w-full bg-slate-950 border-2 border-indigo-500 rounded-xl p-2.5 shadow-2xl flex flex-col gap-2">
+        {/* Navigation Bar Strip (History + Breadcrumb Bar + Scoped Search) */}
+        <div className="flex items-center gap-1.5">
+          {/* History / Direction Controls */}
+          <div className="flex items-center gap-0.5 bg-slate-900 border border-slate-800 rounded-lg p-0.5 shrink-0">
+            <button
+              onClick={handleBack}
+              disabled={historyIndex === 0}
+              className={`p-1 rounded transition ${
+                historyIndex === 0
+                  ? 'text-slate-600 cursor-not-allowed'
+                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              }`}
+              title="Back (Alt+Left)"
+            >
+              <ArrowLeft className="w-3 h-3" />
+            </button>
+            <button
+              onClick={handleForward}
+              disabled={historyIndex >= history.length - 1}
+              className={`p-1 rounded transition ${
+                historyIndex >= history.length - 1
+                  ? 'text-slate-600 cursor-not-allowed'
+                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              }`}
+              title="Forward (Alt+Right)"
+            >
+              <ArrowRight className="w-3 h-3" />
+            </button>
+            <button
+              onClick={handleUpLevel}
+              disabled={pathSegments.length <= 1}
+              className={`p-1 rounded transition ${
+                pathSegments.length <= 1
+                  ? 'text-slate-600 cursor-not-allowed'
+                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              }`}
+              title="Up one level (Alt+Up)"
+            >
+              <ArrowUp className="w-3 h-3" />
+            </button>
+          </div>
+
+          {/* Breadcrumb Address Bar */}
+          <div className="flex-1 min-w-0 bg-slate-900 border border-slate-700/80 rounded-lg px-2 py-1 flex items-center gap-1 overflow-x-auto no-scrollbar">
+            <Folder className="w-3 h-3 text-amber-400 shrink-0" />
+            <div className="flex items-center gap-1 text-[10px] text-slate-300 truncate">
+              {pathSegments.map((segment, idx) => (
+                <React.Fragment key={idx}>
+                  {idx > 0 && <span className="text-slate-600 text-[8px]">❯</span>}
+                  <button
+                    onClick={() => handleSegmentClick(idx)}
+                    className={`hover:text-indigo-300 hover:underline transition truncate ${
+                      idx === pathSegments.length - 1
+                        ? 'font-bold text-white'
+                        : 'text-slate-400'
+                    }`}
+                  >
+                    {segment}
+                  </button>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Scoped Folder Search Bar */}
+        <div className="flex items-center gap-2 bg-slate-900/90 border border-indigo-500/70 rounded-lg px-2.5 py-1">
+          <Search className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+          <input
+            type="text"
+            placeholder={`Search in ${currentFolderName}... [Ctrl+F]`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="flex-1 bg-transparent text-white text-[10px] focus:outline-none placeholder-slate-500"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="p-0.5 text-slate-400 hover:text-white rounded"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          )}
+        </div>
+
+        {/* Current Folder Contents (Filtered Results) */}
+        <div className="bg-slate-900/50 rounded-lg border border-slate-800/80 p-2 flex flex-col gap-1 max-h-24 overflow-y-auto">
+          {filteredItems.length > 0 ? (
+            filteredItems.map((item) => (
+              <div
+                key={item}
+                onClick={() => {
+                  if (item.startsWith('Cat ') || item.startsWith('Drive')) {
+                    navigateTo(`${currentPathString} > ${item}`);
+                  }
+                }}
+                className="flex items-center justify-between p-1 rounded hover:bg-slate-800 text-[9.5px] text-slate-200 cursor-pointer transition"
+              >
+                <div className="flex items-center gap-1.5 truncate">
+                  {item.endsWith('.tsx') || item.endsWith('.json') ? (
+                    <FileText className="w-3 h-3 text-indigo-400 shrink-0" />
+                  ) : (
+                    <Folder className="w-3 h-3 text-amber-400 shrink-0" />
+                  )}
+                  <span className="truncate">{item}</span>
+                </div>
+                <span className="text-[8px] text-slate-500">
+                  {item.endsWith('.tsx') ? 'Source' : 'Folder'}
+                </span>
+              </div>
+            ))
+          ) : (
+            <div className="text-center py-2 text-[9.5px] text-slate-500">
+              No matching items found for "{searchQuery}" in this folder.
+            </div>
+          )}
+        </div>
+      </div>
+
+      <span className="text-[9px] text-slate-400 text-center">
+        Combines hierarchical breadcrumb navigation with scoped in-folder instant query filtering.
+      </span>
+    </div>
+  );
+};
+

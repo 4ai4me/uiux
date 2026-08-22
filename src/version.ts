@@ -9,12 +9,13 @@ export interface AppVersionInfo {
 }
 
 export const CURRENT_APP_VERSION: AppVersionInfo = {
-  version: '2.26.0',
-  buildNumber: '20260817-R24',
+  version: '2.27.0',
+  buildNumber: '20260821-R25',
   author: 'NJ',
-  releaseDate: '2026-08-17',
-  codename: 'Text Hints & Overlay Transparency Complete 1:1 Labs',
+  releaseDate: '2026-08-21',
+  codename: 'Document Tab Bar & Omnibar Breadcrumb Search Expansion (638 Terms)',
   changelog: [
+    'v2.27.0: Registered Term #637 (Document Tab Bar / Browser Tab Strip) and Term #638 (Omnibar with Breadcrumb Search / Explorer Address-Search Bar) in Category 03 (Navigation & Menus). Implemented dedicated 1:1 Live Interactive Labs in LiveNavLabs.tsx and high-contrast Diagnostic Schematics in TermSchematic.tsx with full light/dark theme parity and verified all counts (638 terms).',
     'v2.26.0: Full audit and complete 1:1 overhaul of Category 23 (Text Hint & Placeholder #551-#590) and Category 24 (Overlay & Transparency #591-#636). Created dedicated interactive lab modules /src/components/LiveTextHintLabs.tsx and /src/components/LiveOverlayTransparencyLabs.tsx, fully wired to LiveDemoRenderer.tsx without fallbacks. Verified 100% type safety and logged architectural diagnosis in log.md.',
     'v2.25.0: Full audit and complete 1:1 overhaul of Category 22 (Icons & Symbols #511-#550) with 40 dedicated interactive labs in LiveIconSymbolLabs.tsx and distinct high-contrast diagnostic schematics in TermSchematic.tsx (Action Icons, Status Icons, Kebab ⋮, Meatball …, Hamburger ☰, Grip Dots ⠿, Chevron vs Arrow, File Types, Bento Grid, Sort Indicators, Active Filters, Search 🔍, Clear ✕, Password Eye, External Link ↗, Copy 📋, Download ⬇, Upload ⬆, Locks, Bookmarks, Notification Bell, Settings Gear, Help ?, Info ℹ, Warning ⚠, Error ⛔, Success ✓, Spinner ◌, Undo/Redo, Trash 🗑, Edit ✎, Add ➕, Folders, Sync, Maximize/Minimize, Play/Pause, Tags, Avatars, aria-label). Conducted re-diagnosis on Category 21 (Keyboard Shortcuts #471-#510) and confirmed 100% 1:1 mapped integrity in log.md.',
     'v2.24.0: Full audit and complete 1:1 overhaul of Category 21 (Keyboard Shortcuts & Hotkeys #471-#510) with 40 dedicated interactive labs in LiveKeyboardShortcutLabs.tsx and distinct high-contrast diagnostic schematics in TermSchematic.tsx (Global Shortcuts Ctrl+S/Z, Modifier Keys Ctrl/Shift/Alt/Meta, Key Chord sequences, Arrow Key Nudge 1px/10px, Focus Trap modal tab loop, Escape to Dismiss, Shortcut Cheat Sheet, <kbd> 3D Badge, Conflict Resolution, Typeahead list jump, Access Key Alt+Mnemonic, Global Hotkey Listener, Scoped Shortcuts, Customizer, Spacebar Pan, Delete Selection, Duplicate Ctrl+D, Group/Ungroup, Select All, Invert Selection, Find Ctrl+F, Replace Modal, Command Palette Ctrl+K, Zoom In/Out/Fit/100%, Tab Navigation & Close/Reopen, Panel Toggles Sidebar/Console, Lock/Hide Selection, Align/Distribute Shortcuts, Fullscreen, Refresh, Accessibility Mode). Also completed deep architectural diagnosis of Category 22 (Icons & Symbols #511-#550).',

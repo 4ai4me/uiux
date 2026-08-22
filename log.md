@@ -35,6 +35,29 @@
    - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
 
 ## 3. Implementation History & Verification
+- **2026-08-21 (Glossary Database Expansion: Term #637 Document Tab Bar & #638 Omnibar with Breadcrumb Search)**:
+  - **Feature Description & User Request**:
+    - Registered 2 major requested UI/UX terms into the Lexicon master database, bringing the total count from 636 to **638 terms**.
+    - **Term #637: `Document Tab Bar (Browser Tab Strip)`**:
+      - Korean: `문서/페이지 수평 탭 바 (브라우저 스타일 탭 스트립)`
+      - Definition: Multi-view document management bar supporting dynamic tab spawning (`+`), close actions (`✕`), active buffer switching, unsaved dirty state indicators, and tab lifecycle tracking (like Chrome, VS Code, Excel).
+      - Category: `Cat 03. Navigation & Menus` (`cat-3`).
+      - Diagnostic Schematic: `document_tab_bar` / `browser_tab_strip`.
+      - Live Interactive Lab: `LiveDocumentTabBarLab` with dynamic add tab, close tab, switch active document, touch dirty indicator, and syntax content preview.
+    - **Term #638: `Omnibar with Breadcrumb Search (Explorer Address-Search Bar)`**:
+      - Korean: `탐색기형 통합 주소 및 범위 검색 바 (브레드크럼 스코프 검색)`
+      - Definition: Integrated navigation address bar combining hierarchical breadcrumb path navigation (`◀ ▶ ▲` history, path traversal) with real-time in-folder scoped filter search (like Windows File Explorer).
+      - Category: `Cat 03. Navigation & Menus` (`cat-3`).
+      - Diagnostic Schematic: `omnibar_breadcrumb_search` / `explorer_address_search`.
+      - Live Interactive Lab: `LiveOmnibarBreadcrumbSearchLab` with functional back/forward/up navigation, clickable breadcrumb segments, real-time in-folder filtering, match counter, and instant one-click clear button.
+  - **Files Updated & Verified**:
+    - `src/data/termsCat24.ts`: Added Term items #637 and #638 with full AI prompts and definitions.
+    - `src/data/categories.ts`: Updated Cat 03 count from 20 to 22.
+    - `src/components/TermSchematic.tsx`: Added dedicated, distinct diagnostic schematics for `.document_tab_bar` and `.omnibar_breadcrumb_search`.
+    - `src/components/LiveNavLabs.tsx`: Implemented `LiveDocumentTabBarLab` and `LiveOmnibarBreadcrumbSearchLab`.
+    - `src/components/LiveDemoRenderer.tsx`: Wired 1:1 dispatch mappings for terms 637 and 638.
+    - `src/version.ts`: Bumped version to `v2.27.0` (638 terms) with changelog metadata.
+    - Verified with `lint_applet` (`tsc --noEmit`) and `compile_applet` (`npm run build`) passing 100% cleanly.
 - **2026-08-21 (Theme Contrast & Schematic/Lab UI/UX Readability & Ergonomics Overhaul)**:
   - **Issue Identified**:
     - DIAGNOSTIC SCHEMATIC and LIVE INTERACTIVE LAB containers in Light mode maintained dark background fills, making light/dark/auto mode differences barely distinguishable.
