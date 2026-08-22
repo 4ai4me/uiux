@@ -13,18 +13,20 @@ export const TermSchematic: React.FC<Props> = ({ term, className = '', isCompact
   // Render dedicated, distinct visual schematics based on exact schematicType
   return (
     <div
-      className={`relative w-full rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 p-3 flex flex-col items-center justify-center overflow-hidden select-none shadow-inner transition-colors duration-150 ${
-        isCompact ? 'h-28' : 'h-40'
+      className={`schematic-viewport relative w-full rounded-2xl bg-white dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800/90 p-3.5 flex flex-col items-center justify-center overflow-hidden select-none shadow-sm dark:shadow-inner transition-colors duration-150 ${
+        isCompact ? 'h-32 min-h-[128px]' : 'h-48 min-h-[192px]'
       } ${className}`}
     >
       {/* Background Subtle High-Contrast Grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(#94a3b8_1px,transparent_1px)] dark:bg-[radial-gradient(#475569_1px,transparent_1px)] [background-size:14px_14px] opacity-40 dark:opacity-30 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(#94a3b8_1px,transparent_1px)] dark:bg-[radial-gradient(#475569_1px,transparent_1px)] [background-size:14px_14px] opacity-35 dark:opacity-25 pointer-events-none" />
 
       {/* Dynamic Schematic Renderers */}
-      {renderSchematicContent(type, term, isCompact)}
+      <div className="w-full h-full flex items-center justify-center text-slate-800 dark:text-slate-100 font-sans z-10">
+        {renderSchematicContent(type, term, isCompact)}
+      </div>
 
       {/* Type Tag Footer */}
-      <div className="absolute bottom-1.5 right-2.5 flex items-center gap-1.5 opacity-90 z-20">
+      <div className="absolute bottom-2 right-3 flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/80 shadow-xs z-20">
         <span className="w-2 h-2 rounded-full bg-indigo-500" />
         <span className="text-[11px] font-mono font-bold text-slate-700 dark:text-slate-300">.{type}</span>
       </div>

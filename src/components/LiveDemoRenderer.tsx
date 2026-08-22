@@ -499,31 +499,31 @@ interface Props {
 
 export const LiveDemoRenderer: React.FC<Props> = ({ term }) => {
   return (
-    <div className="w-full bg-slate-50 dark:bg-slate-900/90 rounded-xl border border-slate-200 dark:border-slate-800 p-4 flex flex-col gap-3 shadow-sm dark:shadow-inner select-none transition-colors duration-150">
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-          <span className="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
+    <div className="live-lab-viewport w-full bg-white dark:bg-slate-900/90 rounded-2xl border-2 border-slate-200 dark:border-slate-800 p-5 flex flex-col gap-4 shadow-sm dark:shadow-inner select-none transition-colors duration-150">
+      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <div className="flex items-center gap-2.5">
+          <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500/50" />
+          <span className="text-sm font-mono font-black text-slate-900 dark:text-slate-100 tracking-wider">
             LIVE INTERACTIVE LAB
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/30 font-bold">
+          <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/40 font-bold">
             {term.schematicType || term.demoType}
           </span>
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700 font-bold">
+          <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 font-bold">
             Cat {term.catNumber}
           </span>
         </div>
       </div>
 
-      <div className="py-2 min-h-[155px] flex items-center justify-center">
+      <div className="py-4 min-h-[170px] flex items-center justify-center text-slate-900 dark:text-slate-100 text-sm">
         {renderSpecializedDemo(term)}
       </div>
 
-      <div className="pt-2 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-[10px] font-mono text-slate-500 dark:text-slate-400">
-        <span className="truncate font-medium">💡 {term.visualPoint}</span>
-        <span className="text-emerald-600 dark:text-emerald-400 shrink-0 font-bold">● Interactive Lab Active</span>
+      <div className="pt-2.5 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-600 dark:text-slate-400">
+        <span className="truncate font-semibold">💡 {term.visualPoint}</span>
+        <span className="text-indigo-600 dark:text-indigo-400 font-bold ml-2 shrink-0">Click & interact with controls</span>
       </div>
     </div>
   );

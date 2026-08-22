@@ -35,6 +35,25 @@
    - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
 
 ## 3. Implementation History & Verification
+- **2026-08-21 (Theme Contrast & Schematic/Lab UI/UX Readability & Ergonomics Overhaul)**:
+  - **Issue Identified**:
+    - DIAGNOSTIC SCHEMATIC and LIVE INTERACTIVE LAB containers in Light mode maintained dark background fills, making light/dark/auto mode differences barely distinguishable.
+    - Interactive controls, text labels, and buttons inside schematics and labs were too small, leading to poor readability and difficulty clicking interactive targets.
+  - **Resolution**:
+    - **`src/index.css`**:
+      - Configured high-contrast theme overrides for `.schematic-viewport` and `.live-lab-viewport`. In Light Mode (`html.light`), schematics and labs automatically render with clean white/slate-50 backgrounds, crisp slate borders (`#cbd5e1`), deep slate text (`#0f172a`), and high-contrast color tokens (indigo `#4338ca`, emerald `#047857`, amber `#b45309`).
+      - In Dark Mode (`html.dark`), vibrant neon/white contrast and glowing dark slate containers (`#020617` / `#0b0f19`) are applied.
+      - Enforced minimum interactive target sizing (`min-height: 32px ~ 40px`), touch-action manipulation, and generous padding for buttons/inputs.
+    - **`src/components/ThemeToggle.tsx`**:
+      - Re-architected theme switcher with distinct, high-contrast active state badges (Amber for Light, Indigo for Dark, Slate for Auto), tactile hover transitions, and larger touch areas.
+    - **`src/components/TermSchematic.tsx`**:
+      - Enhanced viewport container with `.schematic-viewport`, expanded height (`h-32 min-h-[128px]` for compact cards, `h-48 min-h-[192px]` for modals/views), larger typography, and clear type badges.
+    - **`src/components/LiveDemoRenderer.tsx`**:
+      - Enhanced container with `.live-lab-viewport`, larger header fonts (`text-sm font-mono font-black`), larger interactive play area (`min-h-[170px]`), and prominent interactive status badges.
+    - **`src/components/TermDetailModal.tsx` & `TermCard.tsx`**:
+      - Scaled up navigation buttons (`w-10 h-10`), close button, copy prompt button (`px-4 py-2`), and enlarged typography across definitions, when-to-use tips, and differentiator notes.
+    - **Verification**:
+      - Ran `lint_applet` and `compile_applet` to confirm 0 errors and production build readiness.
 - **2026-08-21 (GitHub Actions CI/CD Workflow Fix - npm install & lockfile resilience)**:
   - **Issue Identified**: In GitHub Actions (`Deploy to GitHub Pages`), workflows failed with red 'X' in ~17-20 seconds because `deploy.yml` was executing `npm ci` with `cache: 'npm'`, which strictly requires an existing committed `package-lock.json`. Without `package-lock.json`, `npm ci` terminates immediately with an error.
   - **Resolution**:
