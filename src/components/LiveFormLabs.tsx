@@ -961,6 +961,7 @@ export const LiveSearchBarAdvancedFilterLab: React.FC = () => {
   const [excludeChat, setExcludeChat] = useState(false);
 
   const [activeSearchSummary, setActiveSearchSummary] = useState<string | null>(null);
+  const [filterSuccessNotice, setFilterSuccessNotice] = useState(false);
 
   const handleExecuteSearch = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -978,6 +979,11 @@ export const LiveSearchBarAdvancedFilterLab: React.FC = () => {
     setSimpleQuery(finalQuery);
     setActiveSearchSummary(finalQuery);
     setIsOpen(false);
+  };
+
+  const handleCreateFilterRule = () => {
+    setFilterSuccessNotice(true);
+    setTimeout(() => setFilterSuccessNotice(false), 3000);
   };
 
   const handleResetFilters = () => {
@@ -1214,10 +1220,8 @@ export const LiveSearchBarAdvancedFilterLab: React.FC = () => {
             <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-800">
               <button
                 type="button"
-                onClick={() => {
-                  alert('필터 규칙 생성 모달 / 자동 분류 규칙이 생성되었습니다.');
-                }}
-                className="text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-medium hover:underline"
+                onClick={handleCreateFilterRule}
+                className="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-bold hover:underline"
               >
                 필터 만들기
               </button>
@@ -1233,12 +1237,19 @@ export const LiveSearchBarAdvancedFilterLab: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleExecuteSearch}
-                  className="px-5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs font-bold shadow transition"
+                  className="px-5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs font-bold shadow transition active:scale-95"
                 >
                   검색
                 </button>
               </div>
             </div>
+
+            {filterSuccessNotice && (
+              <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 px-3 py-1.5 rounded-lg text-[11px] font-bold flex items-center gap-1.5 animate-in fade-in">
+                <span>✓</span>
+                <span>현재 조건으로 자동 분류 필터 규칙이 성공적으로 등록되었습니다.</span>
+              </div>
+            )}
           </div>
         )}
       </div>

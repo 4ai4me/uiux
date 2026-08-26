@@ -107,7 +107,7 @@ export const BentoHeader: React.FC<Props> = ({
               </div>
 
               <p className="text-sm text-slate-700 dark:text-slate-300 mt-1 max-w-lg leading-relaxed font-normal">
-                AI Vibe Coding & Frontend Architecture Encyclopedia. Real Interactive Labs, Distinct Diagnostic Schematics, and AI Prompts.
+                AI Vibe Coding & Frontend Architecture Encyclopedia. Real Live UX Environments, Distinct Diagnostic Schematics, and AI Prompts.
               </p>
             </div>
 

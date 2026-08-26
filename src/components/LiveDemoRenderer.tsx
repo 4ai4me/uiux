@@ -341,6 +341,26 @@ import {
   LiveTileWindowsLab,
   LiveBringToFrontLab,
   LiveStickyNotesLab,
+  LiveAlwaysOnTopPinLab,
+  LiveDockablePanelLab as LiveWindowDockablePanelLab,
+  LiveWindowResizeGripsLab,
+  LiveWindowOpacitySliderLab,
+  LiveSplitPaneDividerLab,
+  LiveMagneticSnapZoneLab,
+  LiveWindowRollUpLab,
+  LiveFloatingActionRibbonLab,
+  LiveWindowFocusDimmerLab,
+  LiveMultiDocWorkspaceGridLab,
+  LiveContextNestedFlyoutLab,
+  LiveRadialPieMenuLab,
+  LiveMenuMnemonicUnderlineLab,
+  LiveRecentFilesMenuLab,
+  LiveHamburgerDrawerMenuLab,
+  LiveFloatingInspectorLab,
+  LiveTaskbarThumbnailPeekLab,
+  LiveSystemStatusBarLab,
+  LiveSnapLayoutsSelectorLab,
+  LiveCrashRecoveryBannerLab,
 } from './LiveWindowMenuLabs';
 import {
   LivePointerHoverLab,
@@ -353,6 +373,36 @@ import {
   LiveCursorGrabLab,
   LiveCursorResizeLab,
   LivePointerCaptureLab,
+  LivePointerLockFPSLab,
+  LiveMomentumInertiaScrollLab,
+  LiveElasticRubberBandingLab,
+  LiveMagneticCursorSnapLab,
+  LiveCustomCursorTrailLab,
+  LiveStylusPressureTiltLab,
+  LiveHoverScrubTimelineLab,
+  LivePinchSpreadZoomLab,
+  LiveMultiTouchRotationLab,
+  LiveTouchLongPressHapticLab,
+  LiveDirectCanvasPanLab,
+  LiveSnapToGuideGridLab,
+  LiveSmartDistributeGuidesLab,
+  LiveThreeFingerSwipeLab,
+  LiveTouchHitExpansionLab,
+  LiveWheelShiftHorizontalLab,
+  LiveCustomDragGhostLab,
+  LiveRightClickOrbitCameraLab,
+  LiveDoubleClickMaximizeLab,
+  LiveTripleClickSelectLab,
+  LiveDragAutoScrollLab,
+  LiveClickRippleEffectLab,
+  LiveBezierTangentHandleLab,
+  LiveFreeformLassoSelectLab,
+  LiveHoverTooltipDelayLab,
+  LiveHoverCardRichFlyoutLab,
+  LiveClickOutsideBackdropLab,
+  LiveRightDragMeasurementLab,
+  LiveDragReorderPlaceholderLab,
+  LiveSpatialCompassMinimapLab,
 } from './LiveMousePointerLabs';
 import {
   LiveGlobalShortcutLab,
@@ -494,7 +544,7 @@ import {
   FileCode, Terminal, HelpCircle, ArrowUpRight, Folder, FolderOpen, File,
   MousePointer, MousePointerClick, RefreshCw, Upload, CornerDownLeft,
   Calendar, Clock, Filter, MoreVertical, Edit, FileText, CheckCircle2, ChevronLeft,
-  Download, LayoutGrid, Settings, Flame, CloudUpload, Undo2, Redo2
+  Download, LayoutGrid, Settings, Flame, CloudUpload, Undo2, Redo2, X
 } from 'lucide-react';
 
 interface Props {
@@ -508,7 +558,7 @@ export const LiveDemoRenderer: React.FC<Props> = ({ term }) => {
         <div className="flex items-center gap-2.5">
           <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500/50" />
           <span className="text-sm font-mono font-black text-slate-900 dark:text-slate-100 tracking-wider">
-            LIVE INTERACTIVE LAB
+            Live UX
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -543,13 +593,22 @@ function renderSpecializedDemo(term: TermItem) {
   const cat = term.catNumber;
 
   // -------------------------------------------------------------
+  // High-Priority Direct Term Dispatches
+  // -------------------------------------------------------------
+  if (term.num === 640 || sch === 'search_bar_advanced_filter_dropdown') return <LiveSearchBarAdvancedFilterLab />;
+  if (term.num === 639 || sch === 'draggable_inline_edit_row') return <LiveDraggableInlineEditRowLab />;
+  if (term.num === 638 || sch === 'omnibar_breadcrumb_search') return <LiveOmnibarBreadcrumbSearchLab />;
+  if (term.num === 637 || sch === 'document_tab_bar') return <LiveDocumentTabBarLab />;
+  if (term.num === 636) return <LiveUniversalSystemLab />;
+
+  // -------------------------------------------------------------
   // Category 01: Basic Inputs (#001 ~ #020) High-Precision Labs
   // -------------------------------------------------------------
   if (term.num === 1 || sch === 'input_text' || termName === 'text field') return <LiveTextFieldDemo />;
   if (term.num === 2 || sch === 'textarea' || termName === 'textarea') return <LiveTextareaDemo />;
   if (term.num === 3 || sch === 'input_number' || termName === 'number input') return <LiveNumberStepperDemo />;
   if (term.num === 4 || sch === 'input_password' || termName.includes('password')) return <LivePasswordInputDemo />;
-  if (term.num === 5 || sch === 'input_search' || termName.includes('search')) return <LiveSearchFieldDemo />;
+  if (term.num === 5 || sch === 'input_search' || termName === 'search field' || termName === 'search input') return <LiveSearchFieldDemo />;
   if (term.num === 6 || sch === 'checkbox' || termName === 'checkbox') return <LiveCheckboxDemo />;
   if (term.num === 7 || sch === 'radio' || termName === 'radio button') return <LiveRadioGroupDemo />;
   if (term.num === 8 || sch === 'toggle_switch' || termName.includes('toggle switch') || termName.includes('switch')) return <LiveToggleSwitchDemo />;
@@ -1041,7 +1100,7 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 390) return <LiveMarkdownEditorLab />;
 
   // -------------------------------------------------------------
-  // Category 19: Window, Dialog & Menu Bars (#391 ~ #410) Dedicated Labs
+  // Category 19: Window, Dialog & Menu Bars (#391 ~ #430) Dedicated Labs
   // -------------------------------------------------------------
   if (term.num === 391) return <LiveWindowTitleBarLab />;
   if (term.num === 392) return <LiveWindowControlButtonsLab />;
@@ -1063,9 +1122,29 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 408) return <LiveTileWindowsLab />;
   if (term.num === 409) return <LiveBringToFrontLab />;
   if (term.num === 410) return <LiveStickyNotesLab />;
+  if (term.num === 411) return <LiveAlwaysOnTopPinLab />;
+  if (term.num === 412) return <LiveWindowDockablePanelLab />;
+  if (term.num === 413) return <LiveWindowResizeGripsLab />;
+  if (term.num === 414) return <LiveWindowOpacitySliderLab />;
+  if (term.num === 415) return <LiveSplitPaneDividerLab />;
+  if (term.num === 416) return <LiveMagneticSnapZoneLab />;
+  if (term.num === 417) return <LiveWindowRollUpLab />;
+  if (term.num === 418) return <LiveFloatingActionRibbonLab />;
+  if (term.num === 419) return <LiveWindowFocusDimmerLab />;
+  if (term.num === 420) return <LiveMultiDocWorkspaceGridLab />;
+  if (term.num === 421) return <LiveContextNestedFlyoutLab />;
+  if (term.num === 422) return <LiveRadialPieMenuLab />;
+  if (term.num === 423) return <LiveMenuMnemonicUnderlineLab />;
+  if (term.num === 424) return <LiveRecentFilesMenuLab />;
+  if (term.num === 425) return <LiveHamburgerDrawerMenuLab />;
+  if (term.num === 426) return <LiveFloatingInspectorLab />;
+  if (term.num === 427) return <LiveTaskbarThumbnailPeekLab />;
+  if (term.num === 428) return <LiveSystemStatusBarLab />;
+  if (term.num === 429) return <LiveSnapLayoutsSelectorLab />;
+  if (term.num === 430) return <LiveCrashRecoveryBannerLab />;
 
   // -------------------------------------------------------------
-  // Category 20: Mouse & Pointer Controls (#431 ~ #440) Dedicated Labs
+  // Category 20: Mouse & Pointer Controls (#431 ~ #470) Dedicated Labs
   // -------------------------------------------------------------
   if (term.num === 431) return <LivePointerHoverLab />;
   if (term.num === 432) return <LivePointerActivePressLab />;
@@ -1077,6 +1156,36 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 438) return <LiveCursorGrabLab />;
   if (term.num === 439) return <LiveCursorResizeLab />;
   if (term.num === 440) return <LivePointerCaptureLab />;
+  if (term.num === 441) return <LivePointerLockFPSLab />;
+  if (term.num === 442) return <LiveMomentumInertiaScrollLab />;
+  if (term.num === 443) return <LiveElasticRubberBandingLab />;
+  if (term.num === 444) return <LiveMagneticCursorSnapLab />;
+  if (term.num === 445) return <LiveCustomCursorTrailLab />;
+  if (term.num === 446) return <LiveStylusPressureTiltLab />;
+  if (term.num === 447) return <LiveHoverScrubTimelineLab />;
+  if (term.num === 448) return <LivePinchSpreadZoomLab />;
+  if (term.num === 449) return <LiveMultiTouchRotationLab />;
+  if (term.num === 450) return <LiveTouchLongPressHapticLab />;
+  if (term.num === 451) return <LiveDirectCanvasPanLab />;
+  if (term.num === 452) return <LiveSnapToGuideGridLab />;
+  if (term.num === 453) return <LiveSmartDistributeGuidesLab />;
+  if (term.num === 454) return <LiveThreeFingerSwipeLab />;
+  if (term.num === 455) return <LiveTouchHitExpansionLab />;
+  if (term.num === 456) return <LiveWheelShiftHorizontalLab />;
+  if (term.num === 457) return <LiveCustomDragGhostLab />;
+  if (term.num === 458) return <LiveRightClickOrbitCameraLab />;
+  if (term.num === 459) return <LiveDoubleClickMaximizeLab />;
+  if (term.num === 460) return <LiveTripleClickSelectLab />;
+  if (term.num === 461) return <LiveDragAutoScrollLab />;
+  if (term.num === 462) return <LiveClickRippleEffectLab />;
+  if (term.num === 463) return <LiveBezierTangentHandleLab />;
+  if (term.num === 464) return <LiveFreeformLassoSelectLab />;
+  if (term.num === 465) return <LiveHoverTooltipDelayLab />;
+  if (term.num === 466) return <LiveHoverCardRichFlyoutLab />;
+  if (term.num === 467) return <LiveClickOutsideBackdropLab />;
+  if (term.num === 468) return <LiveRightDragMeasurementLab />;
+  if (term.num === 469) return <LiveDragReorderPlaceholderLab />;
+  if (term.num === 470) return <LiveSpatialCompassMinimapLab />;
 
   // -------------------------------------------------------------
   // Category 21: Keyboard Shortcuts & Hotkeys (#471 ~ #510) Dedicated Labs
@@ -2059,8 +2168,8 @@ const LiveSearchFieldDemo = () => {
         />
         <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
         {query && (
-          <button onClick={() => setQuery('')} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
-            <Trash2 className="w-3.5 h-3.5" />
+          <button onClick={() => setQuery('')} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white" title="검색어 지우기">
+            <X className="w-3.5 h-3.5" />
           </button>
         )}
       </div>

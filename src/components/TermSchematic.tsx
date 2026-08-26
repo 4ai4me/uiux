@@ -5,30 +5,106 @@ interface Props {
   term: TermItem;
   className?: string;
   isCompact?: boolean;
+  showGuides?: boolean;
+  blueprintTheme?: 'blueprint' | 'dark_cad' | 'slate_clean';
+  zoomLevel?: number;
 }
 
-export const TermSchematic: React.FC<Props> = ({ term, className = '', isCompact = false }) => {
+export const TermSchematic: React.FC<Props> = ({
+  term,
+  className = '',
+  isCompact = false,
+  showGuides = true,
+  blueprintTheme = 'blueprint',
+  zoomLevel = 1.0,
+}) => {
   const type = term.schematicType || 'generic';
 
-  // Render dedicated, distinct visual schematics based on exact schematicType
+  // Theme styling configurations
+  const themeClasses = {
+    blueprint: 'bg-[#0f172a] dark:bg-[#020617] border-cyan-800/80 dark:border-cyan-500/50 text-cyan-100 shadow-[inset_0_0_24px_rgba(6,182,212,0.12)]',
+    dark_cad: 'bg-[#090d16] dark:bg-[#030712] border-indigo-900/80 dark:border-indigo-500/50 text-indigo-100 shadow-[inset_0_0_24px_rgba(99,102,241,0.15)]',
+    slate_clean: 'bg-white dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 shadow-sm',
+  }[blueprintTheme];
+
+  const gridColor = {
+    blueprint: 'rgba(6, 182, 212, 0.15)',
+    dark_cad: 'rgba(99, 102, 241, 0.15)',
+    slate_clean: 'rgba(148, 163, 184, 0.18)',
+  }[blueprintTheme];
+
   return (
     <div
-      className={`schematic-viewport relative w-full rounded-2xl bg-white dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800/90 p-3.5 flex flex-col items-center justify-center overflow-hidden select-none shadow-sm dark:shadow-inner transition-colors duration-150 ${
-        isCompact ? 'h-32 min-h-[128px]' : 'h-48 min-h-[192px]'
-      } ${className}`}
+      className={`schematic-viewport relative w-full rounded-2xl border-2 p-3 flex flex-col items-center justify-center overflow-hidden select-none transition-all duration-200 ${
+        isCompact ? 'h-36 min-h-[144px]' : 'h-56 min-h-[224px]'
+      } ${themeClasses} ${className}`}
     >
-      {/* Background Subtle High-Contrast Grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(#94a3b8_1px,transparent_1px)] dark:bg-[radial-gradient(#475569_1px,transparent_1px)] [background-size:14px_14px] opacity-35 dark:opacity-25 pointer-events-none" />
+      {/* 1. Precision Technical CAD Grid */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-80"
+        style={{
+          backgroundImage: `linear-gradient(to right, ${gridColor} 1px, transparent 1px), linear-gradient(to bottom, ${gridColor} 1px, transparent 1px)`,
+          backgroundSize: isCompact ? '12px 12px' : '16px 16px',
+        }}
+      />
 
-      {/* Dynamic Schematic Renderers */}
-      <div className="w-full h-full flex items-center justify-center text-slate-800 dark:text-slate-100 font-sans z-10">
+      {/* 2. Top & Left Technical Precision Rulers */}
+      {!isCompact && showGuides && (
+        <>
+          {/* Top Ruler */}
+          <div className="absolute top-0 inset-x-0 h-3.5 bg-slate-950/60 border-b border-cyan-500/30 flex items-center justify-between px-2 font-mono text-[7px] text-cyan-400/70 pointer-events-none z-20">
+            <span>0</span>
+            <span>50</span>
+            <span>100</span>
+            <span>150</span>
+            <span>200</span>
+            <span>250</span>
+            <span>300px</span>
+          </div>
+          {/* Left Ruler */}
+          <div className="absolute left-0 inset-y-0 w-3.5 bg-slate-950/60 border-r border-cyan-500/30 flex flex-col justify-between py-4 items-center font-mono text-[7px] text-cyan-400/70 pointer-events-none z-20">
+            <span>0</span>
+            <span>50</span>
+            <span>100</span>
+            <span>150</span>
+            <span>px</span>
+          </div>
+        </>
+      )}
+
+      {/* 3. Corner CAD Alignment Crosshairs */}
+      <div className="absolute top-2 left-2 text-[9px] font-mono text-cyan-400/60 pointer-events-none z-20 select-none">
+        + <span className="text-[6px] tracking-tighter opacity-70">X:0 Y:0</span>
+      </div>
+      <div className="absolute top-2 right-2 text-[9px] font-mono text-cyan-400/60 pointer-events-none z-20 select-none">
+        + <span className="text-[6px] tracking-tighter opacity-70">SCALE: {zoomLevel}x</span>
+      </div>
+      <div className="absolute bottom-2 left-2 text-[8px] font-mono text-cyan-400/60 pointer-events-none z-20 flex items-center gap-1">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        <span className="text-[7px] font-bold tracking-tight">CAD DIAGNOSTIC ACTIVE</span>
+      </div>
+
+      {/* 4. Dimension Markers & Guides Overlay */}
+      {showGuides && !isCompact && (
+        <div className="absolute inset-x-8 top-5 flex justify-between items-center text-[7px] font-mono text-cyan-400/80 pointer-events-none border-b border-dashed border-cyan-500/40 pb-0.5 z-10">
+          <span>⇥ Origin Ref</span>
+          <span className="bg-cyan-950/80 px-1 border border-cyan-500/40 rounded">↔ Dimension Span</span>
+          <span>Target Edge ⇤</span>
+        </div>
+      )}
+
+      {/* 5. Dynamic Schematic Renderers with Zoom Transform */}
+      <div 
+        className="w-full h-full flex items-center justify-center text-slate-800 dark:text-slate-100 font-sans z-10 transition-transform duration-150"
+        style={{ transform: `scale(${zoomLevel})` }}
+      >
         {renderSchematicContent(type, term, isCompact)}
       </div>
 
-      {/* Type Tag Footer */}
-      <div className="absolute bottom-2 right-3 flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/80 shadow-xs z-20">
-        <span className="w-2 h-2 rounded-full bg-indigo-500" />
-        <span className="text-[11px] font-mono font-bold text-slate-700 dark:text-slate-300">.{type}</span>
+      {/* 6. Type Tag & Spec Footer */}
+      <div className="absolute bottom-2 right-3 flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-900/90 border border-cyan-500/40 text-cyan-300 shadow-md z-20">
+        <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
+        <span className="text-[10px] font-mono font-bold">.{type}</span>
       </div>
     </div>
   );
@@ -5524,6 +5600,749 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
               <span className="text-indigo-600 dark:text-indigo-400 font-bold">☑ 첨부파일 있음</span>
               <span className="px-2 py-0.5 bg-blue-600 text-white rounded font-bold">검색</span>
             </div>
+          </div>
+        </div>
+      );
+
+    // ==========================================
+    // Category 19: Window, Dialog & Menu Bars (#411 ~ #430)
+    // ==========================================
+    case 'window_pin_top':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2.5 z-10 shadow-xl font-mono flex flex-col gap-2">
+          <div className="flex items-center justify-between bg-slate-950 px-2 py-1 rounded-lg border border-cyan-500/40">
+            <span className="text-[10px] text-cyan-300 font-bold">📌 Always-on-Top (Z: 9999)</span>
+            <span className="w-3 h-3 rounded-full bg-cyan-400 animate-ping" />
+          </div>
+          <div className="relative h-16 bg-slate-950/80 rounded-lg border border-slate-800 p-2 overflow-hidden flex items-center justify-center">
+            <div className="absolute top-1 left-2 text-[8px] text-slate-500">Occluded Background [Z: 10]</div>
+            <div className="w-36 h-10 bg-cyan-950/80 border-2 border-cyan-400 rounded-md flex items-center justify-center text-[9px] text-cyan-200 font-bold shadow-[0_0_12px_rgba(6,182,212,0.4)]">
+              Pinned Topmost Window
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'dockable_panel':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[9px] text-indigo-300 px-1 font-bold">
+            <span>Dockable / Floating Panel</span>
+            <span className="text-[8px] bg-indigo-900/60 px-1 py-0.5 rounded border border-indigo-500/30">↗ Undocked</span>
+          </div>
+          <div className="grid grid-cols-3 gap-1.5 h-16">
+            <div className="col-span-2 bg-slate-950 rounded-lg border-2 border-dashed border-cyan-500/50 p-1 flex items-center justify-center text-[8px] text-cyan-400/80 text-center">
+              Target Snap Dock Zone (Sidebar Left)
+            </div>
+            <div className="col-span-1 bg-indigo-950/90 rounded-lg border border-indigo-400 p-1 flex flex-col justify-between shadow-md">
+              <div className="flex justify-between items-center text-[7px] text-indigo-300 font-bold">
+                <span>Tool</span>
+                <span>✕</span>
+              </div>
+              <span className="text-[6.5px] text-slate-300">Float Pos [X: 180, Y: 40]</span>
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'window_resize_grips':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-400 rounded-xl p-2.5 z-10 shadow-xl font-mono flex flex-col justify-between relative h-24">
+          <div className="flex justify-between items-center text-[9px] text-cyan-300 font-bold">
+            <span>Window Resize Grips (8-Dir)</span>
+            <span className="text-[7.5px] bg-cyan-950 px-1 py-0.5 rounded border border-cyan-500/30">Min: 200x120</span>
+          </div>
+          <div className="text-[8px] text-slate-400 text-center">
+            ↔ Horizontal / ↕ Vertical / ⤡ Diagonal
+          </div>
+          {/* 8 grip markers */}
+          <div className="absolute -top-1 -left-1 w-2.5 h-2.5 bg-cyan-400 rounded-xs border border-white" />
+          <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-cyan-400 rounded-xs border border-white" />
+          <div className="absolute -bottom-1 -left-1 w-2.5 h-2.5 bg-cyan-400 rounded-xs border border-white" />
+          <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-cyan-400 rounded-xs border border-white flex items-center justify-center text-[8px] text-slate-950 font-black">
+            ⋰
+          </div>
+        </div>
+      );
+
+    case 'window_opacity_slider':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2.5 z-10 shadow-xl font-mono flex flex-col gap-2">
+          <div className="flex justify-between items-center text-[9px] text-indigo-300 font-bold">
+            <span>Window Opacity: 65%</span>
+            <span className="text-[8px] text-indigo-400">Backdrop Blur 8px</span>
+          </div>
+          <div className="w-full h-2.5 bg-slate-950 rounded-full border border-slate-700 relative flex items-center px-1">
+            <div className="w-3/5 h-1.5 bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-full" />
+            <div className="w-3.5 h-3.5 bg-white rounded-full shadow border-2 border-cyan-500 absolute left-[60%] -translate-x-1/2" />
+          </div>
+          <div className="h-10 rounded-lg bg-cyan-500/20 backdrop-blur-md border border-cyan-400/50 flex items-center justify-center text-[8.5px] text-cyan-200 font-bold">
+            Translucent Tracing Canvas Layer
+          </div>
+        </div>
+      );
+
+    case 'split_pane_divider':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[8.5px] text-cyan-300 font-bold px-1">
+            <span>Split View Divider</span>
+            <span className="text-[7.5px] bg-cyan-950 px-1 rounded">50% : 50% Flex</span>
+          </div>
+          <div className="flex h-16 rounded-lg overflow-hidden border border-slate-800">
+            <div className="flex-1 bg-slate-950 p-1.5 flex flex-col justify-between text-[7.5px] text-slate-400">
+              <span>Pane A (Editor)</span>
+              <span className="text-cyan-400">width: 50%</span>
+            </div>
+            <div className="w-2.5 bg-cyan-600 hover:bg-cyan-400 flex flex-col items-center justify-center text-[8px] text-white cursor-col-resize select-none">
+              <span>⋮</span>
+            </div>
+            <div className="flex-1 bg-slate-950 p-1.5 flex flex-col justify-between text-[7.5px] text-slate-400 border-l border-slate-800">
+              <span>Pane B (Preview)</span>
+              <span className="text-cyan-400">width: 50%</span>
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'magnetic_snap_zone':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[8.5px] text-cyan-300 font-bold px-1">
+            <span>Magnetic Snap Zone</span>
+            <span className="text-[7.5px] bg-cyan-950 px-1 rounded text-cyan-400">Aero Snap 1/2 Right</span>
+          </div>
+          <div className="flex h-16 rounded-lg overflow-hidden border border-slate-800 gap-1 p-1 bg-slate-950">
+            <div className="w-1/2 bg-slate-900 rounded p-1 flex items-center justify-center text-[7.5px] text-slate-400">
+              Active Drag
+            </div>
+            <div className="w-1/2 bg-cyan-950/60 rounded border-2 border-dashed border-cyan-400 p-1 flex items-center justify-center text-[7.5px] text-cyan-300 font-bold text-center animate-pulse">
+              🧲 Snap Guide (50vw)
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'window_roll_up':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex items-center justify-between bg-indigo-950 px-2 py-1.5 rounded-lg border border-indigo-400 shadow-md">
+            <span className="text-[9px] text-indigo-200 font-bold">Window Title (Rolled Up)</span>
+            <span className="text-[10px] text-cyan-400 font-black">▲ 32px</span>
+          </div>
+          <div className="h-10 rounded-lg border-2 border-dashed border-slate-700/60 flex items-center justify-center text-[8px] text-slate-500">
+            [ Collapsed Window Content Body ]
+          </div>
+        </div>
+      );
+
+    case 'floating_action_ribbon':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2.5 z-10 shadow-xl font-mono flex flex-col items-center gap-2">
+          <div className="flex justify-between items-center w-full text-[8.5px] text-cyan-300 font-bold">
+            <span>Floating Quick Action Ribbon</span>
+            <span className="text-[7.5px] text-slate-400">Draggable</span>
+          </div>
+          <div className="flex items-center gap-1.5 bg-slate-950/90 border border-cyan-500/50 rounded-full px-3 py-1 shadow-[0_0_12px_rgba(6,182,212,0.3)]">
+            <span className="text-slate-500 text-[10px] font-bold">⠿</span>
+            <span className="text-cyan-400 text-xs cursor-pointer hover:scale-110">💾</span>
+            <span className="text-cyan-400 text-xs cursor-pointer hover:scale-110">📋</span>
+            <span className="text-cyan-400 text-xs cursor-pointer hover:scale-110">📐</span>
+            <span className="text-cyan-400 text-xs cursor-pointer hover:scale-110">✏️</span>
+            <span className="text-amber-400 text-xs cursor-pointer hover:scale-110">✨</span>
+          </div>
+        </div>
+      );
+
+    case 'window_focus_dimmer':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5 relative h-24 overflow-hidden">
+          <div className="absolute top-1 left-2 w-28 h-12 bg-slate-950/90 opacity-40 border border-slate-700 rounded-md p-1 text-[7px] text-slate-500">
+            Background Window (Dimmed 30%)
+          </div>
+          <div className="absolute bottom-1 right-2 w-36 h-14 bg-slate-950 border-2 border-cyan-400 rounded-md p-1.5 shadow-[0_0_16px_rgba(6,182,212,0.5)] z-10 flex flex-col justify-between">
+            <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+              <span>● Active Focus Window</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            </div>
+            <span className="text-[7px] text-slate-300">100% Brightness & Focus</span>
+          </div>
+        </div>
+      );
+
+    case 'multi_doc_workspace_grid':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[8.5px] text-indigo-300 font-bold px-1">
+            <span>2x2 Workspace Grid</span>
+            <span className="text-[7.5px] bg-indigo-950 px-1 rounded">MDI Matrix</span>
+          </div>
+          <div className="grid grid-cols-2 gap-1 h-16 bg-slate-950 p-1 rounded-lg border border-slate-800">
+            <div className="bg-slate-900 border border-cyan-500/40 rounded p-1 text-[7px] text-cyan-300 flex items-center justify-center font-bold">Doc A (1,1)</div>
+            <div className="bg-slate-900 border border-cyan-500/40 rounded p-1 text-[7px] text-cyan-300 flex items-center justify-center font-bold">Doc B (1,2)</div>
+            <div className="bg-slate-900 border border-cyan-500/40 rounded p-1 text-[7px] text-cyan-300 flex items-center justify-center font-bold">Doc C (2,1)</div>
+            <div className="bg-slate-900 border border-cyan-500/40 rounded p-1 text-[7px] text-cyan-300 flex items-center justify-center font-bold">Doc D (2,2)</div>
+          </div>
+        </div>
+      );
+
+    case 'context_nested_flyout':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-center relative h-24">
+          <div className="w-24 bg-slate-950 border border-slate-700 rounded-md p-1 flex flex-col gap-0.5 text-[7.5px] text-slate-300">
+            <div>Copy</div>
+            <div className="bg-cyan-950 text-cyan-300 px-0.5 rounded flex justify-between font-bold">
+              <span>Export</span>
+              <span>▶</span>
+            </div>
+            <div>Delete</div>
+          </div>
+          <div className="absolute left-[54%] top-3 w-24 bg-slate-950 border-2 border-cyan-400 rounded-md p-1 flex flex-col gap-0.5 text-[7.5px] text-cyan-200 shadow-xl z-20 font-bold">
+            <div className="hover:text-white">📄 SVG Vector</div>
+            <div className="hover:text-white">🖼 PNG 4x</div>
+            <div className="hover:text-white">📑 PDF Doc</div>
+          </div>
+        </div>
+      );
+
+    case 'radial_pie_menu':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-center relative h-24">
+          <div className="w-20 h-20 rounded-full border-2 border-cyan-500/50 bg-slate-950 flex items-center justify-center relative shadow-[0_0_16px_rgba(6,182,212,0.3)]">
+            <div className="w-6 h-6 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center text-[9px] font-black z-10">
+              🎯
+            </div>
+            <span className="absolute top-0 text-[7px] text-cyan-300 font-bold">Cut</span>
+            <span className="absolute right-1 text-[7px] text-cyan-300 font-bold">Copy</span>
+            <span className="absolute bottom-0 text-[7px] text-cyan-300 font-bold">Paste</span>
+            <span className="absolute left-1 text-[7px] text-cyan-300 font-bold">Del</span>
+          </div>
+        </div>
+      );
+
+    case 'menu_mnemonic_underline':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2.5 z-10 shadow-xl font-mono flex flex-col gap-2">
+          <div className="flex justify-between items-center text-[8.5px] text-indigo-300 font-bold">
+            <span>Mnemonic Access Keys</span>
+            <span className="text-[7.5px] bg-indigo-950 px-1 rounded text-cyan-300">[Alt Key Down]</span>
+          </div>
+          <div className="flex items-center gap-2 bg-slate-950 px-2 py-1.5 rounded-lg border border-slate-800 text-[9px] text-slate-200">
+            <span><u className="text-cyan-400 font-black">F</u>ile</span>
+            <span><u className="text-cyan-400 font-black">E</u>dit</span>
+            <span><u className="text-cyan-400 font-black">V</u>iew</span>
+            <span><u className="text-cyan-400 font-black">I</u>nsert</span>
+            <span><u className="text-cyan-400 font-black">H</u>elp</span>
+          </div>
+        </div>
+      );
+
+    case 'recent_files_menu':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1 text-[8px]">
+          <div className="flex justify-between items-center text-[8.5px] text-cyan-300 font-bold px-1">
+            <span>Recent Files History</span>
+            <span className="text-[7px] text-slate-400">1~9 Quick Keys</span>
+          </div>
+          <div className="bg-slate-950 rounded-lg p-1.5 border border-slate-800 flex flex-col gap-1 text-slate-300">
+            <div className="flex justify-between items-center text-cyan-200">
+              <span>1. Project_Layout.cad</span>
+              <span className="text-[7px] text-slate-500">10m ago 📌</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>2. Circuit_V3.sch</span>
+              <span className="text-[7px] text-slate-500">2h ago</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span>3. Firmware_Config.json</span>
+              <span className="text-[7px] text-slate-500">Yesterday</span>
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'hamburger_drawer_menu':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex h-24 overflow-hidden relative">
+          <div className="w-28 bg-slate-950 border-r border-cyan-500/50 p-1.5 flex flex-col gap-1 text-[7.5px] text-slate-300 z-10">
+            <div className="text-cyan-300 font-bold border-b border-slate-800 pb-0.5">☰ App Drawer</div>
+            <div>📂 Dashboard</div>
+            <div>⚙️ Preferences</div>
+            <div>📊 Telemetry</div>
+          </div>
+          <div className="flex-1 bg-slate-950/60 p-2 flex items-center justify-center text-[7.5px] text-slate-500 text-center">
+            Backdrop Dim Area (Click to Dismiss)
+          </div>
+        </div>
+      );
+
+    case 'floating_inspector_window':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1 text-[8px]">
+          <div className="flex justify-between items-center bg-indigo-950 px-1.5 py-0.5 rounded text-[8px] text-indigo-300 font-bold">
+            <span>⠿ Property Inspector</span>
+            <span>✕</span>
+          </div>
+          <div className="grid grid-cols-2 gap-1 text-[7.5px] text-slate-300">
+            <div className="bg-slate-950 p-1 rounded border border-slate-800">X: <span className="text-cyan-400">420px</span></div>
+            <div className="bg-slate-950 p-1 rounded border border-slate-800">Y: <span className="text-cyan-400">180px</span></div>
+            <div className="bg-slate-950 p-1 rounded border border-slate-800">W: <span className="text-indigo-400">240px</span></div>
+            <div className="bg-slate-950 p-1 rounded border border-slate-800">Fill: <span className="text-emerald-400">#06B6D4</span></div>
+          </div>
+        </div>
+      );
+
+    case 'taskbar_thumbnail_peek':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col items-center justify-between h-24">
+          <div className="w-32 bg-slate-950 border-2 border-cyan-400 rounded-md p-1 shadow-xl flex flex-col gap-0.5">
+            <div className="flex justify-between text-[7px] text-cyan-300 font-bold">
+              <span>Aero Peek Preview</span>
+              <span>✕</span>
+            </div>
+            <div className="h-8 bg-slate-900 rounded flex items-center justify-center text-[7px] text-slate-400">
+              Live Window Snapshot
+            </div>
+          </div>
+          <div className="w-full h-4 bg-slate-950 rounded border border-slate-800 flex items-center px-2 gap-2 text-[7px] text-slate-400">
+            <span>Taskbar:</span>
+            <span className="px-1 bg-cyan-950 text-cyan-300 border border-cyan-500/40 rounded">Hover Peek ●</span>
+          </div>
+        </div>
+      );
+
+    case 'system_status_bar':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col justify-between h-24">
+          <div className="text-[8.5px] text-cyan-300 font-bold px-1">Window System Status Bar</div>
+          <div className="flex items-center justify-between bg-slate-950 border border-cyan-500/40 rounded-lg px-2 py-1 text-[7.5px] text-slate-300">
+            <div className="flex items-center gap-1.5">
+              <span className="text-cyan-400 font-bold">READY ●</span>
+              <span>Ln 42, Col 18</span>
+              <span>UTF-8</span>
+            </div>
+            <div className="flex items-center gap-1 text-cyan-300 font-bold">
+              <span>100%</span>
+              <span>🔍</span>
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'snap_layouts_selector':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[8.5px] text-indigo-300 font-bold px-1">
+            <span>Snap Layouts Selector</span>
+            <span className="text-[7.5px] text-slate-400">Maximize Hover</span>
+          </div>
+          <div className="grid grid-cols-3 gap-1 h-14 bg-slate-950 p-1 rounded-lg border border-slate-800">
+            <div className="bg-slate-900 border border-cyan-500/40 rounded flex"><div className="w-1/2 bg-cyan-500/30 border-r border-cyan-500/40" /></div>
+            <div className="bg-slate-900 border border-cyan-500/40 rounded grid grid-cols-2 gap-0.5 p-0.5"><div className="bg-cyan-500/40 rounded-xs" /><div className="bg-cyan-500/20 rounded-xs" /></div>
+            <div className="bg-slate-900 border border-cyan-500/40 rounded grid grid-cols-2 grid-rows-2 gap-0.5 p-0.5"><div className="bg-cyan-500/40 rounded-xs" /><div className="bg-cyan-500/20 rounded-xs" /><div className="bg-cyan-500/20 rounded-xs" /><div className="bg-cyan-500/20 rounded-xs" /></div>
+          </div>
+        </div>
+      );
+
+    case 'crash_recovery_banner':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-amber-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex items-center gap-1.5 bg-amber-950/80 border border-amber-500/50 rounded-lg p-1.5 text-[8px] text-amber-200">
+            <span className="text-amber-400 font-bold">⚠️</span>
+            <div className="flex-1 leading-tight">
+              <span className="font-bold block">Session Crash Recovered</span>
+              <span className="text-[7px] text-amber-300/80">Autosave snapshot available</span>
+            </div>
+          </div>
+          <div className="flex justify-end gap-1 text-[7.5px]">
+            <span className="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">Discard</span>
+            <span className="px-2 py-0.5 rounded bg-amber-500 text-slate-950 font-bold shadow">Restore Session</span>
+          </div>
+        </div>
+      );
+
+    // ==========================================
+    // Category 20: Mouse & Pointer Controls (#441 ~ #470)
+    // ==========================================
+    case 'marquee_selection':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1 relative h-24">
+          <div className="text-[8.5px] text-cyan-300 font-bold px-1">Marquee Rubberband Selection</div>
+          <div className="absolute inset-x-4 inset-y-6 bg-cyan-950/40 border-2 border-dashed border-cyan-400 rounded flex items-center justify-between p-2">
+            <span className="text-[7px] text-cyan-300 font-bold">Selection Box [W: 140, H: 60]</span>
+            <span className="text-[8px] bg-cyan-500 text-slate-950 font-black px-1 rounded">3 Items</span>
+          </div>
+        </div>
+      );
+
+    case 'lasso_selection':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col items-center justify-center relative h-24">
+          <div className="text-[8.5px] text-indigo-300 font-bold absolute top-1.5 left-2">Freeform Lasso Selection</div>
+          <div className="w-36 h-12 rounded-full border-2 border-cyan-400 border-dashed bg-cyan-950/30 flex items-center justify-center text-[7.5px] text-cyan-300 font-bold animate-pulse">
+            Point-in-Polygon Closed Loop
+          </div>
+        </div>
+      );
+
+    case 'drag_threshold_deadzone':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col items-center justify-center relative h-24">
+          <div className="text-[8.5px] text-cyan-300 font-bold absolute top-1.5 left-2">Drag Deadzone (3px Jitter Lock)</div>
+          <div className="w-12 h-12 rounded-full border border-dashed border-slate-600 flex items-center justify-center relative">
+            <div className="w-3 h-3 rounded-full bg-cyan-400 animate-ping absolute" />
+            <div className="w-2 h-2 rounded-full bg-white" />
+            <span className="absolute -bottom-4 text-[7px] text-cyan-300 whitespace-nowrap">Δd &gt; 3px ➔ Drag Trigger</span>
+          </div>
+        </div>
+      );
+
+    case 'auto_scroll_boundary':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col justify-between h-24 relative overflow-hidden">
+          <div className="bg-cyan-950/80 border-b border-cyan-500/40 text-center text-[7.5px] text-cyan-300 font-bold py-0.5 animate-pulse">
+            ▲ Top Boundary Auto-Scroll (120px/s)
+          </div>
+          <div className="text-[8px] text-slate-400 text-center">Viewport Content Area</div>
+          <div className="bg-cyan-950/80 border-t border-cyan-500/40 text-center text-[7.5px] text-cyan-300 font-bold py-0.5 animate-pulse">
+            ▼ Bottom Boundary Auto-Scroll (120px/s)
+          </div>
+        </div>
+      );
+
+    case 'hover_intent_timer':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2.5 z-10 shadow-xl font-mono flex flex-col gap-2">
+          <div className="flex justify-between items-center text-[8.5px] text-indigo-300 font-bold">
+            <span>Hover Intent Delay Timer</span>
+            <span className="text-[7.5px] bg-indigo-950 px-1 rounded text-cyan-300">200ms Verified</span>
+          </div>
+          <div className="flex items-center gap-2 bg-slate-950 p-2 rounded-lg border border-slate-800">
+            <div className="w-5 h-5 rounded-full border-2 border-cyan-400 flex items-center justify-center text-[8px] text-cyan-300 font-bold">
+              ⏱
+            </div>
+            <div className="flex-1 text-[7.5px] text-slate-300">
+              <span>Pointer Stable ➔ Display Tooltip</span>
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'safe_triangle_hover':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-between relative h-24">
+          <div className="w-20 bg-slate-950 border border-slate-700 rounded p-1 text-[7px] text-slate-300">
+            <div>Menu 1</div>
+            <div className="text-cyan-300 font-bold">Menu 2 ▶</div>
+            <div>Menu 3</div>
+          </div>
+          {/* Safe triangle visual */}
+          <div className="w-16 h-12 bg-cyan-500/20 border-r border-t border-b border-cyan-400/40 rounded flex items-center justify-center text-[6.5px] text-cyan-200 font-bold text-center">
+            Safe Triangle Zone
+          </div>
+          <div className="w-24 bg-slate-950 border-2 border-cyan-400 rounded p-1 text-[7px] text-cyan-200 font-bold">
+            Submenu Panel
+          </div>
+        </div>
+      );
+
+    case 'triple_click_selection':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[8.5px] text-cyan-300 font-bold px-1">
+            <span>Triple-Click Paragraph Select</span>
+            <span className="text-[7.5px] bg-cyan-950 px-1 rounded">detail === 3</span>
+          </div>
+          <div className="bg-cyan-950/80 border border-cyan-400/60 p-2 rounded-lg text-[8px] text-cyan-100 font-bold leading-relaxed shadow-[inset_0_0_12px_rgba(6,182,212,0.3)]">
+            [ Complete paragraph selected in 1 action: All words and punctuation highlighted simultaneously. ]
+          </div>
+        </div>
+      );
+
+    case 'long_press_trigger':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2.5 z-10 shadow-xl font-mono flex items-center justify-center gap-3">
+          <div className="w-12 h-12 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin flex items-center justify-center text-xs">
+            👆
+          </div>
+          <div className="flex flex-col text-[8px]">
+            <span className="text-cyan-300 font-bold">Long Press 500ms</span>
+            <span className="text-slate-400 text-[7.5px]">Haptic Feedback Wave Triggered</span>
+          </div>
+        </div>
+      );
+
+    case 'pinch_to_zoom':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-between px-4 relative h-24">
+          <div className="w-6 h-6 rounded-full bg-cyan-500/30 border-2 border-cyan-400 flex items-center justify-center text-[8px] text-white font-bold">
+            P1
+          </div>
+          <div className="flex-1 border-b-2 border-dashed border-cyan-400 flex items-center justify-center relative">
+            <span className="bg-slate-950 px-1.5 py-0.5 rounded border border-cyan-500/60 text-[8px] text-cyan-300 font-black">
+              2.4x Zoom Span
+            </span>
+          </div>
+          <div className="w-6 h-6 rounded-full bg-cyan-500/30 border-2 border-cyan-400 flex items-center justify-center text-[8px] text-white font-bold">
+            P2
+          </div>
+        </div>
+      );
+
+    case 'touch_rotate_gesture':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-center relative h-24">
+          <div className="w-16 h-16 rounded-full border-2 border-dashed border-indigo-400 flex items-center justify-center relative rotate-45">
+            <div className="absolute top-0 w-3 h-3 rounded-full bg-indigo-400" />
+            <div className="absolute bottom-0 w-3 h-3 rounded-full bg-cyan-400" />
+            <span className="text-[8px] text-cyan-300 font-black -rotate-45">θ = 45°</span>
+          </div>
+        </div>
+      );
+
+    case 'swipe_card_dismiss':
+      return (
+        <div className="w-full max-w-[260px] bg-rose-950/60 border-2 border-rose-500/80 rounded-xl p-1.5 z-10 shadow-xl font-mono flex items-center relative h-20 overflow-hidden">
+          <span className="absolute right-3 text-sm text-rose-400 font-black">🗑 Delete</span>
+          <div className="w-3/4 bg-slate-900 border border-slate-700 rounded-lg p-2 text-[8px] text-slate-200 font-bold -translate-x-4 shadow-2xl">
+            Swipe-to-Dismiss Row (60% X)
+          </div>
+        </div>
+      );
+
+    case 'pull_to_refresh':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col items-center justify-center gap-1.5 h-24">
+          <div className="w-6 h-6 rounded-full bg-cyan-950 border-2 border-cyan-400 text-cyan-300 flex items-center justify-center text-xs animate-spin font-black">
+            ↻
+          </div>
+          <span className="text-[8px] text-cyan-300 font-bold">Pull-to-Refresh Overscroll (64px)</span>
+        </div>
+      );
+
+    case 'middle_click_auto_scroll':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col items-center justify-center gap-1 h-24">
+          <div className="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-black shadow-lg">
+            ✛
+          </div>
+          <span className="text-[8px] text-indigo-300 font-bold">Auto-Scroll Anchor (↓ 350px/s)</span>
+        </div>
+      );
+
+    case 'momentum_inertia_pan':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2.5 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[8.5px] text-cyan-300 font-bold">
+            <span>Momentum Inertia Scroll Physics</span>
+            <span className="text-[7.5px] text-slate-400">Friction: 0.92</span>
+          </div>
+          <div className="w-full h-8 bg-slate-950 rounded-lg border border-slate-800 flex items-center px-2 relative overflow-hidden">
+            <div className="w-4 h-4 rounded-full bg-cyan-400 animate-pulse" />
+            <div className="flex-1 border-b border-dashed border-cyan-500/60 ml-2" />
+            <span className="text-[7.5px] text-cyan-400 font-bold ml-1">Decay Velocity</span>
+          </div>
+        </div>
+      );
+
+    case 'magnetic_button_proximity':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-center relative h-24">
+          <div className="w-28 h-14 rounded-full border border-dashed border-cyan-500/50 flex items-center justify-center">
+            <div className="px-3 py-1 bg-cyan-500 text-slate-950 font-black rounded-lg text-[8px] translate-x-2 shadow-[0_0_12px_rgba(6,182,212,0.6)]">
+              🧲 Magnetic Attract
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'magnifier_loupe':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-center relative h-24">
+          <div className="w-16 h-16 rounded-full border-2 border-cyan-400 bg-slate-950 shadow-2xl flex items-center justify-center relative overflow-hidden">
+            <span className="text-base">🔍</span>
+            <span className="absolute bottom-1 text-[7px] text-cyan-300 font-black">400% Zoom</span>
+          </div>
+        </div>
+      );
+
+    case 'custom_crosshair_laser':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-rose-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-center relative h-24 overflow-hidden">
+          <div className="absolute inset-x-0 top-1/2 h-0.5 bg-rose-500/80" />
+          <div className="absolute inset-y-0 left-1/2 w-0.5 bg-rose-500/80" />
+          <span className="bg-slate-950 px-1.5 py-0.5 rounded border border-rose-500 text-[8px] text-rose-300 font-bold z-10">
+            X: 640 Y: 360
+          </span>
+        </div>
+      );
+
+    case 'snap_to_grid_points':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2.5 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[8.5px] text-cyan-300 font-bold">
+            <span>Snap to Vector Grid</span>
+            <span className="text-[7.5px] bg-cyan-950 px-1 rounded text-cyan-400">16px Grid Lock</span>
+          </div>
+          <div className="grid grid-cols-6 gap-2 bg-slate-950 p-2 rounded-lg border border-slate-800 justify-items-center">
+            <span className="w-1 h-1 rounded-full bg-slate-700" />
+            <span className="w-1 h-1 rounded-full bg-slate-700" />
+            <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
+            <span className="w-1 h-1 rounded-full bg-slate-700" />
+            <span className="w-1 h-1 rounded-full bg-slate-700" />
+            <span className="w-1 h-1 rounded-full bg-slate-700" />
+          </div>
+        </div>
+      );
+
+    case 'anchor_connection_snap':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-between px-3 relative h-24">
+          <div className="w-16 h-12 bg-slate-950 border border-slate-700 rounded p-1 text-[7px] text-slate-400 flex items-center justify-center">
+            Node Out
+          </div>
+          <div className="flex-1 border-b-2 border-cyan-400 relative">
+            <span className="w-3 h-3 rounded-full bg-emerald-400 border border-white absolute right-0 -top-1.5 animate-ping" />
+          </div>
+          <div className="w-16 h-12 bg-cyan-950/80 border-2 border-cyan-400 rounded p-1 text-[7px] text-cyan-300 font-bold flex items-center justify-center">
+            Target Port
+          </div>
+        </div>
+      );
+
+    case 'signature_scratchpad':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1 h-24">
+          <div className="flex justify-between items-center text-[8px] text-cyan-300 font-bold px-1">
+            <span>Signature Scratchpad</span>
+            <span className="text-[7px] text-slate-400">Bezier Smooth</span>
+          </div>
+          <div className="flex-1 bg-slate-950 rounded border border-slate-800 flex items-center justify-center text-cyan-400 font-serif italic text-base">
+            ~ Alex Mercer ~
+          </div>
+        </div>
+      );
+
+    case 'dial_knob_controller':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-center gap-3 h-24">
+          <div className="w-14 h-14 rounded-full border-4 border-cyan-500 bg-slate-950 flex items-center justify-center relative shadow-lg">
+            <div className="w-1 h-4 bg-white rounded absolute top-1" />
+            <span className="text-[8.5px] text-cyan-300 font-black">78%</span>
+          </div>
+          <div className="flex flex-col text-[8px]">
+            <span className="text-cyan-300 font-bold">Rotational Dial Knob</span>
+            <span className="text-slate-400 text-[7px]">0°~300° Continuous Arc</span>
+          </div>
+        </div>
+      );
+
+    case 'dual_range_slider_thumb':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2.5 z-10 shadow-xl font-mono flex flex-col gap-2">
+          <div className="flex justify-between items-center text-[8.5px] text-indigo-300 font-bold">
+            <span>Dual-Handle Range Slider</span>
+            <span className="text-cyan-400">$24 - $88</span>
+          </div>
+          <div className="w-full h-2 bg-slate-950 rounded-full relative flex items-center border border-slate-700">
+            <div className="w-1/2 h-full bg-cyan-400 rounded-full mx-auto" />
+            <div className="w-3.5 h-3.5 rounded-full bg-white border-2 border-cyan-500 absolute left-1/4 -translate-x-1/2 shadow" />
+            <div className="w-3.5 h-3.5 rounded-full bg-white border-2 border-cyan-500 absolute left-3/4 -translate-x-1/2 shadow" />
+          </div>
+        </div>
+      );
+
+    case 'color_eyedropper_tool':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2.5 z-10 shadow-xl font-mono flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-lg">🧪</span>
+            <div className="flex flex-col text-[8px]">
+              <span className="text-cyan-300 font-bold">Eyedropper Sample</span>
+              <span className="text-slate-400 font-mono">RGB: 6, 182, 212</span>
+            </div>
+          </div>
+          <div className="px-2 py-1 rounded bg-cyan-500 text-slate-950 font-black text-[9px] shadow">
+            #06B6D4
+          </div>
+        </div>
+      );
+
+    case 'cursor_ripple_wave':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-center relative h-24">
+          <div className="w-16 h-16 rounded-full border-2 border-cyan-400/40 animate-ping absolute" />
+          <div className="w-10 h-10 rounded-full border-2 border-cyan-400/80 flex items-center justify-center">
+            <span className="text-xs">👆</span>
+          </div>
+          <span className="absolute bottom-1 text-[7.5px] text-cyan-300 font-bold">Click Shockwave Ripple</span>
+        </div>
+      );
+
+    case 'parallax_tilt_effect':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-center h-24">
+          <div className="w-36 h-14 bg-gradient-to-r from-indigo-900 to-cyan-900 border-2 border-cyan-400 rounded-lg shadow-2xl rotate-6 skew-y-3 flex items-center justify-center text-[8.5px] text-white font-black">
+            3D Parallax Tilt (rX: 12°, rY: -8°)
+          </div>
+        </div>
+      );
+
+    case 'spotlight_torch_effect':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-950 border-2 border-emerald-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-center relative h-24 overflow-hidden">
+          <div className="w-24 h-24 rounded-full bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center text-[8px] text-emerald-300 font-bold shadow-[0_0_24px_rgba(16,185,129,0.4)]">
+            🔦 Spotlight
+          </div>
+        </div>
+      );
+
+    case 'trail_particle_cursor':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-center gap-1.5 h-24">
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 opacity-20" />
+          <span className="w-2 h-2 rounded-full bg-cyan-500 opacity-40" />
+          <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 opacity-60" />
+          <span className="w-3 h-3 rounded-full bg-cyan-400 opacity-80" />
+          <span className="text-base text-cyan-300">✦</span>
+          <span className="text-[8px] text-cyan-300 font-bold ml-1">Particle Trail Queue</span>
+        </div>
+      );
+
+    case 'image_zoom_lens':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex items-center justify-between gap-2 h-24">
+          <div className="w-20 h-14 bg-slate-950 rounded border border-slate-700 relative p-1 flex items-center justify-center">
+            <div className="w-8 h-8 bg-cyan-500/30 border border-cyan-400 rounded-xs" />
+          </div>
+          <span className="text-cyan-400 text-xs font-black">➔</span>
+          <div className="w-24 h-14 bg-slate-950 border-2 border-cyan-400 rounded flex items-center justify-center text-[7.5px] text-cyan-300 font-bold text-center">
+            500% Synchronized Detail Viewport
+          </div>
+        </div>
+      );
+
+    case 'file_drop_overlay_target':
+      return (
+        <div className="w-full max-w-[260px] bg-cyan-950/40 border-2 border-dashed border-cyan-400 rounded-xl p-2.5 z-10 shadow-xl font-mono flex flex-col items-center justify-center gap-1 h-24 animate-pulse">
+          <span className="text-xl">☁️</span>
+          <span className="text-[8px] text-cyan-300 font-bold">Drag & Drop Files Here</span>
+        </div>
+      );
+
+    case 'before_after_split_slider':
+      return (
+        <div className="w-full max-w-[260px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1 h-24">
+          <div className="flex justify-between items-center text-[8px] text-cyan-300 font-bold px-1">
+            <span>Before / After Comparison</span>
+            <span className="text-slate-400">50% Clip</span>
+          </div>
+          <div className="flex-1 flex rounded border border-slate-800 overflow-hidden relative">
+            <div className="w-1/2 bg-slate-950 flex items-center justify-center text-[7px] text-slate-400">BEFORE</div>
+            <div className="w-0.5 bg-cyan-400 relative flex items-center justify-center">
+              <span className="w-3 h-3 rounded-full bg-white border border-cyan-500 absolute shadow text-[6px] text-slate-950 font-black flex items-center justify-center">↔</span>
+            </div>
+            <div className="w-1/2 bg-cyan-950 flex items-center justify-center text-[7px] text-cyan-300 font-bold">AFTER</div>
           </div>
         </div>
       );

@@ -113,7 +113,7 @@ export const ConflictAuditView: React.FC = () => {
 
           {/* Interactive Live Comparison */}
           <div className="bg-slate-50 dark:bg-slate-950/90 rounded-xl p-4 border border-slate-200 dark:border-slate-800 flex flex-col gap-2">
-            <h4 className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 uppercase">Live Side-by-Side Interactive Lab</h4>
+            <h4 className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 uppercase">Live UX Side-by-Side Comparison</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
               <div>
                 <span className="text-[11px] font-mono text-indigo-600 dark:text-indigo-400 block mb-1 font-bold">Expandable Panel Demo</span>
