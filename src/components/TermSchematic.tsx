@@ -5455,6 +5455,44 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
         </div>
       );
 
+    case 'draggable_inline_edit_row':
+    case 'reorderable_inline_edit_row':
+      return (
+        <div className="w-full max-w-[280px] bg-amber-100 dark:bg-amber-950/40 border-2 border-amber-400 dark:border-amber-600 rounded-xl p-2 z-10 shadow-lg font-mono flex flex-col gap-1">
+          {/* Exact Replica of User's Component Spec */}
+          <div className="flex items-center gap-1.5 bg-yellow-200/90 dark:bg-yellow-900/40 border border-yellow-300 dark:border-yellow-700/60 rounded-lg p-1.5 shadow-sm">
+            {/* Grip Reorder Handle */}
+            <div className="text-slate-700 dark:text-slate-200 text-xs font-black select-none tracking-tighter shrink-0">
+              ⠿
+            </div>
+            {/* White Inline Input */}
+            <div className="flex-1 bg-white dark:bg-slate-950 border-2 border-black dark:border-slate-300 rounded-md px-1.5 py-0.5 text-[9px] text-slate-900 dark:text-slate-100 font-bold truncate">
+              Servo_Axis_1
+            </div>
+            {/* Save / Confirm (✓) */}
+            <span className="text-emerald-700 dark:text-emerald-400 text-[10px] font-black cursor-pointer hover:scale-110 transition-transform">
+              ✓
+            </span>
+            {/* Cancel / Revert (↺) */}
+            <span className="text-slate-600 dark:text-slate-300 text-[9px] font-black cursor-pointer hover:scale-110 transition-transform">
+              ↺
+            </span>
+            {/* Byte / Character Counter */}
+            <span className="text-[8.5px] text-slate-600 dark:text-slate-400 font-mono font-bold shrink-0">
+              7 / 30byte
+            </span>
+            {/* Delete / Trash (🗑) */}
+            <span className="text-slate-500 dark:text-slate-400 hover:text-rose-600 text-[10px] cursor-pointer ml-0.5">
+              🗑
+            </span>
+          </div>
+          <div className="flex justify-between items-center text-[7.5px] text-amber-900 dark:text-amber-300 font-bold px-1">
+            <span>Hover Highlighted Row</span>
+            <span>⠿ Drag • ✓ Save • ↺ Undo • 🗑 Delete</span>
+          </div>
+        </div>
+      );
+
     default:
       return (
         <div className="flex flex-col items-center gap-1.5 z-10">

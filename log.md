@@ -35,6 +35,30 @@
    - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
 
 ## 3. Implementation History & Verification
+- **2026-08-25 (Glossary Database Expansion: Term #639 Draggable Inline Edit Row with Action Toolbar)**:
+  - **Feature Description & User Request**:
+    - Registered the user-requested composite component into the Lexicon master database as **Term #639**, bringing the total count to **639 terms**.
+    - **Term #639: `Draggable Inline Edit Row with Action Toolbar`**:
+      - Korean: `드래그 순서변경 인라인 편집 행 (확인·취소·글자수제한·삭제 툴바)`
+      - Structure Breakdown:
+        1. Left Drag Handle / Grip Dots (`⠿` / `::`): Allows vertical row reordering via drag-and-drop or direction controls.
+        2. Inline Editable Text Input: Crisp white input box for instantaneous in-place text modification.
+        3. Save / Confirm Icon (`✓`): Explicitly commits changes and updates stored baseline text.
+        4. Cancel / Revert Icon (`↺`): Resets dirty buffer text back to the saved state.
+        5. Byte / Character Counter (`7 / 30byte`): Real-time calculation of string/UTF-8 byte length with dynamic warning/error threshold coloring.
+        6. Delete / Trash Icon (`🗑`): Removes the item from the collection.
+        7. Pointer Hover Row Highlight: Row highlights in soft yellow (`bg-yellow-100` / `bg-amber-100`) on pointer hover.
+      - Category: `Cat 01. Basic Inputs` (`cat-1`).
+      - Diagnostic Schematic: `draggable_inline_edit_row` / `reorderable_inline_edit_row` matching the user's screenshot layout.
+      - Live Interactive Lab: `LiveDraggableInlineEditRowLab` in `LiveFormLabs.tsx` with full interactive row reordering, text typing, live byte computation (`7 / 30byte`), confirm (`✓`), revert (`↺`), delete (`🗑`), and hover highlight states.
+  - **Files Updated & Verified**:
+    - `src/data/termsCat24.ts`: Added Term item #639 with full AI prompt snippet and UI/UX definitions.
+    - `src/data/categories.ts`: Updated Cat 01 count from 20 to 21.
+    - `src/components/TermSchematic.tsx`: Added dedicated, distinct diagnostic schematic for `draggable_inline_edit_row`.
+    - `src/components/LiveFormLabs.tsx`: Implemented `LiveDraggableInlineEditRowLab` with full functional state and toast feedback.
+    - `src/components/LiveDemoRenderer.tsx`: Wired 1:1 dispatch mapping for term 639.
+    - `src/version.ts`: Bumped version to `v2.28.0` (639 terms) with changelog metadata.
+    - Verified with `lint_applet` (`tsc --noEmit`) and `compile_applet` (`npm run build`) passing 100% cleanly.
 - **2026-08-21 (Glossary Database Expansion: Term #637 Document Tab Bar & #638 Omnibar with Breadcrumb Search)**:
   - **Feature Description & User Request**:
     - Registered 2 major requested UI/UX terms into the Lexicon master database, bringing the total count from 636 to **638 terms**.

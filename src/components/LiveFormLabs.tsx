@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Check, AlertTriangle, AlertCircle, X, RotateCcw, 
-  Save, Clock, ShieldCheck, HelpCircle, FileText, CheckCircle2
+  Save, Clock, ShieldCheck, HelpCircle, FileText, CheckCircle2,
+  GripVertical, Trash2, Plus, ArrowUp, ArrowDown, Sparkles
 } from 'lucide-react';
 
 /**
@@ -680,3 +681,261 @@ export const LiveDraftStateLab: React.FC = () => {
     </div>
   );
 };
+
+// #639 Draggable Inline Edit Row - Reorderable list item with byte counter, confirm, revert, delete toolbar, and row hover highlight
+export const LiveDraggableInlineEditRowLab: React.FC = () => {
+  interface RowItem {
+    id: string;
+    text: string;
+    originalText: string;
+    maxBytes: number;
+    isSaved: boolean;
+  }
+
+  const [items, setItems] = useState<RowItem[]>([
+    { id: 'row-1', text: '서보모터 1축 원점설정', originalText: '서보모터 1축 원점설정', maxBytes: 30, isSaved: true },
+    { id: 'row-2', text: 'PLC 통신 인터락 설정', originalText: 'PLC 통신 인터락 설정', maxBytes: 30, isSaved: true },
+    { id: 'row-3', text: '비상정지 센서 #4', originalText: '비상정지 센서 #4', maxBytes: 30, isSaved: true },
+  ]);
+
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const calculateBytes = (str: string) => {
+    let bytes = 0;
+    for (let i = 0; i < str.length; i++) {
+      const code = str.charCodeAt(i);
+      bytes += code > 127 ? 2 : 1; // 2 bytes for Korean/CJK, 1 byte for ASCII
+    }
+    return bytes;
+  };
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 2000);
+  };
+
+  const handleTextChange = (id: string, newText: string) => {
+    setItems((prev) =>
+      prev.map((item) => {
+        if (item.id === id) {
+          return { ...item, text: newText, isSaved: false };
+        }
+        return item;
+      })
+    );
+  };
+
+  const handleSave = (id: string) => {
+    setItems((prev) =>
+      prev.map((item) => {
+        if (item.id === id) {
+          showToast(`'${item.text}' 행이 저장되었습니다 (✓)`);
+          return { ...item, originalText: item.text, isSaved: true };
+        }
+        return item;
+      })
+    );
+  };
+
+  const handleRevert = (id: string) => {
+    setItems((prev) =>
+      prev.map((item) => {
+        if (item.id === id) {
+          showToast(`수정 내용이 원래대로 취소되었습니다 (↺)`);
+          return { ...item, text: item.originalText, isSaved: true };
+        }
+        return item;
+      })
+    );
+  };
+
+  const handleDelete = (id: string) => {
+    const target = items.find((i) => i.id === id);
+    setItems((prev) => prev.filter((item) => item.id !== id));
+    showToast(`'${target?.text || id}' 행이 삭제되었습니다 (🗑)`);
+  };
+
+  const moveRow = (index: number, direction: 'up' | 'down') => {
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= items.length) return;
+    const newItems = [...items];
+    const [moved] = newItems.splice(index, 1);
+    newItems.splice(targetIndex, 0, moved);
+    setItems(newItems);
+  };
+
+  const handleDragStart = (id: string) => {
+    setDraggedId(id);
+  };
+
+  const handleDragOver = (e: React.DragEvent, targetId: string) => {
+    e.preventDefault();
+    if (!draggedId || draggedId === targetId) return;
+
+    const sourceIdx = items.findIndex((i) => i.id === draggedId);
+    const targetIdx = items.findIndex((i) => i.id === targetId);
+    if (sourceIdx < 0 || targetIdx < 0) return;
+
+    const newItems = [...items];
+    const [moved] = newItems.splice(sourceIdx, 1);
+    newItems.splice(targetIdx, 0, moved);
+    setItems(newItems);
+  };
+
+  const handleAddRow = () => {
+    const newId = `row-${Date.now()}`;
+    const newRow: RowItem = {
+      id: newId,
+      text: `신규 파라미터 ${items.length + 1}`,
+      originalText: `신규 파라미터 ${items.length + 1}`,
+      maxBytes: 30,
+      isSaved: true,
+    };
+    setItems([...items, newRow]);
+    showToast('새 인라인 편집 행이 추가되었습니다 (+)');
+  };
+
+  return (
+    <div className="w-full max-w-md bg-slate-100 dark:bg-slate-950 border-2 border-indigo-400/80 dark:border-indigo-500 rounded-xl p-3 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-2.5 shadow-md">
+      <div className="flex justify-between items-center border-b border-slate-300 dark:border-slate-800 pb-2">
+        <div className="flex items-center gap-1.5 font-black text-indigo-600 dark:text-indigo-400">
+          <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+          <span>#639 DRAGGABLE INLINE EDIT ROW</span>
+        </div>
+        <span className="text-[10px] text-slate-500 font-medium">
+          {items.length}개 항목 로드됨
+        </span>
+      </div>
+
+      {toastMessage && (
+        <div className="bg-indigo-600 text-white text-[10px] px-2.5 py-1 rounded-md font-bold text-center animate-in fade-in slide-in-from-top-1 shadow-sm">
+          {toastMessage}
+        </div>
+      )}
+
+      {/* Rows Container */}
+      <div className="flex flex-col gap-2">
+        {items.map((item, idx) => {
+          const byteCount = calculateBytes(item.text);
+          const isOverLimit = byteCount > item.maxBytes;
+          const isModified = item.text !== item.originalText;
+          const isHovered = hoveredId === item.id;
+
+          return (
+            <div
+              key={item.id}
+              draggable
+              onDragStart={() => handleDragStart(item.id)}
+              onDragOver={(e) => handleDragOver(e, item.id)}
+              onMouseEnter={() => setHoveredId(item.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              className={`w-full transition-all duration-150 rounded-lg p-2 flex items-center gap-2 border-2 ${
+                isHovered
+                  ? 'bg-amber-100/90 dark:bg-amber-950/40 border-amber-400 dark:border-amber-600 shadow-md'
+                  : 'bg-amber-50/50 dark:bg-slate-900 border-amber-200/80 dark:border-slate-800 shadow-sm'
+              }`}
+            >
+              {/* 1. Drag & Drop Handle / Grip Icon */}
+              <div 
+                className="cursor-grab active:cursor-grabbing text-slate-500 hover:text-amber-800 dark:hover:text-amber-300 p-0.5 rounded flex items-center justify-center shrink-0"
+                title="드래그하여 위아래 순서 변경 (또는 방향키)"
+              >
+                <GripVertical className="w-4 h-4 text-slate-700 dark:text-slate-300" />
+              </div>
+
+              {/* 2. Inline Editable Text Input */}
+              <div className="flex-1 relative min-w-0">
+                <input
+                  type="text"
+                  value={item.text}
+                  onChange={(e) => handleTextChange(item.id, e.target.value)}
+                  placeholder="항목 이름 입력..."
+                  className={`w-full px-2.5 py-1 rounded-md text-xs font-medium bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 border-2 outline-none transition-colors ${
+                    isOverLimit
+                      ? 'border-rose-500 focus:ring-2 focus:ring-rose-500/20'
+                      : isModified
+                      ? 'border-amber-500 focus:border-amber-600 focus:ring-2 focus:ring-amber-500/20'
+                      : 'border-slate-400 dark:border-slate-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20'
+                  }`}
+                />
+              </div>
+
+              {/* 3. Confirm / Save Button (✓) */}
+              <button
+                onClick={() => handleSave(item.id)}
+                disabled={!isModified || isOverLimit}
+                className={`p-1.5 rounded-md transition-all shrink-0 ${
+                  isModified && !isOverLimit
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm active:scale-95'
+                    : 'text-slate-400 dark:text-slate-600 hover:bg-slate-200/50 dark:hover:bg-slate-800'
+                }`}
+                title="수정 확정 저장 (✓)"
+              >
+                <Check className="w-3.5 h-3.5" />
+              </button>
+
+              {/* 4. Cancel / Revert Button (↺) */}
+              <button
+                onClick={() => handleRevert(item.id)}
+                disabled={!isModified}
+                className={`p-1.5 rounded-md transition-all shrink-0 ${
+                  isModified
+                    ? 'bg-amber-500 hover:bg-amber-600 text-white shadow-sm active:scale-95'
+                    : 'text-slate-400 dark:text-slate-600 hover:bg-slate-200/50 dark:hover:bg-slate-800'
+                }`}
+                title="수정 취소/원래대로 (↺)"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+              </button>
+
+              {/* 5. Byte / Character Limit Indicator */}
+              <div 
+                className={`text-[10px] font-mono font-bold shrink-0 min-w-[58px] text-right ${
+                  isOverLimit
+                    ? 'text-rose-600 dark:text-rose-400 animate-pulse'
+                    : byteCount >= item.maxBytes - 4
+                    ? 'text-amber-600 dark:text-amber-400'
+                    : 'text-slate-600 dark:text-slate-400'
+                }`}
+                title={`현재 바이트 / 최대 제한 (${item.maxBytes}byte)`}
+              >
+                {byteCount} / {item.maxBytes}byte
+              </div>
+
+              {/* 6. Delete Action Button (🗑) */}
+              <button
+                onClick={() => handleDelete(item.id)}
+                className="p-1.5 text-slate-500 hover:text-rose-600 hover:bg-rose-100 dark:hover:bg-rose-950/50 rounded-md transition-all shrink-0 active:scale-95"
+                title="행 삭제 (🗑)"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          );
+        })}
+
+        {items.length === 0 && (
+          <div className="p-6 text-center text-slate-500 text-xs bg-white dark:bg-slate-900 rounded-lg border border-dashed border-slate-300 dark:border-slate-800">
+            등록된 행이 없습니다. 아래 버튼을 눌러 새 행을 추가하세요.
+          </div>
+        )}
+      </div>
+
+      {/* Control Actions */}
+      <div className="flex justify-between items-center pt-2 border-t border-slate-300 dark:border-slate-800">
+        <button
+          onClick={handleAddRow}
+          className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs flex items-center gap-1.5 shadow-sm transition"
+        >
+          <Plus className="w-3.5 h-3.5" /> 새 인라인 행 추가
+        </button>
+        <span className="text-[10px] text-slate-500">
+          Tip: 마우스 호버 시 연노랑 하이라이트 & 드래그 순서변경
+        </span>
+      </div>
+    </div>
+  );
+};
+

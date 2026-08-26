@@ -9,12 +9,13 @@ export interface AppVersionInfo {
 }
 
 export const CURRENT_APP_VERSION: AppVersionInfo = {
-  version: '2.27.0',
-  buildNumber: '20260821-R25',
+  version: '2.28.0',
+  buildNumber: '20260825-R26',
   author: 'NJ',
-  releaseDate: '2026-08-21',
-  codename: 'Document Tab Bar & Omnibar Breadcrumb Search Expansion (638 Terms)',
+  releaseDate: '2026-08-25',
+  codename: 'Draggable Inline Edit Row with Action Toolbar Expansion (639 Terms)',
   changelog: [
+    'v2.28.0: Registered Term #639 (Draggable Inline Edit Row with Action Toolbar / 드래그 순서변경 인라인 편집 행) in Category 01 (Basic Inputs). Implemented dedicated 1:1 Live Interactive Lab with real-time byte counter (7/30byte), confirm (✓), cancel/revert (↺), delete (🗑), hover highlight row styling, and HTML5 drag-and-drop / direction reordering. Added distinct diagnostic schematic with full light/dark theme support and verified total count (639 terms).',
     'v2.27.0: Registered Term #637 (Document Tab Bar / Browser Tab Strip) and Term #638 (Omnibar with Breadcrumb Search / Explorer Address-Search Bar) in Category 03 (Navigation & Menus). Implemented dedicated 1:1 Live Interactive Labs in LiveNavLabs.tsx and high-contrast Diagnostic Schematics in TermSchematic.tsx with full light/dark theme parity and verified all counts (638 terms).',
     'v2.26.0: Full audit and complete 1:1 overhaul of Category 23 (Text Hint & Placeholder #551-#590) and Category 24 (Overlay & Transparency #591-#636). Created dedicated interactive lab modules /src/components/LiveTextHintLabs.tsx and /src/components/LiveOverlayTransparencyLabs.tsx, fully wired to LiveDemoRenderer.tsx without fallbacks. Verified 100% type safety and logged architectural diagnosis in log.md.',
     'v2.25.0: Full audit and complete 1:1 overhaul of Category 22 (Icons & Symbols #511-#550) with 40 dedicated interactive labs in LiveIconSymbolLabs.tsx and distinct high-contrast diagnostic schematics in TermSchematic.tsx (Action Icons, Status Icons, Kebab ⋮, Meatball …, Hamburger ☰, Grip Dots ⠿, Chevron vs Arrow, File Types, Bento Grid, Sort Indicators, Active Filters, Search 🔍, Clear ✕, Password Eye, External Link ↗, Copy 📋, Download ⬇, Upload ⬆, Locks, Bookmarks, Notification Bell, Settings Gear, Help ?, Info ℹ, Warning ⚠, Error ⛔, Success ✓, Spinner ◌, Undo/Redo, Trash 🗑, Edit ✎, Add ➕, Folders, Sync, Maximize/Minimize, Play/Pause, Tags, Avatars, aria-label). Conducted re-diagnosis on Category 21 (Keyboard Shortcuts #471-#510) and confirmed 100% 1:1 mapped integrity in log.md.',

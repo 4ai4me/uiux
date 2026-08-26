@@ -199,6 +199,7 @@ import {
   LiveDirtyStateLab,
   LiveAutosaveLab,
   LiveDraftStateLab,
+  LiveDraggableInlineEditRowLab,
 } from './LiveFormLabs';
 import {
   LiveFocusRingLab,
@@ -1259,6 +1260,7 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 636) return <LiveUniversalSystemLab />;
   if (term.num === 637) return <LiveDocumentTabBarLab />;
   if (term.num === 638) return <LiveOmnibarBreadcrumbSearchLab />;
+  if (term.num === 639) return <LiveDraggableInlineEditRowLab />;
 
   // 4. Fallback for Layout & Panes (Cat 4 & Cat 16)
   if (cat === 4 || cat === 16 || sch.includes('pane') || sch.includes('split') || sch.includes('layout')) {

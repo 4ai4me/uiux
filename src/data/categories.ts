@@ -7,7 +7,7 @@ export const CATEGORIES: Category[] = [
     title: '01. Basic Inputs',
     koreanTitle: '기본 입력 컨트롤',
     description: '텍스트, 숫자, 날짜, 선택, 스위치 등 사용자의 기초 입력을 수집하는 기본 컨트롤',
-    count: 20,
+    count: 21,
     iconName: 'FormInput',
   },
   {
