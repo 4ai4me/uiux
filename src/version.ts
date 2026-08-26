@@ -9,12 +9,13 @@ export interface AppVersionInfo {
 }
 
 export const CURRENT_APP_VERSION: AppVersionInfo = {
-  version: '2.28.0',
-  buildNumber: '20260825-R26',
+  version: '2.29.0',
+  buildNumber: '20260825-R27',
   author: 'NJ',
   releaseDate: '2026-08-25',
-  codename: 'Draggable Inline Edit Row with Action Toolbar Expansion (639 Terms)',
+  codename: 'Search Bar with Advanced Filter Dropdown Popover Expansion (640 Terms)',
   changelog: [
+    'v2.29.0: Registered Term #640 (Search Bar with Advanced Filter Dropdown / 상세 검색 필터 드롭다운형 검색창) in Category 01 (Basic Inputs). Implemented dedicated 1:1 Live Interactive Lab with Gmail-style search options popover panel (From, To, Subject, Has words, Excludes words, Size comparison, Date within range, Scope selector, Has attachment checkbox, Search / Reset / Create Filter actions) with active search query generator. Added distinct diagnostic schematic with full light/dark theme support and verified total count (640 terms).',
     'v2.28.0: Registered Term #639 (Draggable Inline Edit Row with Action Toolbar / 드래그 순서변경 인라인 편집 행) in Category 01 (Basic Inputs). Implemented dedicated 1:1 Live Interactive Lab with real-time byte counter (7/30byte), confirm (✓), cancel/revert (↺), delete (🗑), hover highlight row styling, and HTML5 drag-and-drop / direction reordering. Added distinct diagnostic schematic with full light/dark theme support and verified total count (639 terms).',
     'v2.27.0: Registered Term #637 (Document Tab Bar / Browser Tab Strip) and Term #638 (Omnibar with Breadcrumb Search / Explorer Address-Search Bar) in Category 03 (Navigation & Menus). Implemented dedicated 1:1 Live Interactive Labs in LiveNavLabs.tsx and high-contrast Diagnostic Schematics in TermSchematic.tsx with full light/dark theme parity and verified all counts (638 terms).',
     'v2.26.0: Full audit and complete 1:1 overhaul of Category 23 (Text Hint & Placeholder #551-#590) and Category 24 (Overlay & Transparency #591-#636). Created dedicated interactive lab modules /src/components/LiveTextHintLabs.tsx and /src/components/LiveOverlayTransparencyLabs.tsx, fully wired to LiveDemoRenderer.tsx without fallbacks. Verified 100% type safety and logged architectural diagnosis in log.md.',

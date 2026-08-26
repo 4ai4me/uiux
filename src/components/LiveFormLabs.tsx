@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   Check, AlertTriangle, AlertCircle, X, RotateCcw, 
   Save, Clock, ShieldCheck, HelpCircle, FileText, CheckCircle2,
-  GripVertical, Trash2, Plus, ArrowUp, ArrowDown, Sparkles
+  GripVertical, Trash2, Plus, ArrowUp, ArrowDown, Sparkles,
+  Search, SlidersHorizontal, Calendar, Paperclip, ChevronDown, Filter
 } from 'lucide-react';
 
 /**
@@ -935,6 +936,334 @@ export const LiveDraggableInlineEditRowLab: React.FC = () => {
           Tip: 마우스 호버 시 연노랑 하이라이트 & 드래그 순서변경
         </span>
       </div>
+    </div>
+  );
+};
+
+// #640 Search Bar with Advanced Filter Dropdown (Gmail Style Search Options Popover)
+export const LiveSearchBarAdvancedFilterLab: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(true);
+  const [simpleQuery, setSimpleQuery] = useState('');
+  
+  // Advanced Filter Form Fields
+  const [sender, setSender] = useState('boss@company.com');
+  const [recipient, setRecipient] = useState('');
+  const [subject, setSubject] = useState('2026년 3분기 결산 보고');
+  const [hasWords, setHasWords] = useState('최종 승인');
+  const [doesntHave, setDoesntHave] = useState('초안');
+  const [sizeComparator, setSizeComparator] = useState('초과');
+  const [sizeValue, setSizeValue] = useState('10');
+  const [sizeUnit, setSizeUnit] = useState('MB');
+  const [dateRange, setDateRange] = useState('1일');
+  const [targetDate, setTargetDate] = useState('2026-08-25');
+  const [searchScope, setSearchScope] = useState('전체보관함');
+  const [hasAttachment, setHasAttachment] = useState(true);
+  const [excludeChat, setExcludeChat] = useState(false);
+
+  const [activeSearchSummary, setActiveSearchSummary] = useState<string | null>(null);
+
+  const handleExecuteSearch = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const clauses: string[] = [];
+    if (sender) clauses.push(`from:${sender}`);
+    if (recipient) clauses.push(`to:${recipient}`);
+    if (subject) clauses.push(`subject:(${subject})`);
+    if (hasWords) clauses.push(`"${hasWords}"`);
+    if (doesntHave) clauses.push(`-${doesntHave}`);
+    if (sizeValue) clauses.push(`size:${sizeComparator === '초과' ? '>' : '<'}${sizeValue}${sizeUnit}`);
+    if (hasAttachment) clauses.push('has:attachment');
+    if (searchScope !== '전체보관함') clauses.push(`in:${searchScope}`);
+    
+    const finalQuery = clauses.join(' ') || (simpleQuery || '전체 메일 조회');
+    setSimpleQuery(finalQuery);
+    setActiveSearchSummary(finalQuery);
+    setIsOpen(false);
+  };
+
+  const handleResetFilters = () => {
+    setSender('');
+    setRecipient('');
+    setSubject('');
+    setHasWords('');
+    setDoesntHave('');
+    setSizeValue('');
+    setHasAttachment(false);
+    setExcludeChat(false);
+    setSimpleQuery('');
+    setActiveSearchSummary(null);
+  };
+
+  return (
+    <div className="w-full max-w-lg bg-slate-100 dark:bg-slate-950 border-2 border-indigo-400/80 dark:border-indigo-500 rounded-xl p-3 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-2.5 shadow-xl">
+      <div className="flex justify-between items-center border-b border-slate-300 dark:border-slate-800 pb-2">
+        <div className="flex items-center gap-1.5 font-black text-indigo-600 dark:text-indigo-400">
+          <SlidersHorizontal className="w-3.5 h-3.5" />
+          <span>#640 SEARCH BAR W/ ADVANCED FILTER</span>
+        </div>
+        <span className="text-[10px] text-slate-500 font-medium">
+          {isOpen ? '상세 필터 패널 열림 (Popover Open)' : '단순 검색창 모드'}
+        </span>
+      </div>
+
+      {/* Main Container */}
+      <div className="relative flex flex-col gap-1">
+        {/* 1. Top Search Bar */}
+        <div className="flex items-center bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 focus-within:border-indigo-500 rounded-full px-3 py-2 shadow-sm transition-all">
+          <Search className="w-4 h-4 text-slate-400 shrink-0 mr-2" />
+          <input
+            type="text"
+            value={simpleQuery}
+            onChange={(e) => setSimpleQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleExecuteSearch();
+            }}
+            placeholder="메일 검색 (예: from:김팀장 subject:보고서)"
+            className="flex-1 bg-transparent text-slate-900 dark:text-slate-100 text-xs outline-none placeholder-slate-400 font-sans"
+          />
+          {simpleQuery && (
+            <button
+              onClick={() => {
+                setSimpleQuery('');
+                setActiveSearchSummary(null);
+              }}
+              className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 mr-1"
+              title="검색어 지우기"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+          {/* Options / Tune Icon Button (Opens Advanced Filter Dropdown) */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className={`p-1.5 rounded-full transition-all flex items-center justify-center shrink-0 ${
+              isOpen
+                ? 'bg-indigo-600 text-white shadow-sm'
+                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800'
+            }`}
+            title="검색 옵션 표시 (상세 검색 필터 토글)"
+          >
+            <SlidersHorizontal className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* 2. Advanced Search Dropdown / Popover Panel (Exact replica of user's image) */}
+        {isOpen && (
+          <div className="mt-1 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 rounded-xl p-4 shadow-2xl animate-in fade-in slide-in-from-top-2 font-sans text-xs flex flex-col gap-3">
+            {/* Row 1: 보낸사람 */}
+            <div className="grid grid-cols-4 items-center gap-2">
+              <label className="text-slate-600 dark:text-slate-400 text-xs">보낸사람</label>
+              <input
+                type="text"
+                value={sender}
+                onChange={(e) => setSender(e.target.value)}
+                placeholder="이메일 또는 이름"
+                className="col-span-3 pb-1 bg-transparent border-b border-slate-300 dark:border-slate-700 focus:border-indigo-500 outline-none text-slate-900 dark:text-slate-100 text-xs"
+              />
+            </div>
+
+            {/* Row 2: 받는사람 */}
+            <div className="grid grid-cols-4 items-center gap-2">
+              <label className="text-slate-600 dark:text-slate-400 text-xs">받는사람</label>
+              <input
+                type="text"
+                value={recipient}
+                onChange={(e) => setRecipient(e.target.value)}
+                placeholder="이메일 또는 이름"
+                className="col-span-3 pb-1 bg-transparent border-b border-slate-300 dark:border-slate-700 focus:border-indigo-500 outline-none text-slate-900 dark:text-slate-100 text-xs"
+              />
+            </div>
+
+            {/* Row 3: 제목 */}
+            <div className="grid grid-cols-4 items-center gap-2">
+              <label className="text-slate-600 dark:text-slate-400 text-xs">제목</label>
+              <input
+                type="text"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                placeholder="제목 키워드"
+                className="col-span-3 pb-1 bg-transparent border-b border-slate-300 dark:border-slate-700 focus:border-indigo-500 outline-none text-slate-900 dark:text-slate-100 text-xs"
+              />
+            </div>
+
+            {/* Row 4: 포함하는 단어 */}
+            <div className="grid grid-cols-4 items-center gap-2">
+              <label className="text-slate-600 dark:text-slate-400 text-xs">포함하는 단어</label>
+              <input
+                type="text"
+                value={hasWords}
+                onChange={(e) => setHasWords(e.target.value)}
+                placeholder="본문에 반드시 포함될 단어"
+                className="col-span-3 pb-1 bg-transparent border-b border-slate-300 dark:border-slate-700 focus:border-indigo-500 outline-none text-slate-900 dark:text-slate-100 text-xs"
+              />
+            </div>
+
+            {/* Row 5: 제외할 단어 */}
+            <div className="grid grid-cols-4 items-center gap-2">
+              <label className="text-slate-600 dark:text-slate-400 text-xs">제외할 단어</label>
+              <input
+                type="text"
+                value={doesntHave}
+                onChange={(e) => setDoesntHave(e.target.value)}
+                placeholder="검색에서 제외할 단어"
+                className="col-span-3 pb-1 bg-transparent border-b border-slate-300 dark:border-slate-700 focus:border-indigo-500 outline-none text-slate-900 dark:text-slate-100 text-xs"
+              />
+            </div>
+
+            {/* Row 6: 크기 */}
+            <div className="grid grid-cols-4 items-center gap-2">
+              <label className="text-slate-600 dark:text-slate-400 text-xs">크기</label>
+              <div className="col-span-3 flex items-center gap-2">
+                <select
+                  value={sizeComparator}
+                  onChange={(e) => setSizeComparator(e.target.value)}
+                  className="bg-transparent border-b border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-1 outline-none text-xs"
+                >
+                  <option value="초과">초과</option>
+                  <option value="미만">미만</option>
+                  <option value="동일">동일</option>
+                </select>
+                <input
+                  type="number"
+                  value={sizeValue}
+                  onChange={(e) => setSizeValue(e.target.value)}
+                  placeholder="10"
+                  className="w-16 text-center bg-transparent border-b border-slate-300 dark:border-slate-700 outline-none text-slate-900 dark:text-slate-100 text-xs"
+                />
+                <select
+                  value={sizeUnit}
+                  onChange={(e) => setSizeUnit(e.target.value)}
+                  className="bg-transparent border-b border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-1 outline-none text-xs"
+                >
+                  <option value="MB">MB</option>
+                  <option value="KB">KB</option>
+                  <option value="Bytes">Bytes</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Row 7: 기간 */}
+            <div className="grid grid-cols-4 items-center gap-2">
+              <label className="text-slate-600 dark:text-slate-400 text-xs">기간</label>
+              <div className="col-span-3 flex items-center gap-2">
+                <select
+                  value={dateRange}
+                  onChange={(e) => setDateRange(e.target.value)}
+                  className="bg-transparent border-b border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-1 outline-none text-xs"
+                >
+                  <option value="1일">1일</option>
+                  <option value="3일">3일</option>
+                  <option value="1주">1주</option>
+                  <option value="2주">2주</option>
+                  <option value="1개월">1개월</option>
+                  <option value="6개월">6개월</option>
+                  <option value="1년">1년</option>
+                </select>
+                <div className="flex-1 flex items-center border-b border-slate-300 dark:border-slate-700 pb-0.5">
+                  <input
+                    type="date"
+                    value={targetDate}
+                    onChange={(e) => setTargetDate(e.target.value)}
+                    className="flex-1 bg-transparent text-slate-900 dark:text-slate-100 text-xs outline-none"
+                  />
+                  <Calendar className="w-3.5 h-3.5 text-slate-400 ml-1" />
+                </div>
+              </div>
+            </div>
+
+            {/* Row 8: 검색 위치 */}
+            <div className="grid grid-cols-4 items-center gap-2">
+              <label className="text-slate-600 dark:text-slate-400 text-xs">검색</label>
+              <select
+                value={searchScope}
+                onChange={(e) => setSearchScope(e.target.value)}
+                className="col-span-3 bg-transparent border-b border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 py-1 outline-none text-xs"
+              >
+                <option value="전체보관함">전체보관함</option>
+                <option value="받은편지함">받은편지함</option>
+                <option value="보낸편지함">보낸편지함</option>
+                <option value="중요편지함">중요편지함</option>
+                <option value="임시보관함">임시보관함</option>
+                <option value="스팸함 및 휴지통">스팸함 및 휴지통</option>
+              </select>
+            </div>
+
+            {/* Row 9: Checkboxes */}
+            <div className="flex items-center gap-6 pt-2 text-xs text-slate-700 dark:text-slate-300">
+              <label className="flex items-center gap-1.5 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={hasAttachment}
+                  onChange={(e) => setHasAttachment(e.target.checked)}
+                  className="rounded border-slate-400 text-indigo-600 focus:ring-indigo-500"
+                />
+                <span>첨부파일 있음</span>
+              </label>
+
+              <label className="flex items-center gap-1.5 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={excludeChat}
+                  onChange={(e) => setExcludeChat(e.target.checked)}
+                  className="rounded border-slate-400 text-indigo-600 focus:ring-indigo-500"
+                />
+                <span>채팅 제외</span>
+              </label>
+            </div>
+
+            {/* Row 10: Action Toolbar */}
+            <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => {
+                  alert('필터 규칙 생성 모달 / 자동 분류 규칙이 생성되었습니다.');
+                }}
+                className="text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-medium hover:underline"
+              >
+                필터 만들기
+              </button>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleResetFilters}
+                  className="px-3 py-1.5 rounded text-xs text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                >
+                  초기화
+                </button>
+                <button
+                  type="button"
+                  onClick={handleExecuteSearch}
+                  className="px-5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs font-bold shadow transition"
+                >
+                  검색
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Query Preview / Active Filter Result */}
+      {activeSearchSummary && (
+        <div className="bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-300 dark:border-indigo-800 rounded-lg p-2.5 flex flex-col gap-1 text-[11px]">
+          <div className="flex justify-between items-center text-indigo-700 dark:text-indigo-300 font-bold">
+            <span>🔍 생성된 고급 검색 쿼리:</span>
+            <button
+              onClick={() => setActiveSearchSummary(null)}
+              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          </div>
+          <code className="bg-white dark:bg-slate-900 p-1.5 rounded border border-indigo-200 dark:border-indigo-900 text-emerald-600 dark:text-emerald-400 font-mono text-[10px] break-all">
+            {activeSearchSummary}
+          </code>
+        </div>
+      )}
+
+      <span className="text-[10px] text-slate-500 text-center">
+        단순 키워드 검색바와 우측 슬라이더 튠 아이콘을 통한 드롭다운형 다중 조건 상세 검색 결합 컴포넌트
+      </span>
     </div>
   );
 };

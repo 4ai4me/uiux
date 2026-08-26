@@ -5493,6 +5493,41 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
         </div>
       );
 
+    case 'search_bar_advanced_filter_dropdown':
+    case 'advanced_filter_search_bar':
+      return (
+        <div className="w-full max-w-[280px] bg-slate-100 dark:bg-slate-900 border-2 border-indigo-500 rounded-xl p-2.5 z-10 shadow-xl flex flex-col gap-1.5 font-sans text-slate-900 dark:text-slate-100">
+          {/* Top Search Bar */}
+          <div className="flex items-center bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-full px-2 py-1 shadow-sm">
+            <span className="text-[10px] text-slate-400 mr-1.5">🔍</span>
+            <span className="text-[9px] text-slate-500 flex-1">메일 검색</span>
+            <span className="text-[9px] text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50 dark:bg-indigo-950/60 p-0.5 rounded">
+              🎛
+            </span>
+          </div>
+
+          {/* Advanced Search Popover Panel */}
+          <div className="bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-lg p-2 shadow flex flex-col gap-1 text-[8px]">
+            <div className="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-0.5">
+              <span className="text-slate-500">보낸사람</span>
+              <span className="text-slate-800 dark:text-slate-200 font-mono">user@domain.com</span>
+            </div>
+            <div className="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-0.5">
+              <span className="text-slate-500">제목</span>
+              <span className="text-slate-800 dark:text-slate-200">결산 보고서</span>
+            </div>
+            <div className="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-0.5">
+              <span className="text-slate-500">크기 / 기간</span>
+              <span className="text-slate-800 dark:text-slate-200">&gt; 10MB • 1주 이내</span>
+            </div>
+            <div className="flex justify-between items-center pt-0.5">
+              <span className="text-indigo-600 dark:text-indigo-400 font-bold">☑ 첨부파일 있음</span>
+              <span className="px-2 py-0.5 bg-blue-600 text-white rounded font-bold">검색</span>
+            </div>
+          </div>
+        </div>
+      );
+
     default:
       return (
         <div className="flex flex-col items-center gap-1.5 z-10">

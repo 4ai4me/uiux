@@ -35,6 +35,38 @@
    - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
 
 ## 3. Implementation History & Verification
+- **2026-08-25 (Glossary Database Expansion: Term #640 Search Bar with Advanced Filter Dropdown)**:
+  - **Feature Description & User Request**:
+    - Registered the user-requested composite component into the Lexicon master database as **Term #640**, bringing the total count to **640 terms**.
+    - **Term #640: `Search Bar with Advanced Filter Dropdown (Search Options Popover)`**:
+      - Korean: `상세 검색 필터 드롭다운형 검색창 (검색 옵션 팝오버)`
+      - Structure Breakdown:
+        1. Inline Search Bar with Left Glass Icon (`🔍`) and Right Slider/Tune Icon (`SlidersHorizontal` / `🎛`): Clean one-line search input for rapid keyword queries.
+        2. Options / Tune Toggle Button (`🎛`): Clicking the right-hand icon expands/collapses the floating advanced search filter popover menu directly underneath the search bar.
+        3. Multi-Field Structured Filter Form (Gmail / Notion Style):
+           - Sender (`보낸사람`) & Recipient (`받는사람`) inputs.
+           - Subject (`제목`) keyword input.
+           - Has Words (`포함하는 단어`) & Doesn't Have (`제외할 단어`) inputs.
+           - File Size comparator (`초과/미만/동일`), magnitude, and unit selector (`MB/KB/Bytes`).
+           - Date within range (`1일/3일/1주/1개월/1년`) and target date picker with calendar icon.
+           - Folder / Location Scope dropdown (`전체보관함`, `받은편지함`, `보낸편지함` 등).
+           - Checkboxes: `[ ] 첨부파일 있음` (Has attachment) & `[ ] 채팅 제외` (Don't include chats).
+        4. Bottom Action Bar:
+           - Filter creator text button (`필터 만들기`).
+           - Reset filters button (`초기화`).
+           - Blue Primary Action Button (`검색`).
+        5. Generated Query Preview: Real-time serialization of advanced filter parameters into canonical search syntax (e.g. `from:boss@company.com subject:(결산) has:attachment`).
+      - Category: `Cat 01. Basic Inputs` (`cat-1`).
+      - Diagnostic Schematic: `search_bar_advanced_filter_dropdown` / `advanced_filter_search_bar` matching the user's screenshot layout.
+      - Live Interactive Lab: `LiveSearchBarAdvancedFilterLab` in `LiveFormLabs.tsx` with full interactive popover toggle, form typing, date/size/scope selection, query generation, and execution.
+  - **Files Updated & Verified**:
+    - `src/data/termsCat24.ts`: Added Term item #640 with full AI prompt snippet and UI/UX definitions.
+    - `src/data/categories.ts`: Updated Cat 01 count from 21 to 22.
+    - `src/components/TermSchematic.tsx`: Added dedicated, distinct diagnostic schematic for `search_bar_advanced_filter_dropdown`.
+    - `src/components/LiveFormLabs.tsx`: Implemented `LiveSearchBarAdvancedFilterLab` with full functional state, popover expansion, query generator, and reset actions.
+    - `src/components/LiveDemoRenderer.tsx`: Wired 1:1 dispatch mapping for term 640.
+    - `src/version.ts`: Bumped version to `v2.29.0` (640 terms) with changelog metadata.
+    - Verified with `lint_applet` (`tsc --noEmit`) and `compile_applet` (`npm run build`) passing 100% cleanly.
 - **2026-08-25 (Glossary Database Expansion: Term #639 Draggable Inline Edit Row with Action Toolbar)**:
   - **Feature Description & User Request**:
     - Registered the user-requested composite component into the Lexicon master database as **Term #639**, bringing the total count to **639 terms**.
