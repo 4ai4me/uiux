@@ -35,6 +35,15 @@
    - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
 
 ## 3. Implementation History & Verification
+- **2026-08-30 (GitHub Actions CI/CD Build & Lock File Resolution - v2.31.2)**:
+  - **User Request & Diagnosis**:
+    1. 에러: `Error: Dependencies lock file is not found in /home/runner/work/uiux/uiux. Supported file patterns: package-lock.json,npm-shrinkwrap.json,yarn.lock`
+    2. 원인: GitHub Actions 환경에서 `package-lock.json` 부재 시 또는 캐시 설정 충돌 시 의존성 설치 검증 실패.
+    3. 조치:
+       - 워크플로우 `.github/workflows/deploy.yml`에서 캐시 키 의존성 제거 및 `npm install` 직접 실행 보장.
+       - 표준 `package-lock.json`을 프로젝트 루트에 정식 생성하여 GitHub 저장소 동기화 시 누락되지 않도록 완전 조치.
+  - **Verification**:
+    - `package-lock.json` 유효성 및 `npm run build` 검증 100% 완료.
 - **2026-08-25 (Category 19 & 20 Complete 50-Term Diagnostic Schematic Customization - v2.31.1)**:
   - **User Request & Root Cause Diagnosis**:
     1. 피드백: "이번에 신규로 추가한 항목(Category 19 #411~#430, Category 20 #441~#470)을 보면 DIAGNOSTIC SCHEMATIC 가 다 동일합니다. 각각 특징에 맞게 수정."

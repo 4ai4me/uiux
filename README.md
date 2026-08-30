@@ -1,16 +1,16 @@
 # 📘 UI/UX Glossary Encyclopedia for AI Prompt Engineering
 
-> **총 636개 UI/UX 컴포넌트 & 인터랙션 디자인 용어 사전 및 AI 프롬프트 엔지니어링 인터랙티브 백과사전**  
+> **총 640개 UI/UX 컴포넌트 & 인터랙션 디자인 용어 사전 및 AI 프롬프트 엔지니어링 인터랙티브 백과사전**  
 > AI 코딩 어시스턴트(Gemini, Claude, ChatGPT, v0 등)에게 정확하고 전문적인 UI/UX 요구사항을 지시할 수 있도록 지원하는 실시간 인터랙티브 레퍼런스 플랫폼입니다.
 
 ---
 
 ## 🌟 프로젝트 개요 (Overview)
 
-현대 웹/앱 디자인과 엔지니어링에 필요한 **24개 카테고리, 총 636개 전문 UI/UX 용어**를 체계적으로 분류하고, 각 용어마다 **고유한 인터랙티브 실습 랩(Live Interactive Lab)**, **구조적 다이어그램(Schematic)**, 그리고 **AI 프롬프트 생성기(Prompt Template)**를 제공합니다.
+현대 웹/앱 디자인과 엔지니어링에 필요한 **24개 카테고리, 총 640개 전문 UI/UX 용어**를 체계적으로 분류하고, 각 용어마다 **고유한 인터랙티브 실습 랩(Live UX)**, **구조적 다이어그램(CAD Diagnostic Schematic)**, 그리고 **AI 프롬프트 생성기(Prompt Template)**를 제공합니다.
 
 - 🎯 **정확한 AI 프롬프트 생성**: 추상적인 설명 대신 정확한 디자인 토큰과 산업 표준 기술 용어로 AI에게 프롬프트를 전달
-- 🧪 **1:1 실시간 인터랙티브 랩**: 636개 모든 용어에 대해 실제 동작하는 React + Tailwind CSS 라이브 샌드박스 제공
+- 🧪 **1:1 실시간 인터랙티브 랩**: 640개 모든 용어에 대해 실제 동작하는 React + Tailwind CSS 라이브 샌드박스 제공
 - 📐 **정밀 아키텍처 다이어그램**: 각 컴포넌트의 레이아웃 구조, 계층, 패딩, Z-인덱스 등을 시각적으로 명확히 전달
 - 💾 **데이터 내보내기 & 북마크**: JSON, CSV, 마크다운 내보내기 및 즐겨찾기 관리 지원
 
@@ -18,7 +18,7 @@
 
 ## ✨ 주요 기능 (Key Features)
 
-### 1. 24개 핵심 카테고리 (Total 636 Terms)
+### 1. 24개 핵심 카테고리 (Total 640 Terms)
 | # | 카테고리명 | 영문 카테고리 | 주요 구성 내용 |
 |---|---|---|---|
 | 01 | 기본 입력 컨트롤 | Basic Inputs | 텍스트, 숫자, 날짜, 스위치, 슬라이더 등 |
@@ -46,7 +46,7 @@
 | 23 | 텍스트 힌트 및 마이크로카피 | Text Hints & Microcopy | Ghost Text, Floating Label, Range Limit, Shortcut Pill 등 |
 | 24 | 오버레이 및 투명도 | Overlays & Transparency | Z-Index Layer, Glassmorphism, Dimmed Scrim, Portal 등 |
 
-### 2. 636개 전 항목 라이브 인터랙티브 랩 (Live Interactive Lab)
+### 2. 640개 전 항목 라이브 인터랙티브 랩 (Live UX)
 - 슬라이더, 입력 필드, 토글, 드래그, 애니메이션을 브라우저에서 직접 조작
 - React 19 + Tailwind CSS + Motion(Framer Motion) 기반 즉각 반응
 
@@ -54,11 +54,11 @@
 - 복사 한 번으로 최적화된 시스템 프롬프트 및 구현 가이드 복사
 - 한국어 / 영어 프롬프트 템플릿 및 관련 Tailwind 클래스 토큰 자동 추천
 
-### 4. 고유 진단 다이어그램 (Diagnostic Schematics)
+### 4. 고유 진단 다이어그램 (CAD Diagnostic Schematics)
 - 단순 텍스트 설명이 아닌 컴포넌트의 기하학적 구조 및 박스 모델 시각화
 
 ### 5. 검색, 필터 및 내보내기 (Search & Export Suite)
-- 한글/영문 키워드, 번호(#001~#636), 카테고리 태그 실시간 검색
+- 한글/영문 키워드, 번호(#001~#640), 카테고리 태그 실시간 검색
 - 즐겨찾기(Bookmark) 및 최근 본 항목 관리
 - JSON, CSV 데이터셋 내보내기 지원
 
