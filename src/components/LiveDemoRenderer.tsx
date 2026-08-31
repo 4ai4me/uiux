@@ -287,6 +287,12 @@ import {
   LiveGroupRowLab,
   LiveRowDetailLab,
   LiveInlineRowActionsLab,
+  LiveHeaderFilterToolboxLab,
+  LivePivotMatrixTransformLab,
+  LiveGridCellTransactionCommitLab,
+  LiveCellNavigationDomSyncLab,
+  LiveCascaderGridEditorLab,
+  LiveBidirectionalFreezeMatrixLab,
 } from './LiveDataGridLabs';
 import {
   LiveSingleLineTextBoxLab,
@@ -595,6 +601,12 @@ function renderSpecializedDemo(term: TermItem) {
   // -------------------------------------------------------------
   // High-Priority Direct Term Dispatches
   // -------------------------------------------------------------
+  if (term.num === 646 || sch === 'bidirectional_freeze_matrix') return <LiveBidirectionalFreezeMatrixLab />;
+  if (term.num === 645 || sch === 'cascader_grid_editor') return <LiveCascaderGridEditorLab />;
+  if (term.num === 644 || sch === 'cell_navigation_dom_sync') return <LiveCellNavigationDomSyncLab />;
+  if (term.num === 643 || sch === 'grid_cell_transaction_commit') return <LiveGridCellTransactionCommitLab />;
+  if (term.num === 642 || sch === 'pivot_matrix_transform') return <LivePivotMatrixTransformLab />;
+  if (term.num === 641 || sch === 'header_filter_toolbox') return <LiveHeaderFilterToolboxLab />;
   if (term.num === 640 || sch === 'search_bar_advanced_filter_dropdown') return <LiveSearchBarAdvancedFilterLab />;
   if (term.num === 639 || sch === 'draggable_inline_edit_row') return <LiveDraggableInlineEditRowLab />;
   if (term.num === 638 || sch === 'omnibar_breadcrumb_search') return <LiveOmnibarBreadcrumbSearchLab />;
@@ -1372,6 +1384,12 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 638) return <LiveOmnibarBreadcrumbSearchLab />;
   if (term.num === 639) return <LiveDraggableInlineEditRowLab />;
   if (term.num === 640) return <LiveSearchBarAdvancedFilterLab />;
+  if (term.num === 641) return <LiveHeaderFilterToolboxLab />;
+  if (term.num === 642) return <LivePivotMatrixTransformLab />;
+  if (term.num === 643) return <LiveGridCellTransactionCommitLab />;
+  if (term.num === 644) return <LiveCellNavigationDomSyncLab />;
+  if (term.num === 645) return <LiveCascaderGridEditorLab />;
+  if (term.num === 646) return <LiveBidirectionalFreezeMatrixLab />;
 
   // 4. Fallback for Layout & Panes (Cat 4 & Cat 16)
   if (cat === 4 || cat === 16 || sch.includes('pane') || sch.includes('split') || sch.includes('layout')) {

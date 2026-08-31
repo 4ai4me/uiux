@@ -6347,6 +6347,173 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
         </div>
       );
 
+    case 'header_filter_toolbox':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center bg-slate-950 px-2 py-1 rounded border border-cyan-500/40 text-[8px]">
+            <span className="text-cyan-200 font-bold">Col Header: Model</span>
+            <span className="bg-cyan-500 text-slate-950 font-black px-1 rounded text-[7px]">▼ Filter Popover</span>
+          </div>
+          <div className="bg-slate-950/90 border border-cyan-400/60 rounded-lg p-1.5 flex flex-col gap-1">
+            <div className="flex justify-between border-b border-cyan-900/60 pb-0.5 text-[7px] text-cyan-400 font-bold">
+              <span className="bg-cyan-900/60 px-1 rounded">Sort: ASC</span>
+              <span className="bg-cyan-900/60 px-1 rounded">Values (3)</span>
+              <span>Cond</span>
+            </div>
+            <div className="flex items-center justify-between text-[7.5px] text-slate-300">
+              <span>☑ Sensor Alpha</span>
+              <span className="text-[6.5px] bg-emerald-950 text-emerald-300 px-1 rounded">MATCH</span>
+            </div>
+            <div className="flex justify-between items-center pt-0.5 border-t border-cyan-900/40 text-[7px]">
+              <span className="text-slate-500">3 of 5 matched</span>
+              <span className="bg-cyan-500 text-slate-950 px-1.5 py-0.2 rounded font-black">[APPLY]</span>
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'pivot_matrix_transform':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Pivot Engine: Row(Qtr) ✕ Col(Region)</span>
+            <span className="bg-cyan-950 border border-cyan-500 px-1 rounded text-[6.5px]">Σ AGG(SUM)</span>
+          </div>
+          <div className="bg-slate-950 rounded border border-cyan-800 text-[7px] overflow-hidden">
+            <div className="grid grid-cols-4 bg-cyan-950/70 p-1 font-bold text-center border-b border-cyan-800 text-cyan-200">
+              <span>Qtr \ Reg</span>
+              <span>Seoul</span>
+              <span>Busan</span>
+              <span className="text-amber-400">Total</span>
+            </div>
+            <div className="grid grid-cols-4 p-1 text-center border-b border-slate-800 text-slate-300">
+              <span className="font-bold text-cyan-400 text-left pl-1">2026 Q1</span>
+              <span>1,420</span>
+              <span>1,850</span>
+              <span className="font-bold text-cyan-300">3,270</span>
+            </div>
+            <div className="grid grid-cols-4 p-1 text-center bg-cyan-900/30 text-cyan-200 font-black">
+              <span className="text-left pl-1">Grand Σ</span>
+              <span>3,100</span>
+              <span>3,890</span>
+              <span className="bg-cyan-500 text-slate-950 rounded">6,990</span>
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'grid_cell_transaction_commit':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px]">
+            <span className="text-amber-400 font-bold flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
+              ⚡ Dirty Transaction Queue: 2 modified
+            </span>
+            <span className="bg-cyan-950 border border-cyan-500 text-cyan-300 px-1 rounded text-[6.5px]">ATOMIC</span>
+          </div>
+          <div className="grid grid-cols-2 gap-1 text-[7px]">
+            <div className="bg-slate-950 border border-amber-500/80 rounded p-1 relative">
+              <span className="text-slate-400">RPM: </span>
+              <span className="text-amber-300 font-bold">3,500</span>
+              <span className="absolute top-0.5 right-0.5 text-[6px] text-amber-400">▲ DIRTY</span>
+            </div>
+            <div className="bg-slate-950 border border-amber-500/80 rounded p-1 relative">
+              <span className="text-slate-400">Duty: </span>
+              <span className="text-amber-300 font-bold">92%</span>
+              <span className="absolute top-0.5 right-0.5 text-[6px] text-amber-400">▲ DIRTY</span>
+            </div>
+          </div>
+          <div className="flex justify-between items-center text-[7px] pt-0.5">
+            <span className="bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700">↺ Rollback</span>
+            <span className="text-cyan-400">➔ Isolated Buffer ➔</span>
+            <span className="bg-cyan-500 text-slate-950 font-black px-1.5 py-0.5 rounded shadow">✓ Commit All</span>
+          </div>
+        </div>
+      );
+
+    case 'cell_navigation_dom_sync':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Virtual Scroll Focus Tracker</span>
+            <span className="bg-cyan-950 text-cyan-400 px-1 rounded text-[6.5px]">Offset: 120px</span>
+          </div>
+          <div className="bg-slate-950 border border-cyan-800 rounded p-1 flex flex-col gap-1 text-[7px]">
+            <div className="flex justify-between text-slate-500 text-[6.5px] border-b border-slate-800 pb-0.5">
+              <span>Virtual Buffer [Row 01 ~ 20]</span>
+              <span className="text-cyan-400">Render Window [Row 05 ~ 08]</span>
+            </div>
+            <div className="flex items-center justify-between bg-cyan-950/60 border-2 border-cyan-400 rounded px-1.5 py-1">
+              <span className="font-bold text-cyan-200">Active Cell [R:06, C:01]</span>
+              <span className="bg-cyan-500 text-slate-950 font-black text-[6.5px] px-1 rounded">KEYBOARD SYNC</span>
+            </div>
+            <div className="flex justify-between text-[6.5px] text-slate-400">
+              <span>Nav: [↑] [↓] [←] [→]</span>
+              <span className="text-emerald-400">Auto-Scroll: True (DOM Intact)</span>
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'cascader_grid_editor':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>3-Level Cascader Cell Editor</span>
+            <span className="text-amber-400 text-[6.5px]">Hierarchical Node</span>
+          </div>
+          <div className="flex gap-1 text-[6.5px]">
+            <div className="w-1/3 bg-slate-950 border border-cyan-800 rounded p-1 space-y-0.5">
+              <div className="text-slate-500 font-bold">1. Plant</div>
+              <div className="bg-cyan-900 text-cyan-200 px-1 py-0.5 rounded font-bold">Plant 01 ➔</div>
+              <div className="text-slate-400 px-1">Plant 02</div>
+            </div>
+            <div className="w-1/3 bg-slate-950 border border-cyan-800 rounded p-1 space-y-0.5">
+              <div className="text-slate-500 font-bold">2. Line</div>
+              <div className="bg-cyan-900 text-cyan-200 px-1 py-0.5 rounded font-bold">Line A ➔</div>
+              <div className="text-slate-400 px-1">Line B</div>
+            </div>
+            <div className="w-1/3 bg-slate-950 border border-cyan-400 rounded p-1 space-y-0.5">
+              <div className="text-slate-500 font-bold">3. Unit</div>
+              <div className="bg-emerald-500 text-slate-950 px-1 py-0.5 rounded font-black">Arm X-1 ✓</div>
+              <div className="text-slate-400 px-1">Laser LC</div>
+            </div>
+          </div>
+          <div className="bg-slate-950 px-1.5 py-0.5 rounded border border-cyan-900 text-[6.5px] text-cyan-300 truncate">
+            Target Value: Plant 01 ➔ Line A ➔ Arm X-1
+          </div>
+        </div>
+      );
+
+    case 'bidirectional_freeze_matrix':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>4-Quadrant Bidirectional Freeze</span>
+            <span className="bg-cyan-950 text-cyan-400 px-1 rounded text-[6.5px]">2D SYNC</span>
+          </div>
+          <div className="grid grid-cols-2 gap-1 text-[7px]">
+            <div className="bg-cyan-950/80 border-2 border-cyan-400 rounded p-1.5 text-center flex flex-col items-center justify-center">
+              <span className="text-cyan-200 font-bold">Q1: Top-Left</span>
+              <span className="text-[6px] text-amber-300 font-black">🔒 FULL LOCKED</span>
+            </div>
+            <div className="bg-slate-950 border border-cyan-800 rounded p-1.5 text-center flex flex-col items-center justify-center">
+              <span className="text-slate-300">Q2: Top-Right</span>
+              <span className="text-[6px] text-cyan-400">↔ X-Scroll Header</span>
+            </div>
+            <div className="bg-slate-950 border border-cyan-800 rounded p-1.5 text-center flex flex-col items-center justify-center">
+              <span className="text-slate-300">Q3: Bottom-Left</span>
+              <span className="text-[6px] text-cyan-400">↕ Y-Scroll Column</span>
+            </div>
+            <div className="bg-slate-950 border-2 border-dashed border-cyan-600 rounded p-1.5 text-center flex flex-col items-center justify-center">
+              <span className="text-cyan-300 font-bold">Q4: Main Body</span>
+              <span className="text-[6px] text-emerald-400 font-bold">⤢ 2D Free Scroll</span>
+            </div>
+          </div>
+        </div>
+      );
+
     default:
       return (
         <div className="flex flex-col items-center gap-1.5 z-10">

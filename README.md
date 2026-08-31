@@ -1,16 +1,16 @@
 # 📘 UI/UX Glossary Encyclopedia for AI Prompt Engineering
 
-> **총 640개 UI/UX 컴포넌트 & 인터랙션 디자인 용어 사전 및 AI 프롬프트 엔지니어링 인터랙티브 백과사전**  
+> **총 646개 UI/UX 컴포넌트 & 인터랙션 디자인 용어 사전 및 AI 프롬프트 엔지니어링 인터랙티브 백과사전**  
 > AI 코딩 어시스턴트(Gemini, Claude, ChatGPT, v0 등)에게 정확하고 전문적인 UI/UX 요구사항을 지시할 수 있도록 지원하는 실시간 인터랙티브 레퍼런스 플랫폼입니다.
 
 ---
 
 ## 🌟 프로젝트 개요 (Overview)
 
-현대 웹/앱 디자인과 엔지니어링에 필요한 **24개 카테고리, 총 640개 전문 UI/UX 용어**를 체계적으로 분류하고, 각 용어마다 **고유한 인터랙티브 실습 랩(Live UX)**, **구조적 다이어그램(CAD Diagnostic Schematic)**, 그리고 **AI 프롬프트 생성기(Prompt Template)**를 제공합니다.
+현대 웹/앱 디자인과 엔지니어링에 필요한 **24개 카테고리, 총 646개 전문 UI/UX 용어**를 체계적으로 분류하고, 각 용어마다 **고유한 인터랙티브 실습 랩(Live UX)**, **구조적 다이어그램(CAD Diagnostic Schematic)**, 그리고 **AI 프롬프트 생성기(Prompt Template)**를 제공합니다.
 
 - 🎯 **정확한 AI 프롬프트 생성**: 추상적인 설명 대신 정확한 디자인 토큰과 산업 표준 기술 용어로 AI에게 프롬프트를 전달
-- 🧪 **1:1 실시간 인터랙티브 랩**: 640개 모든 용어에 대해 실제 동작하는 React + Tailwind CSS 라이브 샌드박스 제공
+- 🧪 **1:1 실시간 인터랙티브 랩**: 646개 모든 용어에 대해 실제 동작하는 React + Tailwind CSS 라이브 샌드박스 제공
 - 📐 **정밀 아키텍처 다이어그램**: 각 컴포넌트의 레이아웃 구조, 계층, 패딩, Z-인덱스 등을 시각적으로 명확히 전달
 - 💾 **데이터 내보내기 & 북마크**: JSON, CSV, 마크다운 내보내기 및 즐겨찾기 관리 지원
 
@@ -18,7 +18,7 @@
 
 ## ✨ 주요 기능 (Key Features)
 
-### 1. 24개 핵심 카테고리 (Total 640 Terms)
+### 1. 24개 핵심 카테고리 (Total 646 Terms)
 | # | 카테고리명 | 영문 카테고리 | 주요 구성 내용 |
 |---|---|---|---|
 | 01 | 기본 입력 컨트롤 | Basic Inputs | 텍스트, 숫자, 날짜, 스위치, 슬라이더 등 |
@@ -37,16 +37,16 @@
 | 14 | 파일 및 미디어 | File & Media Upload | Dropzone, Chunk Upload, Image Cropper 등 |
 | 15 | 인터랙션 및 제스처 | Interactions & Gestures | Drag & Drop, Swipe, Pinch Zoom, Long Press 등 |
 | 16 | 캔버스 및 다이어그램 | Canvas & Nodes | Infinite Canvas, Node Graph, Minimap, Rulers 등 |
-| 17 | 애니메이션 및 트랜지션 | Motion & Transitions | Accordion, Flip Card, Ripple, Parallax 등 |
-| 18 | 접근성 및 국제화 | A11y & i18n | Focus Ring, Screen Reader Announcer, RTL 등 |
-| 19 | 대시보드 위젯 | Dashboard Widgets | KPI Card, Activity Feed, Metric Counter 등 |
-| 20 | 코드 및 에디터 | Code & Rich Editors | Markdown, Monaco, Diff Viewer, Syntax Token 등 |
-| 21 | 테마 및 커스터마이징 | Theming & Tokens | Dark/Light Mode, Density Switcher, Accent Colors 등 |
-| 22 | 모바일 네이티브 UX | Mobile Native UX | Pull-to-Refresh, Safe Area, Haptic, Bottom Nav 등 |
-| 23 | 텍스트 힌트 및 마이크로카피 | Text Hints & Microcopy | Ghost Text, Floating Label, Range Limit, Shortcut Pill 등 |
-| 24 | 오버레이 및 투명도 | Overlays & Transparency | Z-Index Layer, Glassmorphism, Dimmed Scrim, Portal 등 |
+| 17 | 대용량 데이터 그리드 처리 | Table & Grid Advanced | Spreadsheet Grid, Pivot Matrix, Header Filter, Virtual DOM Sync 등 |
+| 18 | 텍스트박스 및 편집기 | Textbox & Rich Editor | Auto-growing Textarea, Markdown, Monaco, Code Editor 등 |
+| 19 | 윈도우 및 다이얼로그 바 | Window, Dialog & Menu Bars | Dockable Panel, Snap Zone, Floating Ribbon, Top-Pinned Window 등 |
+| 20 | 마우스 및 포인터 제어 | Mouse & Pointer Controls | Drag Marquee, Radial Pointer, Edge Auto-Scroll, Sticky Target 등 |
+| 21 | 터치 및 제스처 컨트롤 | Touch & Multi-Touch Gestures | Two-Finger Orbit, Edge Swipe, Long-Press Pie, Pinch Rotate 등 |
+| 22 | 디스플레이 및 다이나믹 인덱스 | Display & Dynamic Indexing | Breadcrumb Collapser, Tag Overflow, Tab Carousel, Metric Tile 등 |
+| 23 | 실시간 데이터 동기화 및 텔레메트리 | Real-Time Sync & Telemetry | WebSocket Heartbeat, SSE Gauge, Delta Highlight, Reconnect Banner 등 |
+| 24 | 미디어 뷰어 및 그래픽스 제어 | Media & Graphics Viewers | Crosshair Laser, Snap-to-Grid, Split Comparison, Drop Overlay 등 |
 
-### 2. 640개 전 항목 라이브 인터랙티브 랩 (Live UX)
+### 2. 646개 전 항목 라이브 인터랙티브 랩 (Live UX)
 - 슬라이더, 입력 필드, 토글, 드래그, 애니메이션을 브라우저에서 직접 조작
 - React 19 + Tailwind CSS + Motion(Framer Motion) 기반 즉각 반응
 
@@ -58,7 +58,7 @@
 - 단순 텍스트 설명이 아닌 컴포넌트의 기하학적 구조 및 박스 모델 시각화
 
 ### 5. 검색, 필터 및 내보내기 (Search & Export Suite)
-- 한글/영문 키워드, 번호(#001~#640), 카테고리 태그 실시간 검색
+- 한글/영문 키워드, 번호(#001~#646), 카테고리 태그 실시간 검색
 - 즐겨찾기(Bookmark) 및 최근 본 항목 관리
 - JSON, CSV 데이터셋 내보내기 지원
 

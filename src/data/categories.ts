@@ -151,7 +151,7 @@ export const CATEGORIES: Category[] = [
     title: '17. Table & Grid Advanced',
     koreanTitle: '대용량 데이터 그리드 처리',
     description: 'Spreadsheet Grid, Pinned Row/Col, Multi-Level Header, Virtualization, Filter Builder',
-    count: 30,
+    count: 36,
     iconName: 'Grid3X3',
   },
   {

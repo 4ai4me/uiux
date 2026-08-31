@@ -35,6 +35,36 @@
    - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
 
 ## 3. Implementation History & Verification
+- **2026-08-30 (Category 17 Advanced Data Grid 6 New Terms Addition - v2.32.0)**:
+  - **User Request & Option A Approved**:
+    1. 분석 대상 프로그램의 UX/UI 심층 분석 결과 도출된 대용량 엔터프라이즈 데이터 그리드 필수 패턴 6종 추가 승인.
+    2. 조건 준수:
+       - Diagnostic Schematic 및 Live UX 각 특징에 맞게 전용 구현.
+       - 소스파일의 UX/UI 인터랙션 패턴만 참고하고 데이터는 100% 임의의 안전한 산업 샘플값으로 대체.
+  - **Implemented New Terms (#641 ~ #646)**:
+    - **#641 `Header Filter Toolbox (컬럼 헤더 복합 필터 팝오버 툴박스)`**:
+      - `schematicType`: `header_filter_toolbox` (정밀 컬럼 헤더 팝오버, 정렬/값필터/조건식 탭 및 매칭 카운터 도면)
+      - `Live UX`: `LiveHeaderFilterToolboxLab` (정렬 방향 선택, 다중 체크박스 필터링, 조건식 텍스트 필터 및 실시간 그리드 필터 적용)
+    - **#642 `Pivot Matrix Transform (동적 피벗 매트릭스 크로스탭 집계)`**:
+      - `schematicType`: `pivot_matrix_transform` (행 축 ✕ 열 축 2D 교차 집계 셀 및 Grand Total CAD 도면)
+      - `Live UX`: `LivePivotMatrixTransformLab` (행/열 피벗 축 동적 전환, 집계함수 SUM/AVG/MAX 실시간 2D 매트릭스 렌더링)
+    - **#643 `Grid Cell Transaction Commit (트랜잭션 격리 셀 일괄 커밋/롤백)`**:
+      - `schematicType`: `grid_cell_transaction_commit` (더티 코너 마커, 격리된 트랜잭션 버퍼 큐, 원자적 Commit/Rollback 도면)
+      - `Live UX`: `LiveGridCellTransactionCommitLab` (수정 셀 더티 플래그 표시, 임시 버퍼 적재, 실시간 롤백 및 원자적 커밋)
+    - **#644 `Cell Navigation DOM Sync (가상 스크롤 뷰포트 키보드 포커스 동기화)`**:
+      - `schematicType`: `cell_navigation_dom_sync` (가상 윈도우 스크롤 오프셋 계산, 키보드 네비게이션 연동 포커스 트래커 도면)
+      - `Live UX`: `LiveCellNavigationDomSyncLab` (가상 스크롤 윈도우 시뮬레이션, 방향키 이동 시 뷰포트 경계 자동 스크롤 동기화)
+    - **#645 `Cascader Grid Editor (계층형 계단식 드롭다운 셀 에디터)`**:
+      - `schematicType`: `cascader_grid_editor` (3단계 계층형 노드 트리 벡터 연결선 및 셀 값 반영 도면)
+      - `Live UX`: `LiveCascaderGridEditorLab` (공장 ➔ 생산라인 ➔ 단위설비 3단계 계층 선택 및 그리드 셀 즉시 갱신)
+    - **#646 `Bidirectional Freeze Matrix (4사분면 양방향 다중 고정 매트릭스)`**:
+      - `schematicType`: `bidirectional_freeze_matrix` (좌상단 고정, 상단 가로스크롤, 좌측 세로스크롤, 본문 2D 스크롤 CAD 도면)
+      - `Live UX`: `LiveBidirectionalFreezeMatrixLab` (행/열 고정선 개수 조절기, 4개 독립 뷰포트 완벽 동기화 스크롤 샌드박스)
+  - **Verification**:
+    - `lint_applet` (TypeScript strict check: 0 errors)
+    - `compile_applet` (Vite production bundle build: 성공)
+    - 총 용어 수 646개 동기화 및 `cat-17` 개수 36개 갱신 확인 완료.
+
 - **2026-08-30 (GitHub Actions CI/CD Build & Lock File Resolution - v2.31.2)**:
   - **User Request & Diagnosis**:
     1. 에러: `Error: Dependencies lock file is not found in /home/runner/work/uiux/uiux. Supported file patterns: package-lock.json,npm-shrinkwrap.json,yarn.lock`

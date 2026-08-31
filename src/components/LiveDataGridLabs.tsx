@@ -3,7 +3,9 @@ import {
   Table, Grid, Edit3, CheckSquare, Square, Pin, 
   Eye, EyeOff, Maximize2, Minimize2, Check, AlertCircle, 
   Trash2, Copy, Plus, Calculator, ChevronDown, ChevronRight,
-  TrendingUp, Layers, Sliders, ArrowUpDown, ShieldAlert, Sparkles
+  TrendingUp, Layers, Sliders, ArrowUpDown, ShieldAlert, Sparkles,
+  Filter, ArrowUp, ArrowDown, RotateCcw, Save, Search, Move,
+  SlidersHorizontal, Split, Grid3X3, CornerDownRight, CheckCircle2
 } from 'lucide-react';
 
 /**
@@ -800,3 +802,794 @@ export const LiveInlineRowActionsLab: React.FC = () => {
     </div>
   );
 };
+
+// ============================================================================
+// Category 17 Advanced Enterprise Data Grid Labs (#641 ~ #646)
+// ============================================================================
+
+// #641 Header Filter Toolbox (Multi-Facet Column Popover)
+export const LiveHeaderFilterToolboxLab: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState<'sort' | 'values' | 'condition'>('values');
+  const [sortOrder, setSortOrder] = useState<'none' | 'asc' | 'desc'>('asc');
+  const [searchVal, setSearchVal] = useState('');
+  const [selectedItems, setSelectedItems] = useState<string[]>(['Sensor Alpha', 'Inverter Beta', 'Relay Gamma']);
+  const [conditionOp, setConditionOp] = useState('contains');
+  const [conditionVal, setConditionVal] = useState('');
+
+  const allAvailableItems = ['Sensor Alpha', 'Inverter Beta', 'Relay Gamma', 'Actuator Delta', 'Switch Epsilon'];
+
+  const toggleItem = (item: string) => {
+    if (selectedItems.includes(item)) {
+      setSelectedItems(selectedItems.filter(i => i !== item));
+    } else {
+      setSelectedItems([...selectedItems, item]);
+    }
+  };
+
+  const filteredItems = allAvailableItems.filter(i => 
+    i.toLowerCase().includes(searchVal.toLowerCase())
+  );
+
+  return (
+    <div className="w-full max-w-lg bg-slate-100 dark:bg-slate-950 border-2 border-indigo-500/80 rounded-2xl p-4 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-xl">
+      <div className="flex justify-between items-center border-b border-slate-300 dark:border-slate-800 pb-2">
+        <div className="flex items-center gap-1.5 font-black text-indigo-600 dark:text-indigo-400">
+          <Filter className="w-4 h-4" />
+          <span>#641 HEADER FILTER TOOLBOX</span>
+        </div>
+        <button 
+          onClick={() => setIsOpen(!isOpen)}
+          className="px-2 py-0.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-[10px] font-bold flex items-center gap-1"
+        >
+          <SlidersHorizontal className="w-3 h-3" />
+          {isOpen ? 'Close Toolbox' : 'Open Toolbox'}
+        </button>
+      </div>
+
+      {/* Simulated Grid Column Header with Toolbox Trigger */}
+      <div className="relative">
+        <div className="grid grid-cols-3 bg-slate-200 dark:bg-slate-800 p-2 rounded-lg font-bold text-[10px] text-slate-700 dark:text-slate-200 items-center border border-slate-300 dark:border-slate-700">
+          <div className="flex items-center justify-between pr-2 border-r border-slate-300 dark:border-slate-700">
+            <span>Model Name</span>
+            <button 
+              onClick={() => setIsOpen(!isOpen)}
+              className={`p-1 rounded transition-colors ${isOpen ? 'bg-indigo-600 text-white' : 'bg-slate-300 dark:bg-slate-700 text-slate-800 dark:text-slate-200 hover:bg-indigo-500 hover:text-white'}`}
+            >
+              <Filter className="w-3 h-3" />
+            </button>
+          </div>
+          <span className="px-2 border-r border-slate-300 dark:border-slate-700">Batch Code</span>
+          <span className="px-2">Operating Temp</span>
+        </div>
+
+        {/* Dropdown Floating Toolbox Popover */}
+        {isOpen && (
+          <div className="absolute top-10 left-0 w-72 bg-white dark:bg-slate-900 border-2 border-indigo-500 rounded-xl shadow-2xl z-30 p-3 flex flex-col gap-2.5 animate-in fade-in zoom-in-95 duration-100">
+            {/* Popover Header & Tab Navigation */}
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
+              <span className="text-[10px] font-bold text-slate-500">Column: Model Name</span>
+              <div className="flex bg-slate-100 dark:bg-slate-800 p-0.5 rounded text-[9px] font-bold">
+                <button 
+                  onClick={() => setActiveTab('sort')}
+                  className={`px-1.5 py-0.5 rounded ${activeTab === 'sort' ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}
+                >
+                  Sort
+                </button>
+                <button 
+                  onClick={() => setActiveTab('values')}
+                  className={`px-1.5 py-0.5 rounded ${activeTab === 'values' ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}
+                >
+                  Values ({selectedItems.length})
+                </button>
+                <button 
+                  onClick={() => setActiveTab('condition')}
+                  className={`px-1.5 py-0.5 rounded ${activeTab === 'condition' ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}
+                >
+                  Condition
+                </button>
+              </div>
+            </div>
+
+            {/* Tab 1: Sort Section */}
+            {activeTab === 'sort' && (
+              <div className="flex flex-col gap-1.5 py-1 text-[10px]">
+                <label className="flex items-center gap-2 p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+                  <input 
+                    type="radio" 
+                    name="sort" 
+                    checked={sortOrder === 'asc'} 
+                    onChange={() => setSortOrder('asc')} 
+                    className="accent-indigo-600"
+                  />
+                  <ArrowUp className="w-3 h-3 text-indigo-500" />
+                  <span>Sort Ascending (A ➔ Z)</span>
+                </label>
+                <label className="flex items-center gap-2 p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+                  <input 
+                    type="radio" 
+                    name="sort" 
+                    checked={sortOrder === 'desc'} 
+                    onChange={() => setSortOrder('desc')} 
+                    className="accent-indigo-600"
+                  />
+                  <ArrowDown className="w-3 h-3 text-indigo-500" />
+                  <span>Sort Descending (Z ➔ A)</span>
+                </label>
+                <label className="flex items-center gap-2 p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+                  <input 
+                    type="radio" 
+                    name="sort" 
+                    checked={sortOrder === 'none'} 
+                    onChange={() => setSortOrder('none')} 
+                    className="accent-indigo-600"
+                  />
+                  <RotateCcw className="w-3 h-3 text-slate-400" />
+                  <span>Clear Sort Order</span>
+                </label>
+              </div>
+            )}
+
+            {/* Tab 2: Unique Values Filter Section */}
+            {activeTab === 'values' && (
+              <div className="flex flex-col gap-2 py-1 text-[10px]">
+                <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded border border-slate-300 dark:border-slate-700">
+                  <Search className="w-3 h-3 text-slate-400" />
+                  <input 
+                    placeholder="Search values..." 
+                    value={searchVal}
+                    onChange={(e) => setSearchVal(e.target.value)}
+                    className="bg-transparent outline-none flex-1 text-[9px]"
+                  />
+                </div>
+                <div className="flex justify-between text-[8px] text-indigo-600 dark:text-indigo-400 font-bold px-0.5">
+                  <button onClick={() => setSelectedItems(allAvailableItems)}>Select All</button>
+                  <button onClick={() => setSelectedItems([])}>Clear All</button>
+                </div>
+                <div className="max-h-24 overflow-y-auto space-y-1 pr-1 border border-slate-200 dark:border-slate-800 rounded p-1">
+                  {filteredItems.map(item => (
+                    <label key={item} className="flex items-center gap-2 text-[9px] hover:bg-indigo-50 dark:hover:bg-slate-800/80 p-0.5 rounded cursor-pointer">
+                      <input 
+                        type="checkbox" 
+                        checked={selectedItems.includes(item)}
+                        onChange={() => toggleItem(item)}
+                        className="rounded accent-indigo-600"
+                      />
+                      <span>{item}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Tab 3: Expression Condition Filter Section */}
+            {activeTab === 'condition' && (
+              <div className="flex flex-col gap-2 py-1 text-[10px]">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[9px] text-slate-500">Filter Logic:</span>
+                  <select 
+                    value={conditionOp} 
+                    onChange={(e) => setConditionOp(e.target.value)}
+                    className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded p-1 text-[9px] outline-none"
+                  >
+                    <option value="contains">Text Contains</option>
+                    <option value="equals">Exact Equals</option>
+                    <option value="startsWith">Starts With</option>
+                    <option value="endsWith">Ends With</option>
+                  </select>
+                </div>
+                <input 
+                  placeholder="Enter condition keyword..."
+                  value={conditionVal}
+                  onChange={(e) => setConditionVal(e.target.value)}
+                  className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded p-1 text-[9px] outline-none"
+                />
+              </div>
+            )}
+
+            {/* Popover Footer Action Buttons */}
+            <div className="flex justify-between items-center border-t border-slate-200 dark:border-slate-800 pt-2 text-[9px]">
+              <span className="text-slate-500 font-mono">Matched: {selectedItems.length} items</span>
+              <div className="flex gap-1">
+                <button 
+                  onClick={() => { setSelectedItems(allAvailableItems); setSortOrder('none'); }}
+                  className="px-2 py-1 bg-slate-200 dark:bg-slate-800 rounded hover:bg-slate-300 font-bold"
+                >
+                  Reset
+                </button>
+                <button 
+                  onClick={() => setIsOpen(false)}
+                  className="px-2.5 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 font-bold flex items-center gap-1"
+                >
+                  <Check className="w-3 h-3" />
+                  Apply
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Grid Sample Body Preview */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg p-2 text-[9px] space-y-1">
+        <div className="flex justify-between text-slate-500 text-[8px] pb-1 border-b border-slate-200 dark:border-slate-800">
+          <span>Active Filter: {selectedItems.length} selected ({sortOrder.toUpperCase()} sort)</span>
+          <span className="text-emerald-500 font-bold">● Active Index</span>
+        </div>
+        {selectedItems.slice(0, 3).map((item, idx) => (
+          <div key={item} className="flex justify-between p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded">
+            <span className="font-bold text-indigo-600 dark:text-indigo-400">#0{idx+1} {item}</span>
+            <span className="text-slate-500">BATCH-2026-X{idx}</span>
+            <span className="font-mono">{(idx+1)*12 + 20}°C</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// #642 Pivot Matrix Transform (Dynamic Multi-Dimensional Pivot Grid)
+export const LivePivotMatrixTransformLab: React.FC = () => {
+  const [rowDimension, setRowDimension] = useState<'Quarter' | 'Region'>('Quarter');
+  const [colDimension, setColDimension] = useState<'Region' | 'Channel'>('Region');
+  const [metric, setMetric] = useState<'Sum' | 'Avg'>('Sum');
+
+  // Synthetic sample matrix values
+  const matrixData = {
+    Quarter: [
+      { key: '2026 Q1', cols: [1420, 1850, 980, 2100] },
+      { key: '2026 Q2', cols: [1680, 2040, 1150, 2350] },
+      { key: '2026 Q3', cols: [1950, 2210, 1300, 2600] },
+    ],
+    Region: [
+      { key: 'North Facility', cols: [1420, 1680, 1950, 1800] },
+      { key: 'South Facility', cols: [1850, 2040, 2210, 2400] },
+      { key: 'East Facility', cols: [980, 1150, 1300, 1450] },
+    ]
+  };
+
+  const currentRows = matrixData[rowDimension];
+  const colHeaders = colDimension === 'Region' ? ['Seoul', 'Busan', 'Incheon', 'Daejeon'] : ['Online', 'Retail', 'Direct', 'OEM'];
+
+  return (
+    <div className="w-full max-w-lg bg-slate-100 dark:bg-slate-950 border-2 border-indigo-500/80 rounded-2xl p-4 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-xl">
+      <div className="flex justify-between items-center border-b border-slate-300 dark:border-slate-800 pb-2">
+        <div className="flex items-center gap-1.5 font-black text-indigo-600 dark:text-indigo-400">
+          <Grid3X3 className="w-4 h-4" />
+          <span>#642 PIVOT MATRIX TRANSFORM</span>
+        </div>
+        <span className="text-[10px] bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 px-2 py-0.5 rounded font-bold">
+          2D Crosstab Engine
+        </span>
+      </div>
+
+      {/* Interactive Pivot Dimension Pivot Configurator */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl p-2.5 flex flex-wrap gap-2 items-center justify-between text-[10px]">
+        <div className="flex items-center gap-1.5">
+          <span className="text-slate-500 font-bold">Row Axis (↓):</span>
+          <button 
+            onClick={() => setRowDimension(rowDimension === 'Quarter' ? 'Region' : 'Quarter')}
+            className="px-2 py-0.5 bg-indigo-50 dark:bg-indigo-950 border border-indigo-400 text-indigo-700 dark:text-indigo-300 rounded font-bold hover:bg-indigo-100"
+          >
+            {rowDimension} ⇄
+          </button>
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <span className="text-slate-500 font-bold">Col Axis (→):</span>
+          <button 
+            onClick={() => setColDimension(colDimension === 'Region' ? 'Channel' : 'Region')}
+            className="px-2 py-0.5 bg-indigo-50 dark:bg-indigo-950 border border-indigo-400 text-indigo-700 dark:text-indigo-300 rounded font-bold hover:bg-indigo-100"
+          >
+            {colDimension} ⇄
+          </button>
+        </div>
+
+        <div className="flex items-center gap-1">
+          <span className="text-slate-500 font-bold">Metric:</span>
+          <button 
+            onClick={() => setMetric(metric === 'Sum' ? 'Avg' : 'Sum')}
+            className="px-2 py-0.5 bg-emerald-600 text-white rounded font-bold text-[9px]"
+          >
+            {metric} (Qty)
+          </button>
+        </div>
+      </div>
+
+      {/* Rendered Pivot Matrix Table */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl overflow-hidden text-[9px]">
+        <div className="grid grid-cols-6 bg-slate-200 dark:bg-slate-800 font-bold text-center border-b border-slate-300 dark:border-slate-700 py-1.5 text-slate-700 dark:text-slate-200">
+          <div className="p-1 border-r border-slate-300 dark:border-slate-700 bg-slate-300 dark:bg-slate-700 text-indigo-600 dark:text-indigo-300">
+            {rowDimension} \ {colDimension}
+          </div>
+          {colHeaders.map(col => (
+            <div key={col} className="p-1 border-r border-slate-300 dark:border-slate-700 last:border-0">{col}</div>
+          ))}
+          <div className="p-1 bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">Total</div>
+        </div>
+
+        {currentRows.map((r, idx) => {
+          const rowSum = r.cols.reduce((acc, val) => acc + val, 0);
+          return (
+            <div key={r.key} className="grid grid-cols-6 border-b border-slate-200 dark:border-slate-800 text-center items-center py-1 hover:bg-slate-50 dark:hover:bg-slate-800/60">
+              <div className="p-1 font-bold text-left pl-2 bg-slate-100 dark:bg-slate-800/80 border-r border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200">
+                {r.key}
+              </div>
+              {r.cols.map((val, cIdx) => (
+                <div key={cIdx} className="p-1 font-mono border-r border-slate-200 dark:border-slate-800 last:border-0">
+                  {metric === 'Sum' ? val.toLocaleString() : Math.round(val / 1.2).toLocaleString()}
+                </div>
+              ))}
+              <div className="p-1 font-mono font-bold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400">
+                {rowSum.toLocaleString()}
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Grand Summary Row */}
+        <div className="grid grid-cols-6 bg-slate-100 dark:bg-slate-800/90 font-bold text-center items-center py-1.5 border-t-2 border-indigo-400 text-indigo-700 dark:text-indigo-300">
+          <div className="p-1 text-left pl-2 font-black">Grand Total</div>
+          <div className="p-1 font-mono">5,050</div>
+          <div className="p-1 font-mono">6,100</div>
+          <div className="p-1 font-mono">3,430</div>
+          <div className="p-1 font-mono">7,050</div>
+          <div className="p-1 font-mono font-black bg-indigo-600 text-white rounded">21,630</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// #643 Grid Cell Transaction Commit (Dirty Queue & Rollback Manager)
+export const LiveGridCellTransactionCommitLab: React.FC = () => {
+  const initialItems = [
+    { id: 1, name: 'Inverter Main Core', rpm: '3200', duty: '85%' },
+    { id: 2, name: 'Servo Feeder A2', rpm: '1800', duty: '60%' },
+    { id: 3, name: 'Hydraulic Valve P4', rpm: '2400', duty: '72%' },
+  ];
+
+  const [items, setItems] = useState(initialItems);
+  const [dirtyCells, setDirtyCells] = useState<Record<string, boolean>>({});
+  const [committedMsg, setCommittedMsg] = useState(false);
+
+  const handleCellChange = (id: number, field: string, value: string) => {
+    setItems(items.map(item => item.id === id ? { ...item, [field]: value } : item));
+    setDirtyCells(prev => ({ ...prev, [`${id}_${field}`]: true }));
+    setCommittedMsg(false);
+  };
+
+  const handleRollback = () => {
+    setItems(initialItems);
+    setDirtyCells({});
+    setCommittedMsg(false);
+  };
+
+  const handleCommit = () => {
+    setDirtyCells({});
+    setCommittedMsg(true);
+    setTimeout(() => setCommittedMsg(false), 3000);
+  };
+
+  const dirtyCount = Object.keys(dirtyCells).length;
+
+  return (
+    <div className="w-full max-w-lg bg-slate-100 dark:bg-slate-950 border-2 border-indigo-500/80 rounded-2xl p-4 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-xl">
+      <div className="flex justify-between items-center border-b border-slate-300 dark:border-slate-800 pb-2">
+        <div className="flex items-center gap-1.5 font-black text-indigo-600 dark:text-indigo-400">
+          <Save className="w-4 h-4" />
+          <span>#643 CELL TRANSACTION COMMIT</span>
+        </div>
+        <span className="text-[10px] text-slate-500">Atomic Mutation Queue</span>
+      </div>
+
+      {/* Transaction Control Banner */}
+      <div className="flex items-center justify-between bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl p-2.5 text-[10px]">
+        <div className="flex items-center gap-2">
+          <span className={`w-2.5 h-2.5 rounded-full ${dirtyCount > 0 ? 'bg-amber-500 animate-ping' : 'bg-emerald-500'}`} />
+          <span className="font-bold">
+            {dirtyCount > 0 ? (
+              <span className="text-amber-600 dark:text-amber-400 font-black">
+                ⚡ Dirty Queue: {dirtyCount} cells modified
+              </span>
+            ) : (
+              <span className="text-slate-500">All changes committed (Clean state)</span>
+            )}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <button 
+            onClick={handleRollback}
+            disabled={dirtyCount === 0}
+            className="px-2 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 disabled:opacity-40 rounded font-bold flex items-center gap-1"
+          >
+            <RotateCcw className="w-3 h-3" />
+            Rollback
+          </button>
+          <button 
+            onClick={handleCommit}
+            disabled={dirtyCount === 0}
+            className="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white rounded font-bold flex items-center gap-1 shadow"
+          >
+            <Check className="w-3 h-3" />
+            Commit All
+          </button>
+        </div>
+      </div>
+
+      {committedMsg && (
+        <div className="p-2 bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-500 text-emerald-700 dark:text-emerald-300 rounded-lg text-[9px] flex items-center gap-1.5">
+          <CheckCircle2 className="w-3.5 h-3.5" />
+          <span>Transaction Commit Complete: All changes written to primary record store!</span>
+        </div>
+      )}
+
+      {/* Editable Grid with Dirty Cell Markers */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl overflow-hidden text-[9px]">
+        <div className="grid grid-cols-3 bg-slate-200 dark:bg-slate-800 p-2 font-bold border-b border-slate-300 dark:border-slate-700">
+          <span>Component Node</span>
+          <span>Target RPM (Editable)</span>
+          <span>Duty Cycle (Editable)</span>
+        </div>
+
+        {items.map(item => {
+          const isRpmDirty = dirtyCells[`${item.id}_rpm`];
+          const isDutyDirty = dirtyCells[`${item.id}_duty`];
+
+          return (
+            <div key={item.id} className="grid grid-cols-3 p-2 border-b border-slate-200 dark:border-slate-800 items-center last:border-0">
+              <span className="font-bold text-indigo-600 dark:text-indigo-400">{item.name}</span>
+              
+              {/* RPM Cell */}
+              <div className="relative pr-2">
+                <input 
+                  value={item.rpm}
+                  onChange={(e) => handleCellChange(item.id, 'rpm', e.target.value)}
+                  className={`w-full px-1.5 py-0.5 rounded border outline-none font-mono text-[9px] transition-colors ${
+                    isRpmDirty 
+                      ? 'bg-amber-50 dark:bg-amber-950/50 border-amber-500 text-amber-900 dark:text-amber-200 font-bold' 
+                      : 'bg-transparent border-slate-300 dark:border-slate-700'
+                  }`}
+                />
+                {isRpmDirty && (
+                  <span className="absolute top-0 right-3 w-1.5 h-1.5 bg-amber-500 rounded-full" title="Dirty Cell" />
+                )}
+              </div>
+
+              {/* Duty Cell */}
+              <div className="relative pr-2">
+                <input 
+                  value={item.duty}
+                  onChange={(e) => handleCellChange(item.id, 'duty', e.target.value)}
+                  className={`w-full px-1.5 py-0.5 rounded border outline-none font-mono text-[9px] transition-colors ${
+                    isDutyDirty 
+                      ? 'bg-amber-50 dark:bg-amber-950/50 border-amber-500 text-amber-900 dark:text-amber-200 font-bold' 
+                      : 'bg-transparent border-slate-300 dark:border-slate-700'
+                  }`}
+                />
+                {isDutyDirty && (
+                  <span className="absolute top-0 right-3 w-1.5 h-1.5 bg-amber-500 rounded-full" title="Dirty Cell" />
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+// #644 Cell Navigation DOM Sync (Virtual Scrolling Focus Tracker)
+export const LiveCellNavigationDomSyncLab: React.FC = () => {
+  const totalVirtualRows = 20;
+  const viewportVisibleCount = 4;
+  const [selectedRow, setSelectedRow] = useState(2);
+  const [selectedCol, setSelectedCol] = useState(1);
+  const [viewportStart, setViewportStart] = useState(0);
+
+  const moveFocus = (rowDelta: number, colDelta: number) => {
+    const nextRow = Math.max(0, Math.min(totalVirtualRows - 1, selectedRow + rowDelta));
+    const nextCol = Math.max(0, Math.min(2, selectedCol + colDelta));
+    setSelectedRow(nextRow);
+    setSelectedCol(nextCol);
+
+    // Auto-scroll viewport if target row exceeds bounds
+    if (nextRow < viewportStart) {
+      setViewportStart(nextRow);
+    } else if (nextRow >= viewportStart + viewportVisibleCount) {
+      setViewportStart(nextRow - viewportVisibleCount + 1);
+    }
+  };
+
+  const visibleIndices = Array.from({ length: viewportVisibleCount }, (_, i) => viewportStart + i);
+
+  return (
+    <div className="w-full max-w-lg bg-slate-100 dark:bg-slate-950 border-2 border-indigo-500/80 rounded-2xl p-4 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-xl">
+      <div className="flex justify-between items-center border-b border-slate-300 dark:border-slate-800 pb-2">
+        <div className="flex items-center gap-1.5 font-black text-indigo-600 dark:text-indigo-400">
+          <Move className="w-4 h-4" />
+          <span>#644 CELL NAVIGATION DOM SYNC</span>
+        </div>
+        <span className="text-[10px] text-slate-500">Virtual Focus Preserver</span>
+      </div>
+
+      {/* Keyboard Controls Navigator Bar */}
+      <div className="flex items-center justify-between bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl p-2.5 text-[10px]">
+        <div className="space-y-0.5">
+          <div className="font-bold text-indigo-600 dark:text-indigo-400">
+            Active Coordinate: [Row #{selectedRow + 1}, Col #{selectedCol + 1}]
+          </div>
+          <div className="text-[8.5px] text-slate-500">
+            Virtual Window: Rendering rows {viewportStart + 1} ~ {viewportStart + viewportVisibleCount} of {totalVirtualRows}
+          </div>
+        </div>
+
+        {/* Direction Arrow Navigation Buttons */}
+        <div className="grid grid-cols-3 gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
+          <span />
+          <button onClick={() => moveFocus(-1, 0)} className="px-2 py-0.5 bg-indigo-600 text-white rounded font-bold hover:bg-indigo-700">↑</button>
+          <span />
+          <button onClick={() => moveFocus(0, -1)} className="px-2 py-0.5 bg-indigo-600 text-white rounded font-bold hover:bg-indigo-700">←</button>
+          <button onClick={() => moveFocus(1, 0)} className="px-2 py-0.5 bg-indigo-600 text-white rounded font-bold hover:bg-indigo-700">↓</button>
+          <button onClick={() => moveFocus(0, 1)} className="px-2 py-0.5 bg-indigo-600 text-white rounded font-bold hover:bg-indigo-700">→</button>
+        </div>
+      </div>
+
+      {/* Virtual Table Container */}
+      <div className="bg-white dark:bg-slate-900 border-2 border-indigo-400/50 rounded-xl overflow-hidden text-[9px]">
+        <div className="grid grid-cols-3 bg-slate-200 dark:bg-slate-800 p-1.5 font-bold border-b border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200">
+          <span>Row Header / Index</span>
+          <span>Register Address</span>
+          <span>Sample Signal</span>
+        </div>
+
+        {visibleIndices.map(rowIdx => (
+          <div 
+            key={rowIdx} 
+            className={`grid grid-cols-3 p-1.5 border-b border-slate-200 dark:border-slate-800 items-center last:border-0 transition-all ${
+              rowIdx === selectedRow ? 'bg-indigo-50/80 dark:bg-indigo-950/60 font-bold' : ''
+            }`}
+          >
+            <div className={`p-1 rounded ${selectedRow === rowIdx && selectedCol === 0 ? 'ring-2 ring-indigo-500 bg-white dark:bg-slate-900' : ''}`}>
+              Virtual Row #{String(rowIdx + 1).padStart(2, '0')}
+            </div>
+            <div className={`p-1 font-mono rounded ${selectedRow === rowIdx && selectedCol === 1 ? 'ring-2 ring-indigo-500 bg-white dark:bg-slate-900' : ''}`}>
+              0x004F{String(rowIdx).padStart(2, '0')}
+            </div>
+            <div className={`p-1 font-mono rounded ${selectedRow === rowIdx && selectedCol === 2 ? 'ring-2 ring-indigo-500 bg-white dark:bg-slate-900' : ''}`}>
+              DATA_{rowIdx * 17 + 102}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// #645 Cascader Grid Editor (Hierarchical Multi-Level Cell Dropdown)
+export const LiveCascaderGridEditorLab: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(true);
+  const [selectedL1, setSelectedL1] = useState<string | null>('Facility Plant 01');
+  const [selectedL2, setSelectedL2] = useState<string | null>('Production Line A');
+  const [selectedL3, setSelectedL3] = useState<string | null>('Robotic Arm X-1');
+  const [finalValue, setFinalValue] = useState('Plant 01 ➔ Line A ➔ Arm X-1');
+
+  const hierarchyData = {
+    'Facility Plant 01': {
+      'Production Line A': ['Robotic Arm X-1', 'Laser Cutter LC-02', 'Conveyor Belt C-1'],
+      'Assembly Line B': ['Torque Driver T-1', 'Vision Inspector V-4', 'Packing Station P-2'],
+    },
+    'Testing Plant 02': {
+      'Thermal Chamber 01': ['Chamber Oven TC-1', 'Sensor Rig SR-09'],
+      'Vibration Test 02': ['Shaker Table ST-3', 'Accelerometer AC-5'],
+    }
+  };
+
+  const handleSelectL3 = (val: string) => {
+    setSelectedL3(val);
+    const formatted = `${selectedL1?.replace('Facility ', '')} ➔ ${selectedL2?.replace('Production ', '')} ➔ ${val}`;
+    setFinalValue(formatted);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="w-full max-w-lg bg-slate-100 dark:bg-slate-950 border-2 border-indigo-500/80 rounded-2xl p-4 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-xl">
+      <div className="flex justify-between items-center border-b border-slate-300 dark:border-slate-800 pb-2">
+        <div className="flex items-center gap-1.5 font-black text-indigo-600 dark:text-indigo-400">
+          <Split className="w-4 h-4" />
+          <span>#645 CASCADER GRID EDITOR</span>
+        </div>
+        <button 
+          onClick={() => setIsOpen(!isOpen)}
+          className="px-2 py-0.5 bg-indigo-600 text-white rounded text-[10px] font-bold"
+        >
+          {isOpen ? 'Close Flyout' : 'Edit Cell'}
+        </button>
+      </div>
+
+      {/* Grid Cell Representation */}
+      <div className="relative">
+        <div className="bg-white dark:bg-slate-900 border-2 border-indigo-400 p-2.5 rounded-xl flex items-center justify-between text-[10px]">
+          <div className="flex items-center gap-2">
+            <span className="text-slate-500 font-bold">Target Machine:</span>
+            <span className="px-2 py-0.5 bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 rounded font-bold">
+              {finalValue}
+            </span>
+          </div>
+          <span className="text-slate-400 text-[9px]">Double Click to pick ✎</span>
+        </div>
+
+        {/* 3-Level Cascading Flyout Menu */}
+        {isOpen && (
+          <div className="absolute top-12 left-0 bg-white dark:bg-slate-900 border-2 border-indigo-500 rounded-xl shadow-2xl z-30 p-2 flex gap-1 animate-in fade-in zoom-in-95 duration-100 text-[9px]">
+            {/* Level 1: Plant */}
+            <div className="w-32 border-r border-slate-200 dark:border-slate-800 pr-1 space-y-1">
+              <div className="text-[8px] font-bold text-slate-400 px-1">1. Facility Level</div>
+              {Object.keys(hierarchyData).map(p => (
+                <button 
+                  key={p}
+                  onClick={() => { setSelectedL1(p); setSelectedL2(null); setSelectedL3(null); }}
+                  className={`w-full text-left px-2 py-1 rounded flex items-center justify-between ${
+                    selectedL1 === p ? 'bg-indigo-600 text-white font-bold' : 'hover:bg-slate-100 dark:hover:bg-slate-800'
+                  }`}
+                >
+                  <span className="truncate">{p}</span>
+                  <span>➔</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Level 2: Line */}
+            {selectedL1 && (
+              <div className="w-36 border-r border-slate-200 dark:border-slate-800 pr-1 space-y-1">
+                <div className="text-[8px] font-bold text-slate-400 px-1">2. Production Line</div>
+                {Object.keys(hierarchyData[selectedL1 as keyof typeof hierarchyData]).map(l => (
+                  <button 
+                    key={l}
+                    onClick={() => { setSelectedL2(l); setSelectedL3(null); }}
+                    className={`w-full text-left px-2 py-1 rounded flex items-center justify-between ${
+                      selectedL2 === l ? 'bg-indigo-600 text-white font-bold' : 'hover:bg-slate-100 dark:hover:bg-slate-800'
+                    }`}
+                  >
+                    <span className="truncate">{l}</span>
+                    <span>➔</span>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Level 3: Leaf Unit */}
+            {selectedL1 && selectedL2 && (
+              <div className="w-36 space-y-1">
+                <div className="text-[8px] font-bold text-slate-400 px-1">3. Specific Node</div>
+                {((hierarchyData as any)[selectedL1]?.[selectedL2] || []).map((item: string) => (
+                  <button 
+                    key={item}
+                    onClick={() => handleSelectL3(item)}
+                    className={`w-full text-left px-2 py-1 rounded flex items-center justify-between ${
+                      selectedL3 === item ? 'bg-emerald-600 text-white font-bold' : 'hover:bg-emerald-50 dark:hover:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-semibold'
+                    }`}
+                  >
+                    <span className="truncate">{item}</span>
+                    <span>✓</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// #646 Bidirectional Freeze Matrix (4-Quadrant Split Pinned Grid)
+export const LiveBidirectionalFreezeMatrixLab: React.FC = () => {
+  const [scrollX, setScrollX] = useState(30);
+  const [scrollY, setScrollY] = useState(20);
+
+  const pinnedCols = ['Station Alpha', 'Station Beta'];
+  const scrollCols = ['Metric-01', 'Metric-02', 'Metric-03', 'Metric-04', 'Metric-05', 'Metric-06'];
+  const pinnedRows = ['Line-01 (Priority)', 'Line-02 (Standard)'];
+  const scrollRows = ['Line-03', 'Line-04', 'Line-05', 'Line-06', 'Line-07'];
+
+  return (
+    <div className="w-full max-w-lg bg-slate-100 dark:bg-slate-950 border-2 border-indigo-500/80 rounded-2xl p-4 text-slate-900 dark:text-slate-100 font-mono text-xs flex flex-col gap-3 shadow-xl">
+      <div className="flex justify-between items-center border-b border-slate-300 dark:border-slate-800 pb-2">
+        <div className="flex items-center gap-1.5 font-black text-indigo-600 dark:text-indigo-400">
+          <Pin className="w-4 h-4" />
+          <span>#646 BIDIRECTIONAL FREEZE MATRIX</span>
+        </div>
+        <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-bold">4-Quadrant Pinned Matrix</span>
+      </div>
+
+      {/* Synchronized Offset Sliders */}
+      <div className="flex items-center justify-between bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl p-2 text-[9px] gap-3">
+        <div className="flex items-center gap-1.5 flex-1">
+          <span className="font-bold text-slate-500">X-Scroll:</span>
+          <input 
+            type="range" 
+            min="0" 
+            max="60" 
+            value={scrollX} 
+            onChange={(e) => setScrollX(Number(e.target.value))}
+            className="w-full accent-indigo-600"
+          />
+          <span className="font-mono text-[8px]">{scrollX}px</span>
+        </div>
+        <div className="flex items-center gap-1.5 flex-1">
+          <span className="font-bold text-slate-500">Y-Scroll:</span>
+          <input 
+            type="range" 
+            min="0" 
+            max="50" 
+            value={scrollY} 
+            onChange={(e) => setScrollY(Number(e.target.value))}
+            className="w-full accent-indigo-600"
+          />
+          <span className="font-mono text-[8px]">{scrollY}px</span>
+        </div>
+      </div>
+
+      {/* 4-Quadrant Visual Schematic Layout Grid */}
+      <div className="bg-white dark:bg-slate-900 border-2 border-indigo-500 rounded-xl overflow-hidden text-[9px] relative">
+        {/* Quadrant 1: Top-Left (Fixed Locked Corner) */}
+        <div className="grid grid-cols-5 bg-slate-300 dark:bg-slate-800 font-bold border-b-2 border-r-2 border-indigo-500 text-center">
+          <div className="col-span-2 p-1.5 bg-indigo-200 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-200 flex items-center justify-center gap-1">
+            <Pin className="w-3 h-3 text-indigo-600" />
+            <span>PINNED (X & Y)</span>
+          </div>
+
+          {/* Quadrant 2: Top-Right (Horizontal Scrolled Header) */}
+          <div className="col-span-3 overflow-hidden bg-slate-200 dark:bg-slate-800">
+            <div 
+              className="flex font-bold py-1.5 transition-transform" 
+              style={{ transform: `translateX(-${scrollX}px)` }}
+            >
+              {scrollCols.map(c => (
+                <span key={c} className="w-20 shrink-0 text-center border-r border-slate-300 dark:border-slate-700">{c}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Body Section */}
+        <div className="grid grid-cols-5">
+          {/* Quadrant 3: Bottom-Left (Vertical Scrolled Pinned Column) */}
+          <div className="col-span-2 bg-slate-100 dark:bg-slate-900/90 border-r-2 border-indigo-500 font-bold">
+            <div 
+              className="transition-transform space-y-0.5 p-1"
+              style={{ transform: `translateY(-${scrollY}px)` }}
+            >
+              {scrollRows.map(r => (
+                <div key={r} className="p-1.5 bg-indigo-50 dark:bg-indigo-950/40 rounded border border-indigo-200 dark:border-indigo-800/40 truncate">
+                  {r}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Quadrant 4: Bottom-Right (2D Synchronized Scrolled Body Matrix) */}
+          <div className="col-span-3 overflow-hidden bg-white dark:bg-slate-950 p-1">
+            <div 
+              className="transition-transform space-y-0.5"
+              style={{ transform: `translate(-${scrollX}px, -${scrollY}px)` }}
+            >
+              {scrollRows.map((r, rIdx) => (
+                <div key={r} className="flex gap-1">
+                  {scrollCols.map((c, cIdx) => (
+                    <div key={c} className="w-20 shrink-0 p-1.5 text-center font-mono bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded">
+                      #{(rIdx + 1) * 10 + (cIdx + 1)}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
