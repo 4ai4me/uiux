@@ -1,16 +1,16 @@
 # 📘 UI/UX Glossary Encyclopedia for AI Prompt Engineering
 
-> **총 646개 UI/UX 컴포넌트 & 인터랙션 디자인 용어 사전 및 AI 프롬프트 엔지니어링 인터랙티브 백과사전**  
+> **총 652개 UI/UX 컴포넌트 & 인터랙션 디자인 용어 사전 및 AI 프롬프트 엔지니어링 인터랙티브 백과사전**  
 > AI 코딩 어시스턴트(Gemini, Claude, ChatGPT, v0 등)에게 정확하고 전문적인 UI/UX 요구사항을 지시할 수 있도록 지원하는 실시간 인터랙티브 레퍼런스 플랫폼입니다.
 
 ---
 
 ## 🌟 프로젝트 개요 (Overview)
 
-현대 웹/앱 디자인과 엔지니어링에 필요한 **24개 카테고리, 총 646개 전문 UI/UX 용어**를 체계적으로 분류하고, 각 용어마다 **고유한 인터랙티브 실습 랩(Live UX)**, **구조적 다이어그램(CAD Diagnostic Schematic)**, 그리고 **AI 프롬프트 생성기(Prompt Template)**를 제공합니다.
+현대 웹/앱 디자인과 엔지니어링에 필요한 **24개 카테고리, 총 652개 전문 UI/UX 용어**를 체계적으로 분류하고, 각 용어마다 **고유한 인터랙티브 실습 랩(Live UX)**, **구조적 다이어그램(CAD Diagnostic Schematic)**, 그리고 **AI 프롬프트 생성기(Prompt Template)**를 제공합니다.
 
 - 🎯 **정확한 AI 프롬프트 생성**: 추상적인 설명 대신 정확한 디자인 토큰과 산업 표준 기술 용어로 AI에게 프롬프트를 전달
-- 🧪 **1:1 실시간 인터랙티브 랩**: 646개 모든 용어에 대해 실제 동작하는 React + Tailwind CSS 라이브 샌드박스 제공
+- 🧪 **1:1 실시간 인터랙티브 랩**: 652개 모든 용어에 대해 실제 동작하는 React + Tailwind CSS 라이브 샌드박스 제공
 - 📐 **정밀 아키텍처 다이어그램**: 각 컴포넌트의 레이아웃 구조, 계층, 패딩, Z-인덱스 등을 시각적으로 명확히 전달
 - 💾 **데이터 내보내기 & 북마크**: JSON, CSV, 마크다운 내보내기 및 즐겨찾기 관리 지원
 
@@ -18,7 +18,7 @@
 
 ## ✨ 주요 기능 (Key Features)
 
-### 1. 24개 핵심 카테고리 (Total 646 Terms)
+### 1. 24개 핵심 카테고리 (Total 652 Terms)
 | # | 카테고리명 | 영문 카테고리 | 주요 구성 내용 |
 |---|---|---|---|
 | 01 | 기본 입력 컨트롤 | Basic Inputs | 텍스트, 숫자, 날짜, 스위치, 슬라이더 등 |
@@ -44,9 +44,9 @@
 | 21 | 터치 및 제스처 컨트롤 | Touch & Multi-Touch Gestures | Two-Finger Orbit, Edge Swipe, Long-Press Pie, Pinch Rotate 등 |
 | 22 | 디스플레이 및 다이나믹 인덱스 | Display & Dynamic Indexing | Breadcrumb Collapser, Tag Overflow, Tab Carousel, Metric Tile 등 |
 | 23 | 실시간 데이터 동기화 및 텔레메트리 | Real-Time Sync & Telemetry | WebSocket Heartbeat, SSE Gauge, Delta Highlight, Reconnect Banner 등 |
-| 24 | 미디어 뷰어 및 그래픽스 제어 | Media & Graphics Viewers | Crosshair Laser, Snap-to-Grid, Split Comparison, Drop Overlay 등 |
+| 24 | 미디어 뷰어, 공간 전술 HUD 및 렌더 가버너 | Media, Geospatial HUD & Viewers | Tactical HUD, Split-Flap Badge, Frustum Viewshed, Scope Mask, Render Governor 등 |
 
-### 2. 646개 전 항목 라이브 인터랙티브 랩 (Live UX)
+### 2. 652개 전 항목 라이브 인터랙티브 랩 (Live UX)
 - 슬라이더, 입력 필드, 토글, 드래그, 애니메이션을 브라우저에서 직접 조작
 - React 19 + Tailwind CSS + Motion(Framer Motion) 기반 즉각 반응
 

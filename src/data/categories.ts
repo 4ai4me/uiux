@@ -214,7 +214,7 @@ export const CATEGORIES: Category[] = [
     title: '24. Overlay & Transparency',
     koreanTitle: '오버레이, 투영, 투명도',
     description: 'Z-index, Stacking Context, Projection Overlay, Glassmorphism, Click-Through, Portals',
-    count: 46,
+    count: 52,
     iconName: 'Copy',
   },
 ];

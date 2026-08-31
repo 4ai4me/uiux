@@ -6514,6 +6514,167 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
         </div>
       );
 
+    case 'split_flap_status_badge':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Solari Split-Flap Vector Diagram</span>
+            <span className="bg-emerald-950 text-emerald-300 px-1 rounded text-[6.5px]">3D FLIP</span>
+          </div>
+          <div className="bg-slate-950 border border-cyan-800 rounded p-1.5 flex flex-col gap-1 text-[7px]">
+            <div className="flex items-center justify-center gap-0.5">
+              {['R', 'E', 'A', 'D', 'Y'].map((ch, idx) => (
+                <div key={idx} className="w-7 h-9 bg-slate-900 border border-cyan-500/80 rounded flex flex-col relative overflow-hidden shadow-inner">
+                  <div className="h-1/2 bg-slate-800 border-b border-cyan-400/60 flex items-center justify-center text-cyan-200 font-black text-[9px] pt-1">
+                    {ch}
+                  </div>
+                  <div className="h-1/2 bg-slate-950 flex items-center justify-center text-cyan-400 font-black text-[9px] pb-1">
+                    {ch}
+                  </div>
+                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[1px] bg-cyan-300/80 shadow" />
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-between items-center text-[6.5px] text-slate-400 pt-0.5 border-t border-slate-800">
+              <span className="text-amber-400">⚡ Staggered: 40ms/col</span>
+              <span className="text-cyan-300">CSS 3D Transform (X-Axis)</span>
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'tactical_recon_hud':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-emerald-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1 relative overflow-hidden">
+          <div className="flex justify-between items-center text-[7px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-500/40">
+            <span className="font-bold">TOP SECRET // GEO-INT</span>
+            <span className="text-amber-300">MGRS: 52SDG 8912 3401</span>
+          </div>
+          <div className="h-14 bg-slate-950 border border-emerald-800/80 rounded relative flex items-center justify-center">
+            {/* Corner Reticles */}
+            <div className="absolute top-1 left-1 w-2 h-2 border-t border-l border-emerald-400" />
+            <div className="absolute top-1 right-1 w-2 h-2 border-t border-r border-emerald-400" />
+            <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l border-emerald-400" />
+            <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-emerald-400" />
+            {/* Center Boresight */}
+            <div className="w-6 h-6 rounded-full border border-dashed border-emerald-500/60 flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full border border-emerald-400" />
+            </div>
+            <span className="absolute left-1.5 bottom-1 text-[6px] text-emerald-300">GSD: 0.12m</span>
+            <span className="absolute right-1.5 bottom-1 text-[6px] text-emerald-300">NIIRS: 8.4</span>
+            <span className="absolute right-1.5 top-1 text-[6px] text-amber-300">AZ: 142° / P: -38°</span>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-emerald-400">
+            <span>FLIR Thermal Sensor Active</span>
+            <span className="bg-emerald-900/60 px-1 rounded">CAD BORESIGHT</span>
+          </div>
+        </div>
+      );
+
+    case 'shared_corridor_panel_stack':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Shared Corridor Floor Allocation</span>
+            <span className="bg-cyan-950 text-cyan-400 px-1 rounded text-[6.5px]">avail: 280px</span>
+          </div>
+          <div className="bg-slate-950 border border-cyan-800 rounded p-1 flex flex-col gap-1 text-[7px]">
+            <div className="bg-cyan-950/80 border border-cyan-500 rounded p-1">
+              <div className="flex justify-between text-cyan-200 font-bold">
+                <span>Panel 1: Telemetry (Alloc: 110px)</span>
+                <span className="text-[6px] text-emerald-400">floor: 96px ✓</span>
+              </div>
+            </div>
+            <div className="bg-slate-900 border border-cyan-700 rounded p-1">
+              <div className="flex justify-between text-slate-300 font-bold">
+                <span>Panel 2: Sensor Stream (Alloc: 102px)</span>
+                <span className="text-[6px] text-emerald-400">floor: 96px ✓</span>
+              </div>
+            </div>
+            <div className="bg-slate-950/60 border border-dashed border-slate-700 rounded p-0.5 text-center text-slate-500 text-[6.5px]">
+              + Collapsed Siblings (Launcher Strip 24px)
+            </div>
+          </div>
+          <div className="text-[6.5px] text-cyan-400 text-center">
+            Proportional share = base + remaining * (unmet / unmetTotal)
+          </div>
+        </div>
+      );
+
+    case 'cctv_frustum_viewshed':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Camera 3D Viewshed Pyramid</span>
+            <span className="bg-cyan-950 text-cyan-400 px-1 rounded text-[6.5px]">FoV: 65°</span>
+          </div>
+          <div className="h-16 bg-slate-950 border border-cyan-800 rounded relative flex items-center justify-center overflow-hidden">
+            {/* Sensor Apex */}
+            <div className="absolute top-2 left-6 w-2.5 h-2.5 bg-cyan-400 rounded-sm flex items-center justify-center text-slate-950 font-black text-[6px]">
+              C
+            </div>
+            {/* Pyramid Rays */}
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 64">
+              <polygon points="30,12 170,18 190,52 140,58" fill="rgba(6,182,212,0.15)" stroke="rgba(6,182,212,0.8)" strokeWidth="1" />
+              <line x1="30" y1="12" x2="170" y2="18" stroke="rgba(6,182,212,0.6)" strokeDasharray="2 2" />
+              <line x1="30" y1="12" x2="190" y2="52" stroke="rgba(6,182,212,0.6)" strokeDasharray="2 2" />
+              <line x1="30" y1="12" x2="140" y2="58" stroke="rgba(6,182,212,0.6)" strokeDasharray="2 2" />
+              <rect x="135" y="18" width="55" height="38" fill="none" stroke="rgba(245,158,11,0.8)" strokeWidth="1" strokeDasharray="2 2" />
+            </svg>
+            <span className="absolute right-2 bottom-1 text-[6.5px] text-amber-300 font-bold">Ground Footprint</span>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Pitch: -28° | Yaw: 120°</span>
+            <span className="text-cyan-300">Max Range: 150m</span>
+          </div>
+        </div>
+      );
+
+    case 'altitude_adaptive_scope_mask':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Quantized Vignette Scope Mask</span>
+            <span className="bg-cyan-950 text-cyan-400 px-1 rounded text-[6.5px]">Band: 7Mm-10Mm</span>
+          </div>
+          <div className="h-16 bg-slate-950 border border-cyan-800 rounded relative flex items-center justify-center overflow-hidden">
+            {/* Outer dark mask */}
+            <div className="absolute inset-0 bg-slate-950 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full border border-cyan-400 bg-cyan-950/20 shadow-[0_0_20px_rgba(6,182,212,0.3)] flex items-center justify-center">
+                <span className="text-[6px] text-cyan-200">Clear Keyhole</span>
+              </div>
+            </div>
+            <span className="absolute left-2 top-1 text-[6px] text-slate-500">Terminus Alpha: 0.94</span>
+            <span className="absolute right-2 bottom-1 text-[6px] text-cyan-300">Feather: 24px</span>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Alt: 8,450 km (Space)</span>
+            <span className="text-emerald-400">Zero GPU Idle Cost</span>
+          </div>
+        </div>
+      );
+
+    case 'idle_render_governor_monitor':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Idle Render Governor (Ref-Counted)</span>
+            <span className="bg-emerald-950 text-emerald-300 px-1 rounded text-[6.5px]">GPU: 0.8%</span>
+          </div>
+          <div className="bg-slate-950 border border-cyan-800 rounded p-1.5 flex flex-col gap-1 text-[7px]">
+            <div className="flex justify-between items-center bg-cyan-950/70 p-1 rounded border border-cyan-500/40">
+              <span className="text-cyan-200 font-bold">Mode: IDLE (requestRenderMode)</span>
+              <span className="text-[6px] bg-cyan-500 text-slate-950 font-black px-1 rounded">0 FPS</span>
+            </div>
+            <div className="flex gap-1 text-[6.5px]">
+              <span className="bg-slate-900 text-slate-400 px-1 py-0.5 rounded border border-slate-700">hold: flights (0)</span>
+              <span className="bg-slate-900 text-slate-400 px-1 py-0.5 rounded border border-slate-700">hold: anim (0)</span>
+              <span className="text-emerald-400 font-bold ml-auto">96% Energy Saved</span>
+            </div>
+          </div>
+        </div>
+      );
+
     default:
       return (
         <div className="flex flex-col items-center gap-1.5 z-10">

@@ -35,6 +35,36 @@
    - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
 
 ## 3. Implementation History & Verification
+- **2026-08-31 (Geospatial Intelligence, Tactical HUD & Render Governor 6 New Terms Addition - v2.33.0)**:
+  - **User Request & Option A Approved**:
+    1. "God's Eye View (GEV)" 고도 관측/관제 시스템 분석 결과 도출된 핵심 전술 UI/UX 패턴 6종 구현 승인.
+    2. 조건 준수:
+       - Diagnostic Schematic 및 Live UX 각 특징에 맞게 전용 구현.
+       - 원본 프로젝트의 데이터는 절대 사용하지 않고 100% 임의의 안전한 산업 표준 샘플 데이터로 대체.
+  - **Implemented New Terms (#647 ~ #652)**:
+    - **#647 `Split-Flap Status Badge (스플릿 플랩 스테이터스 뱃지)`**:
+      - `schematicType`: `split_flap_status_badge` (문자 셀 상/하 반단 분할선, 3D X축 회전 각도 및 순차 딜레이 도면)
+      - `Live UX`: `LiveSplitFlapStatusBadgeLab` (기계식 솔라리 플립 텍스트 애니메이션, 18셀 스테이터스 칩, 플립 속도 조절 및 상태별 닷)
+    - **#648 `Tactical Reconnaissance HUD (전술 정찰 인텔리전스 HUD)`**:
+      - `schematicType`: `tactical_recon_hud` (TOP SECRET 배너, MGRS 좌표계, 4코너 L자 레티클, 중앙 보어사이트 십자선 도면)
+      - `Live UX`: `LiveTacticalReconHudLab` (주/야간 NVG·FLIR 열화상 모드 토글, 실시간 MGRS 좌표 생성, 나침반 방위각/피치 텔레메트리)
+    - **#649 `Shared Corridor Proportional Panel Stack (가용 높이 비례 분배 사이드 패널 스택)`**:
+      - `schematicType`: `shared_corridor_panel_stack` (Corridor 가용 높이, 패널별 80px 최소 바닥 보장 및 비례 분배 도면)
+      - `Live UX`: `LiveSharedCorridorPanelStackLab` (가용 높이 슬라이더, 3개 패널 동시 확장 시 바닥 높이 보장 및 비례 압축 계산기)
+    - **#650 `Sensor Frustum & 3D Viewshed Volume (센서 시야각 3D 뷰셰드 콘)`**:
+      - `schematicType`: `cctv_frustum_viewshed` (카메라 설치 노드, 4개 꼭짓점 투사 피라미드 및 지면 커버리지 폴리곤 도면)
+      - `Live UX`: `LiveCctvFrustumViewshedLab` (고도, 틸트각, 방위각, 화각(FoV), 유효거리 조절 슬라이더 및 3D 지면 면적 실시간 계산)
+    - **#651 `Altitude-Adaptive Aperture Scope Mask (고도 감응형 조리개 스코프 마스크)`**:
+      - `schematicType`: `altitude_adaptive_scope_mask` (고도 밴드별 양자화 비네팅, 중앙 투명 키홀 및 터미너스 알파 도면)
+      - `Live UX`: `LiveAltitudeAdaptiveScopeMaskLab` (15,000km 우주 ➔ 100m 지표면 고도 줌 슬라이더, 양자화 알파 및 스코프 렌즈 쉐이더)
+    - **#652 `Idle Render Governor & Hold Monitor (유휴 렌더 가버너 모니터)`**:
+      - `schematicType`: `idle_render_governor_monitor` (Continuous Mode 60fps vs Idle Request Mode 0fps 상태 머신 및 홀드 레퍼런스 도면)
+      - `Live UX`: `LiveIdleRenderGovernorMonitorLab` (애니메이터별 홀드 토글, 60fps ➔ 0fps 실시간 절전 전환, 98% GPU 절감율 게이지)
+  - **Verification**:
+    - `lint_applet` (TypeScript strict check: 0 errors)
+    - `compile_applet` (Vite production bundle build: 성공)
+    - 총 용어 수 652개 동기화 및 `cat-24` 개수 52개 갱신 확인 완료.
+
 - **2026-08-30 (Category 17 Advanced Data Grid 6 New Terms Addition - v2.32.0)**:
   - **User Request & Option A Approved**:
     1. 분석 대상 프로그램의 UX/UI 심층 분석 결과 도출된 대용량 엔터프라이즈 데이터 그리드 필수 패턴 6종 추가 승인.

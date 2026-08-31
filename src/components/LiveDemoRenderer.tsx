@@ -542,6 +542,14 @@ import {
   LiveZIndex3DVisualizerLab,
   LiveUniversalSystemLab,
 } from './LiveOverlayTransparencyLabs';
+import {
+  LiveSplitFlapStatusBadgeLab,
+  LiveTacticalReconHudLab,
+  LiveSharedCorridorPanelStackLab,
+  LiveCctvFrustumViewshedLab,
+  LiveAltitudeAdaptiveScopeMaskLab,
+  LiveIdleRenderGovernorMonitorLab,
+} from './LiveGeospatialConsoleLabs';
 import { 
   Play, Pause, RotateCcw, Check, Copy, Sliders, ChevronDown, ChevronRight,
   Eye, EyeOff, Sparkles, Volume2, ShieldCheck, AlertTriangle, Info, Bell,
@@ -601,6 +609,12 @@ function renderSpecializedDemo(term: TermItem) {
   // -------------------------------------------------------------
   // High-Priority Direct Term Dispatches
   // -------------------------------------------------------------
+  if (term.num === 652 || sch === 'idle_render_governor_monitor') return <LiveIdleRenderGovernorMonitorLab />;
+  if (term.num === 651 || sch === 'altitude_adaptive_scope_mask') return <LiveAltitudeAdaptiveScopeMaskLab />;
+  if (term.num === 650 || sch === 'cctv_frustum_viewshed') return <LiveCctvFrustumViewshedLab />;
+  if (term.num === 649 || sch === 'shared_corridor_panel_stack') return <LiveSharedCorridorPanelStackLab />;
+  if (term.num === 648 || sch === 'tactical_recon_hud') return <LiveTacticalReconHudLab />;
+  if (term.num === 647 || sch === 'split_flap_status_badge') return <LiveSplitFlapStatusBadgeLab />;
   if (term.num === 646 || sch === 'bidirectional_freeze_matrix') return <LiveBidirectionalFreezeMatrixLab />;
   if (term.num === 645 || sch === 'cascader_grid_editor') return <LiveCascaderGridEditorLab />;
   if (term.num === 644 || sch === 'cell_navigation_dom_sync') return <LiveCellNavigationDomSyncLab />;
