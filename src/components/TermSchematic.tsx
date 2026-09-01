@@ -6675,6 +6675,252 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
         </div>
       );
 
+    case 'interactive_beaded_curtain':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-amber-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-amber-300 font-bold">
+            <span>Interactive Beaded Curtain Schematic</span>
+            <span className="bg-amber-950 text-amber-400 px-1 rounded text-[6.5px]">Canvas 60fps</span>
+          </div>
+          <div className="h-20 bg-slate-950 border border-amber-900/60 rounded relative overflow-hidden flex items-center justify-center p-1">
+            {/* Top Anchor Rail */}
+            <div className="absolute top-1 left-2 right-2 h-1 bg-amber-600/60 rounded" />
+            <svg className="w-full h-full" viewBox="0 0 240 70">
+              {/* Vertical string lines and beads */}
+              {[30, 60, 90, 120, 150, 180, 210].map((x, idx) => {
+                const isBent = idx === 3;
+                const pathD = isBent ? `M ${x} 6 Q ${x + 24} 35 ${x + 12} 65` : `M ${x} 6 L ${x} 65`;
+                return (
+                  <g key={x}>
+                    <path d={pathD} stroke="rgba(245,158,11,0.4)" strokeWidth="1" fill="none" />
+                    {[16, 28, 40, 52, 62].map((y, bIdx) => {
+                      const cx = isBent ? x + Math.sin(bIdx * 0.7) * 18 : x;
+                      return (
+                        <circle
+                          key={bIdx}
+                          cx={cx}
+                          cy={y}
+                          r="3"
+                          fill={isBent ? '#f59e0b' : bIdx % 2 === 0 ? '#38bdf8' : '#fb7185'}
+                          stroke="rgba(0,0,0,0.6)"
+                          strokeWidth="0.5"
+                        />
+                      );
+                    })}
+                  </g>
+                );
+              })}
+              {/* Cursor Interaction Deflection Arrow */}
+              <circle cx="140" cy="35" r="14" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.8)" strokeDasharray="2 2" />
+              <line x1="140" y1="35" x2="165" y2="35" stroke="#ef4444" strokeWidth="1.5" markerEnd="url(#arrow)" />
+              <text x="142" y="26" fill="#f59e0b" fontSize="6" fontWeight="bold">Touch Radius (r=28px)</text>
+            </svg>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Verlet Strings: 7 Strands × 5 Beads</span>
+            <span className="text-emerald-400">Audio Sync: ON</span>
+          </div>
+        </div>
+      );
+
+    case 'velocity_adaptive_chime_synthesizer':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-emerald-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-emerald-300 font-bold">
+            <span>Velocity-Adaptive Chime Synthesizer</span>
+            <span className="bg-emerald-950 text-emerald-400 px-1 rounded text-[6.5px]">WebAudio API</span>
+          </div>
+          <div className="bg-slate-950 border border-emerald-900/60 rounded p-1.5 flex flex-col gap-1 text-[7px]">
+            {/* Audio Pipeline block */}
+            <div className="flex items-center justify-between gap-1 text-[6.5px]">
+              <div className="bg-slate-900 border border-slate-700 p-1 rounded text-center flex-1">
+                <span className="text-amber-400 font-bold block">Velocity |v|</span>
+                <span className="text-slate-400 text-[6px]">120px/s</span>
+              </div>
+              <span className="text-slate-500">➔</span>
+              <div className="bg-slate-900 border border-slate-700 p-1 rounded text-center flex-1">
+                <span className="text-cyan-400 font-bold block">Pentatonic</span>
+                <span className="text-slate-400 text-[6px]">E5 (659.3Hz)</span>
+              </div>
+              <span className="text-slate-500">➔</span>
+              <div className="bg-slate-900 border border-slate-700 p-1 rounded text-center flex-1">
+                <span className="text-emerald-400 font-bold block">Exp. Gain</span>
+                <span className="text-slate-400 text-[6px]">τ = 0.85s</span>
+              </div>
+            </div>
+            {/* Waveform graphic */}
+            <div className="h-8 bg-emerald-950/30 border border-emerald-500/30 rounded flex items-center justify-center relative overflow-hidden">
+              <svg className="w-full h-full" viewBox="0 0 200 30">
+                <path d="M 0 15 Q 10 2 20 15 T 40 15 T 60 15 T 80 15 T 110 15 T 150 15 T 200 15" fill="none" stroke="#10b981" strokeWidth="1.5" />
+                <path d="M 0 5 Q 60 8 120 18 T 200 24" fill="none" stroke="#f59e0b" strokeWidth="1" strokeDasharray="2 2" />
+              </svg>
+              <span className="absolute right-1 top-0.5 text-[6px] text-amber-300">Decay Envelope (Chime Ring)</span>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Sine/Tri Blend + Bandpass Q=8.0</span>
+            <span className="text-emerald-400">Zero-Latency DSP</span>
+          </div>
+        </div>
+      );
+
+    case 'verlet_string_drag_dynamics':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-indigo-300 font-bold">
+            <span>Verlet Integration Physics Loop</span>
+            <span className="bg-indigo-950 text-indigo-400 px-1 rounded text-[6.5px]">Relaxation: 5 iters</span>
+          </div>
+          <div className="h-20 bg-slate-950 border border-indigo-900/60 rounded relative flex items-center justify-center p-1">
+            <svg className="w-full h-full" viewBox="0 0 240 70">
+              {/* Fixed Anchor */}
+              <rect x="45" y="4" width="150" height="4" fill="#6366f1" rx="1" />
+              {/* P0 to P4 chain */}
+              <circle cx="70" cy="6" r="3" fill="#ef4444" />
+              <text x="76" y="8" fill="#ef4444" fontSize="6">P₀ (Anchor Fixed)</text>
+              
+              <line x1="70" y1="6" x2="95" y2="24" stroke="#818cf8" strokeWidth="1.5" />
+              <circle cx="95" cy="24" r="3" fill="#a5b4fc" />
+              
+              <line x1="95" y1="24" x2="135" y2="40" stroke="#818cf8" strokeWidth="1.5" />
+              <circle cx="135" cy="40" r="4" fill="#fbbf24" stroke="#f59e0b" strokeWidth="1" />
+              <text x="143" y="42" fill="#fbbf24" fontSize="6">P₂ (Dragged Node)</text>
+              
+              <line x1="135" y1="40" x2="160" y2="60" stroke="#818cf8" strokeWidth="1.5" />
+              <circle cx="160" cy="60" r="3" fill="#a5b4fc" />
+
+              {/* Force vector arrow */}
+              <line x1="135" y1="40" x2="175" y2="28" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="2 2" />
+              <text x="178" y="30" fill="#ef4444" fontSize="6">F_ext</text>
+            </svg>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>x′ = 2x - x_old + a·dt²</span>
+            <span className="text-cyan-300">Damping γ=0.96</span>
+          </div>
+        </div>
+      );
+
+    case 'cultural_pattern_grid_matrix':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-pink-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-pink-300 font-bold">
+            <span>Cultural Pattern Grid Matrix</span>
+            <span className="bg-pink-950 text-pink-400 px-1 rounded text-[6.5px]">Azulejo Tile Grid</span>
+          </div>
+          <div className="h-20 bg-slate-950 border border-pink-900/60 rounded p-1.5 flex items-center justify-between gap-2">
+            {/* Bead matrix visual */}
+            <div className="grid grid-cols-6 gap-1 p-1 bg-slate-900 rounded border border-slate-800">
+              {Array.from({ length: 24 }).map((_, i) => {
+                const isAccent = (i % 6 === 1 || i % 6 === 4 || i >= 12 && i < 18);
+                return (
+                  <div
+                    key={i}
+                    className={`w-2.5 h-2.5 rounded-full shadow-sm ${
+                      isAccent ? 'bg-cyan-400 border border-cyan-200 shadow-[0_0_4px_#38bdf8]' : 'bg-slate-700'
+                    }`}
+                  />
+                );
+              })}
+            </div>
+            {/* Palette & Tokens */}
+            <div className="flex-1 flex flex-col justify-between h-full text-[6.5px] text-slate-300">
+              <div className="bg-slate-900 p-1 rounded border border-slate-800 flex flex-col gap-0.5">
+                <span className="text-pink-300 font-bold">Palette Tokens:</span>
+                <div className="flex gap-1 items-center">
+                  <div className="w-2 h-2 rounded bg-cyan-400" />
+                  <span className="text-[6px]">Cobalt Blue</span>
+                </div>
+                <div className="flex gap-1 items-center">
+                  <div className="w-2 h-2 rounded bg-amber-400" />
+                  <span className="text-[6px]">Ochre Terra</span>
+                </div>
+              </div>
+              <span className="text-[6px] text-slate-500">Coord: [x:4, y:3] → #38bdf8</span>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Matrix: 12 × 16 Pixel Beads</span>
+            <span className="text-pink-400">Dynamic Shader Theme</span>
+          </div>
+        </div>
+      );
+
+    case 'physical_parameter_tuner_drawer':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Physics Parameter Tuner Drawer</span>
+            <span className="bg-cyan-950 text-cyan-400 px-1 rounded text-[6.5px]">Drawer Panel</span>
+          </div>
+          <div className="bg-slate-950 border border-cyan-900/60 rounded p-1.5 flex flex-col gap-1 text-[6.5px]">
+            {/* Sliders list */}
+            <div className="flex items-center justify-between">
+              <span className="text-slate-400">Gravity (g):</span>
+              <div className="w-24 h-1.5 bg-slate-800 rounded overflow-hidden">
+                <div className="w-3/5 h-full bg-cyan-400" />
+              </div>
+              <span className="text-cyan-300 font-bold">0.98</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-slate-400">Damping (γ):</span>
+              <div className="w-24 h-1.5 bg-slate-800 rounded overflow-hidden">
+                <div className="w-4/5 h-full bg-emerald-400" />
+              </div>
+              <span className="text-emerald-300 font-bold">0.96</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-slate-400">Touch Radius:</span>
+              <div className="w-24 h-1.5 bg-slate-800 rounded overflow-hidden">
+                <div className="w-1/2 h-full bg-amber-400" />
+              </div>
+              <span className="text-amber-300 font-bold">35px</span>
+            </div>
+            <div className="flex gap-1 mt-0.5">
+              <span className="bg-cyan-950 text-cyan-300 px-1 rounded border border-cyan-500/30 text-[6px]">Soft Silk</span>
+              <span className="bg-slate-900 text-slate-400 px-1 rounded border border-slate-700 text-[6px]">Wood Beads</span>
+              <span className="bg-slate-900 text-slate-400 px-1 rounded border border-slate-700 text-[6px]">Zero-G</span>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Live Sync with Canvas Loop</span>
+            <span className="text-emerald-400">State: Hot-Reloaded</span>
+          </div>
+        </div>
+      );
+
+    case 'curtain_reveal_layering_transition':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-violet-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-violet-300 font-bold">
+            <span>Curtain Reveal Layering Transition</span>
+            <span className="bg-violet-950 text-violet-400 px-1 rounded text-[6.5px]">Depth Stacking</span>
+          </div>
+          <div className="h-20 bg-slate-950 border border-violet-900/60 rounded relative flex items-center justify-center p-1 overflow-hidden">
+            {/* Background Content Layer (Z:0) */}
+            <div className="absolute inset-2 bg-gradient-to-br from-indigo-950 to-slate-900 rounded p-1 flex flex-col justify-center items-center text-center">
+              <span className="text-[7px] text-amber-300 font-serif">"O Sol Nasce Para Todos"</span>
+              <span className="text-[5.5px] text-slate-400">Background Story Card (Defocus → Sharp)</span>
+            </div>
+            {/* Foreground Parting Beaded Curtains (Z:10) */}
+            <div className="absolute inset-y-0 left-0 w-8 bg-amber-500/20 border-r border-amber-400 flex flex-col justify-around py-1 px-0.5">
+              {[1, 2, 3].map(i => <div key={i} className="w-full h-1 bg-amber-400 rounded-full" />)}
+            </div>
+            <div className="absolute inset-y-0 right-0 w-8 bg-amber-500/20 border-l border-amber-400 flex flex-col justify-around py-1 px-0.5">
+              {[1, 2, 3].map(i => <div key={i} className="w-full h-1 bg-amber-400 rounded-full" />)}
+            </div>
+            {/* Center parted gap */}
+            <span className="text-[6.5px] text-violet-200 bg-violet-950/80 px-1 py-0.5 rounded border border-violet-500/50 z-20">
+              Parting Reveal Gap (140px)
+            </span>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Drag to Part ➔ Audio + Story Trigger</span>
+            <span className="text-violet-300">Z-Index: 0 ➔ 10</span>
+          </div>
+        </div>
+      );
+
     default:
       return (
         <div className="flex flex-col items-center gap-1.5 z-10">

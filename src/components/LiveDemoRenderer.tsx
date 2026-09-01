@@ -550,6 +550,14 @@ import {
   LiveAltitudeAdaptiveScopeMaskLab,
   LiveIdleRenderGovernorMonitorLab,
 } from './LiveGeospatialConsoleLabs';
+import {
+  LiveInteractiveBeadedCurtainLab,
+  LiveVelocityAdaptiveChimeSynthesizerLab,
+  LiveVerletStringDragDynamicsLab,
+  LiveCulturalPatternGridMatrixLab,
+  LivePhysicalParameterTunerDrawerLab,
+  LiveCurtainRevealLayeringTransitionLab,
+} from './LiveChimesPhysicsAudioLabs';
 import { 
   Play, Pause, RotateCcw, Check, Copy, Sliders, ChevronDown, ChevronRight,
   Eye, EyeOff, Sparkles, Volume2, ShieldCheck, AlertTriangle, Info, Bell,
@@ -1404,6 +1412,18 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 644) return <LiveCellNavigationDomSyncLab />;
   if (term.num === 645) return <LiveCascaderGridEditorLab />;
   if (term.num === 646) return <LiveBidirectionalFreezeMatrixLab />;
+  if (term.num === 647) return <LiveSplitFlapStatusBadgeLab />;
+  if (term.num === 648) return <LiveTacticalReconHudLab />;
+  if (term.num === 649) return <LiveSharedCorridorPanelStackLab />;
+  if (term.num === 650) return <LiveCctvFrustumViewshedLab />;
+  if (term.num === 651) return <LiveAltitudeAdaptiveScopeMaskLab />;
+  if (term.num === 652) return <LiveIdleRenderGovernorMonitorLab />;
+  if (term.num === 653) return <LiveInteractiveBeadedCurtainLab />;
+  if (term.num === 654) return <LiveVelocityAdaptiveChimeSynthesizerLab />;
+  if (term.num === 655) return <LiveVerletStringDragDynamicsLab />;
+  if (term.num === 656) return <LiveCulturalPatternGridMatrixLab />;
+  if (term.num === 657) return <LivePhysicalParameterTunerDrawerLab />;
+  if (term.num === 658) return <LiveCurtainRevealLayeringTransitionLab />;
 
   // 4. Fallback for Layout & Panes (Cat 4 & Cat 16)
   if (cat === 4 || cat === 16 || sch.includes('pane') || sch.includes('split') || sch.includes('layout')) {
