@@ -212,9 +212,9 @@ export const CATEGORIES: Category[] = [
     id: 'cat-24',
     catNumber: 24,
     title: '24. Overlay & Transparency',
-    koreanTitle: '오버레이, 투영, 투명도',
-    description: 'Z-index, Stacking Context, Projection Overlay, Glassmorphism, Click-Through, Portals',
-    count: 58,
+    koreanTitle: '오버레이, 투영, 투명도 및 지식그래프',
+    description: 'Z-index, Overlay, Glassmorphism, Chimes Physics, Knowledge Graph & Semantic Canvas',
+    count: 64,
     iconName: 'Copy',
   },
 ];

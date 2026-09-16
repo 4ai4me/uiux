@@ -558,6 +558,14 @@ import {
   LivePhysicalParameterTunerDrawerLab,
   LiveCurtainRevealLayeringTransitionLab,
 } from './LiveChimesPhysicsAudioLabs';
+import {
+  LiveForceDirectedGraphCanvasLab,
+  LiveEntityInspectorDrawerLab,
+  LiveSemanticZoomInfiniteCanvasLab,
+  LiveEgoNetworkFocusLab,
+  LiveShortestPathTraversalLab,
+  LiveTripleEditorOntologyTogglerLab,
+} from './LiveKnowledgeGraphLabs';
 import { 
   Play, Pause, RotateCcw, Check, Copy, Sliders, ChevronDown, ChevronRight,
   Eye, EyeOff, Sparkles, Volume2, ShieldCheck, AlertTriangle, Info, Bell,
@@ -1424,6 +1432,12 @@ function renderSpecializedDemo(term: TermItem) {
   if (term.num === 656) return <LiveCulturalPatternGridMatrixLab />;
   if (term.num === 657) return <LivePhysicalParameterTunerDrawerLab />;
   if (term.num === 658) return <LiveCurtainRevealLayeringTransitionLab />;
+  if (term.num === 659) return <LiveForceDirectedGraphCanvasLab />;
+  if (term.num === 660) return <LiveEntityInspectorDrawerLab />;
+  if (term.num === 661) return <LiveSemanticZoomInfiniteCanvasLab />;
+  if (term.num === 662) return <LiveEgoNetworkFocusLab />;
+  if (term.num === 663) return <LiveShortestPathTraversalLab />;
+  if (term.num === 664) return <LiveTripleEditorOntologyTogglerLab />;
 
   // 4. Fallback for Layout & Panes (Cat 4 & Cat 16)
   if (cat === 4 || cat === 16 || sch.includes('pane') || sch.includes('split') || sch.includes('layout')) {

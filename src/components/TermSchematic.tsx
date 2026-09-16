@@ -6921,6 +6921,235 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
         </div>
       );
 
+    case 'force_directed_kg_canvas':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Force-Directed Knowledge Graph</span>
+            <span className="bg-cyan-950 text-cyan-400 px-1 rounded text-[6.5px]">Physics Net</span>
+          </div>
+          <div className="h-20 bg-slate-950 border border-cyan-900/60 rounded relative flex items-center justify-center p-1 overflow-hidden">
+            {/* SVG Spring Tension Lines */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none">
+              <line x1="60" y1="30" x2="135" y2="40" stroke="#38bdf8" strokeWidth="1.5" />
+              <line x1="135" y1="40" x2="210" y2="30" stroke="#38bdf8" strokeWidth="1.5" />
+              <line x1="135" y1="40" x2="135" y2="70" stroke="#38bdf8" strokeWidth="1.5" />
+              <line x1="60" y1="30" x2="80" y2="65" stroke="#334155" strokeWidth="1" strokeDasharray="2 2" />
+              <line x1="210" y1="30" x2="190" y2="65" stroke="#334155" strokeWidth="1" strokeDasharray="2 2" />
+            </svg>
+            {/* Center Node */}
+            <div className="absolute left-[122px] top-[28px] w-7 h-7 rounded-full bg-cyan-500 border-2 border-white flex items-center justify-center text-[6px] text-slate-950 font-bold shadow-[0_0_10px_rgba(6,182,212,0.5)]">
+              Entity
+            </div>
+            {/* Surrounding Nodes */}
+            <div className="absolute left-[48px] top-[18px] w-5 h-5 rounded-full bg-blue-600 border border-blue-300 flex items-center justify-center text-[5.5px] text-white">
+              AI
+            </div>
+            <div className="absolute right-[48px] top-[18px] w-5 h-5 rounded-full bg-purple-600 border border-purple-300 flex items-center justify-center text-[5.5px] text-white">
+              LLM
+            </div>
+            <div className="absolute left-[125px] bottom-[3px] w-5 h-5 rounded-full bg-emerald-600 border border-emerald-300 flex items-center justify-center text-[5.5px] text-white">
+              RAG
+            </div>
+            {/* Force Indicator Badge */}
+            <div className="absolute top-1 left-1 text-[6px] text-cyan-400 bg-slate-900/90 px-1 py-0.5 rounded border border-cyan-800">
+              F_coulomb + F_hooke
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Coulomb Repulsion + Hooke Spring</span>
+            <span className="text-cyan-300">Stabilized (60 FPS)</span>
+          </div>
+        </div>
+      );
+
+    case 'entity_property_inspector_drawer':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-indigo-300 font-bold">
+            <span>Entity Property Inspector Drawer</span>
+            <span className="bg-indigo-950 text-indigo-400 px-1 rounded text-[6.5px]">RDF Schema</span>
+          </div>
+          <div className="h-20 bg-slate-950 border border-indigo-900/60 rounded flex overflow-hidden">
+            {/* Left canvas area */}
+            <div className="flex-1 p-1.5 flex flex-col justify-between border-r border-slate-800">
+              <div className="flex items-center gap-1">
+                <div className="w-2.5 h-2.5 rounded-full bg-indigo-500" />
+                <span className="text-[6.5px] text-indigo-300">Node Selected</span>
+              </div>
+              <div className="text-[6px] text-slate-400">Canvas 2D Coordinates</div>
+            </div>
+            {/* Right Slide Drawer */}
+            <div className="w-32 bg-slate-900 p-1 flex flex-col justify-between border-l border-indigo-500/40">
+              <div className="flex justify-between items-center text-[6px] text-indigo-200 border-b border-slate-800 pb-0.5">
+                <span>Inspector</span>
+                <span className="text-emerald-400">99.4%</span>
+              </div>
+              <div className="text-[5.5px] text-slate-300 flex flex-col gap-0.5">
+                <div>URI: schema:Transformer</div>
+                <div>Class: ModelArch</div>
+                <div className="text-indigo-400">In: 8 | Out: 5</div>
+              </div>
+              <div className="bg-slate-950 text-[5px] text-cyan-300 px-1 rounded truncate">
+                JSON-LD / Turtle
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Node Click ➔ Slide-Over Metadata</span>
+            <span className="text-indigo-300">Triples & JSON-LD</span>
+          </div>
+        </div>
+      );
+
+    case 'semantic_zoom_infinite_canvas':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-emerald-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-emerald-300 font-bold">
+            <span>Semantic Zoom Infinite Canvas</span>
+            <span className="bg-emerald-950 text-emerald-400 px-1 rounded text-[6.5px]">LOD Engine</span>
+          </div>
+          <div className="h-20 bg-slate-950 border border-emerald-900/60 rounded flex items-center justify-around p-1">
+            {/* Low Zoom: Macro Cluster */}
+            <div className="flex flex-col items-center gap-0.5">
+              <div className="w-9 h-9 rounded-2xl bg-emerald-500/20 border border-emerald-500/60 flex items-center justify-center text-[6px] text-emerald-300 text-center font-bold">
+                Macro Hull
+              </div>
+              <span className="text-[5.5px] text-slate-400">Zoom &lt; 50%</span>
+            </div>
+            <span className="text-[7px] text-emerald-500">➔</span>
+            {/* Medium Zoom: Entity Nodes */}
+            <div className="flex flex-col items-center gap-0.5">
+              <div className="w-10 h-10 rounded-lg bg-slate-900 border border-emerald-400 p-0.5 flex flex-col justify-around text-center">
+                <div className="w-full h-1.5 bg-emerald-500/40 rounded" />
+                <span className="text-[5.5px] text-slate-200">Entity Node</span>
+              </div>
+              <span className="text-[5.5px] text-slate-400">100% LOD</span>
+            </div>
+            <span className="text-[7px] text-emerald-500">➔</span>
+            {/* High Zoom: Micro Triples */}
+            <div className="flex flex-col items-center gap-0.5">
+              <div className="w-11 h-10 rounded bg-slate-900 border-2 border-cyan-400 p-0.5 flex flex-col justify-between text-[5px]">
+                <span className="text-cyan-300 font-bold">rel:powers</span>
+                <span className="text-emerald-400">Conf: 99%</span>
+              </div>
+              <span className="text-[5.5px] text-slate-400">Zoom &gt; 150%</span>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Cluster Hull ➔ Entity ➔ Triple Label</span>
+            <span className="text-emerald-300">Semantic LOD</span>
+          </div>
+        </div>
+      );
+
+    case 'ego_network_focus_highlighting':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-pink-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-pink-300 font-bold">
+            <span>Ego-Network Focus & Highlighting</span>
+            <span className="bg-pink-950 text-pink-400 px-1 rounded text-[6.5px]">1-Hop / 2-Hop</span>
+          </div>
+          <div className="h-20 bg-slate-950 border border-pink-900/60 rounded relative flex items-center justify-center p-1 overflow-hidden">
+            {/* Concentric rings */}
+            <div className="absolute w-14 h-14 rounded-full border border-pink-500/40" />
+            <div className="absolute w-24 h-24 rounded-full border border-purple-500/30" />
+            {/* Center Ego Root */}
+            <div className="relative z-10 w-6 h-6 rounded-full bg-pink-600 border border-pink-200 flex items-center justify-center text-[5.5px] text-white font-bold shadow-[0_0_8px_rgba(236,72,153,0.6)]">
+              Ego
+            </div>
+            {/* 1-Hop highlighted */}
+            <div className="absolute left-6 top-4 w-3.5 h-3.5 rounded-full bg-pink-400 border border-white flex items-center justify-center text-[4.5px] text-slate-950">
+              1H
+            </div>
+            <div className="absolute right-6 bottom-4 w-3.5 h-3.5 rounded-full bg-pink-400 border border-white flex items-center justify-center text-[4.5px] text-slate-950">
+              1H
+            </div>
+            {/* Background Dimmed Hairball Nodes */}
+            <div className="absolute left-2 bottom-2 w-2.5 h-2.5 rounded-full bg-slate-700 opacity-20" />
+            <div className="absolute right-2 top-2 w-2.5 h-2.5 rounded-full bg-slate-700 opacity-20" />
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Dim Hairball Clutter (opacity-15)</span>
+            <span className="text-pink-300">Focus+Context</span>
+          </div>
+        </div>
+      );
+
+    case 'shortest_path_traversal_finder':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-amber-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-amber-300 font-bold">
+            <span>Shortest Path Traversal Finder</span>
+            <span className="bg-amber-950 text-amber-400 px-1 rounded text-[6.5px]">Dijkstra BFS</span>
+          </div>
+          <div className="h-20 bg-slate-950 border border-amber-900/60 rounded flex items-center justify-between px-2">
+            {/* Source */}
+            <div className="p-1 rounded bg-amber-950 border border-amber-400 text-[6px] text-amber-200 text-center">
+              Source<br />&lt;Entity A&gt;
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-[5px] text-amber-400">rel:hops</span>
+              <span className="text-[8px] text-amber-400 animate-pulse">➔➔</span>
+            </div>
+            {/* Bridge */}
+            <div className="p-1 rounded bg-slate-900 border border-slate-700 text-[6px] text-slate-300 text-center">
+              Bridge<br />&lt;Index&gt;
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-[5px] text-amber-400">rel:accelerate</span>
+              <span className="text-[8px] text-amber-400 animate-pulse">➔➔</span>
+            </div>
+            {/* Target */}
+            <div className="p-1 rounded bg-amber-950 border border-amber-400 text-[6px] text-amber-200 text-center">
+              Target<br />&lt;Entity B&gt;
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Source ➔ Intermediate ➔ Target</span>
+            <span className="text-amber-300">3 Hops Resolved</span>
+          </div>
+        </div>
+      );
+
+    case 'triple_predicate_editor_ontology_toggler':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-teal-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-teal-300 font-bold">
+            <span>Triple Editor & Ontology Toggler</span>
+            <span className="bg-teal-950 text-teal-400 px-1 rounded text-[6.5px]">RDF S-P-O</span>
+          </div>
+          <div className="h-20 bg-slate-950 border border-teal-900/60 rounded p-1.5 flex flex-col justify-between">
+            {/* Facet pills */}
+            <div className="flex gap-1">
+              <span className="px-1 bg-teal-600 text-white rounded text-[5.5px]">Model [x]</span>
+              <span className="px-1 bg-slate-800 text-slate-400 rounded text-[5.5px]">Ontology</span>
+              <span className="px-1 bg-slate-800 text-slate-400 rounded text-[5.5px]">Infra</span>
+            </div>
+            {/* S P O inputs mock */}
+            <div className="grid grid-cols-3 gap-1 text-[5.5px]">
+              <div className="bg-slate-900 border border-slate-700 p-0.5 rounded text-slate-200 truncate">
+                Subj: GPT-5
+              </div>
+              <div className="bg-slate-900 border border-teal-500/60 p-0.5 rounded text-teal-300 truncate">
+                Pred: powers
+              </div>
+              <div className="bg-slate-900 border border-slate-700 p-0.5 rounded text-slate-200 truncate">
+                Obj: Agent
+              </div>
+            </div>
+            {/* Turtle line */}
+            <div className="bg-slate-900/80 px-1 py-0.5 rounded text-[5px] text-emerald-300 truncate border border-slate-800">
+              :GPT-5 rel:powers :Agent .
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>S-P-O Authoring + Class Toggler</span>
+            <span className="text-teal-300">Turtle Serializer</span>
+          </div>
+        </div>
+      );
+
     default:
       return (
         <div className="flex flex-col items-center gap-1.5 z-10">
