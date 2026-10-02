@@ -1630,21 +1630,6 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
         </div>
       );
 
-    // 4. Layout & Panes (Fallback)
-    case 'two_pane':
-    case 'split_view':
-      return (
-        <div className="w-44 h-22 bg-slate-900 border-2 border-slate-700 rounded-xl flex overflow-hidden z-10">
-          <div className="w-[35%] bg-slate-800 p-1.5 flex flex-col gap-1 border-r-2 border-indigo-500">
-            <div className="w-full h-2.5 bg-slate-700 rounded" />
-            <div className="w-3/4 h-2 bg-slate-700 rounded" />
-          </div>
-          <div className="flex-1 bg-slate-900 p-2 flex flex-col justify-center items-center">
-            <span className="text-xs font-bold text-indigo-300">Main Content</span>
-          </div>
-        </div>
-      );
-
     // -------------------------------------------------------------
     // 7. Disclosure & Hierarchy (#121 ~ #140) Dedicated Schematics
     // -------------------------------------------------------------
@@ -1894,7 +1879,6 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
 
     case 'dialog':
     case 'modal_dialog':
-    case 'modal_window':
       return (
         <div className="w-48 bg-slate-950 border-2 border-indigo-500 rounded-xl p-2 z-10 font-mono shadow-lg flex flex-col gap-1 text-[8px]">
           <div className="flex justify-between items-center font-bold text-white border-b border-slate-800 pb-0.5">
@@ -4749,7 +4733,7 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
         </div>
       );
 
-    case 'prefix_suffix':
+    case 'prefix_suffix_unit':
       return (
         <div className="w-48 bg-white dark:bg-slate-900 border-2 border-indigo-500 rounded-lg px-2 py-1.5 z-10 font-mono shadow-sm flex items-center justify-between text-[10px]">
           <span className="text-slate-500 font-bold bg-slate-100 dark:bg-slate-800 px-1 rounded">₩</span>
@@ -5623,7 +5607,7 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
         </div>
       );
 
-    case 'dockable_panel':
+    case 'dockable_floating_panel':
       return (
         <div className="w-full max-w-[260px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
           <div className="flex justify-between items-center text-[9px] text-indigo-300 px-1 font-bold">
@@ -7146,6 +7130,459 @@ function renderSchematicContent(type: string, term: TermItem, isCompact: boolean
           <div className="flex justify-between text-[6.5px] text-slate-400">
             <span>S-P-O Authoring + Class Toggler</span>
             <span className="text-teal-300">Turtle Serializer</span>
+          </div>
+        </div>
+      );
+
+    // -------------------------------------------------------------
+    // Category 25: Game UI & Heads-Up Display (HUD) (#665 ~ #684)
+    // -------------------------------------------------------------
+    case 'game_health_bar':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-rose-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-rose-300 font-bold">
+            <span>Dynamic Health & Shield Gauge</span>
+            <span className="bg-rose-950 text-rose-400 px-1 rounded text-[6.5px]">HP 1650/2000</span>
+          </div>
+          <div className="relative h-6 bg-slate-950 rounded border border-slate-700 overflow-hidden flex items-center">
+            <div className="absolute top-0 left-0 h-full w-[85%] bg-amber-400/60" />
+            <div className="absolute top-0 left-0 h-full w-[70%] bg-gradient-to-r from-rose-600 to-rose-500" />
+            <div className="absolute top-0 left-0 h-full w-[25%] bg-cyan-400/40 border-r border-cyan-300" />
+            <span className="relative z-10 text-[7px] text-white font-bold ml-1.5 drop-shadow">HP: 70% | Shield: +25%</span>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span className="text-amber-300">Damage Lag Buffer</span>
+            <span className="text-cyan-300">Absorption Shield Layer</span>
+          </div>
+        </div>
+      );
+
+    case 'radial_cooldown':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-amber-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5 items-center">
+          <div className="w-full flex justify-between items-center text-[7.5px] text-amber-300 font-bold">
+            <span>Radial Skill Cooldown HUD</span>
+            <span className="bg-amber-950 text-amber-400 px-1 rounded text-[6.5px]">360° Sweep</span>
+          </div>
+          <div className="relative w-14 h-14 rounded-xl bg-slate-950 border-2 border-indigo-400 flex items-center justify-center overflow-hidden">
+            <span className="text-xl">⚡</span>
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: 'conic-gradient(rgba(15,23,42,0.85) 240deg, transparent 0deg)' }}
+            />
+            <span className="absolute inset-0 flex items-center justify-center font-bold text-xs text-white drop-shadow">1.8s</span>
+            <span className="absolute bottom-0.5 right-1 text-[6px] bg-slate-900 text-slate-300 px-0.5 rounded border border-slate-700">Q</span>
+          </div>
+          <div className="w-full flex justify-between text-[6.5px] text-slate-400">
+            <span>Clockwise Sweep Angle: 240°</span>
+            <span className="text-amber-300">Cooldown Active</span>
+          </div>
+        </div>
+      );
+
+    case 'floating_damage':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-red-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-red-300 font-bold">
+            <span>Floating Combat Text Particle</span>
+            <span className="bg-red-950 text-red-400 px-1 rounded text-[6.5px]">Crit & Normal</span>
+          </div>
+          <div className="relative h-14 bg-slate-950 rounded border border-slate-800 flex items-center justify-around overflow-hidden">
+            <span className="text-2xl">👾</span>
+            <div className="flex flex-col items-center">
+              <span className="text-red-400 font-black text-[10px] animate-bounce drop-shadow-[0_0_8px_rgba(244,63,94,0.8)]">💥 CRIT !850</span>
+              <span className="text-amber-300 font-bold text-[8px] -mt-1">145</span>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Parabola Trajectory Easing</span>
+            <span className="text-red-400 font-bold">1.5x Scale Critical Pop</span>
+          </div>
+        </div>
+      );
+
+    case 'game_minimap':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5 items-center">
+          <div className="w-full flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Radar Minimap Overlay (FOV Cone)</span>
+            <span className="bg-cyan-950 text-cyan-400 px-1 rounded text-[6.5px]">Radius: 150m</span>
+          </div>
+          <div className="relative w-16 h-16 rounded-full bg-slate-950 border-2 border-cyan-400 flex items-center justify-center overflow-hidden">
+            <div className="absolute inset-0 border border-cyan-500/30 rounded-full scale-50" />
+            <div className="absolute w-full h-[1px] bg-cyan-500/30" />
+            <div className="absolute h-full w-[1px] bg-cyan-500/30" />
+            <div
+              className="absolute w-12 h-12"
+              style={{ background: 'conic-gradient(from -25deg at 50% 50%, rgba(6,182,212,0.4) 0deg, rgba(6,182,212,0.4) 50deg, transparent 50deg)' }}
+            />
+            <div className="w-2 h-2 rounded-full bg-cyan-400 z-10 border border-white" />
+            <div className="absolute top-2 left-3 w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping" />
+            <span className="absolute top-1 right-3 text-[7px] text-amber-400">★</span>
+          </div>
+          <div className="w-full flex justify-between text-[6.5px] text-slate-400">
+            <span>50° Field of View Frustum</span>
+            <span className="text-cyan-300">Entity Proximity Ping</span>
+          </div>
+        </div>
+      );
+
+    case 'dialogue_box':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-indigo-300 font-bold">
+            <span>Visual Novel Dialogue Box</span>
+            <span className="bg-indigo-950 text-indigo-400 px-1 rounded text-[6.5px]">NPC Interactive</span>
+          </div>
+          <div className="p-1.5 bg-slate-950 rounded border border-indigo-500/40 flex gap-2 items-start relative">
+            <div className="w-8 h-8 rounded bg-slate-800 border border-indigo-400 flex items-center justify-center text-sm shrink-0">
+              👩‍✈️
+            </div>
+            <div className="flex-1 flex flex-col gap-0.5">
+              <span className="text-[7.5px] font-bold text-indigo-400">Commander Elena</span>
+              <p className="text-[6.5px] text-slate-300 leading-tight">기지 외곽 방벽이 파손되었습니다. 즉시 방어하십시오...</p>
+            </div>
+            <span className="absolute bottom-1 right-1.5 text-[6px] text-indigo-400 animate-pulse">▼</span>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Nameplate + Portrait + Typewriter</span>
+            <span className="text-indigo-300">Next Marker (▼)</span>
+          </div>
+        </div>
+      );
+
+    case 'branching_choice':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-amber-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-amber-300 font-bold">
+            <span>Branching Choice Dialogue</span>
+            <span className="bg-amber-950 text-amber-400 px-1 rounded text-[6.5px]">Timer: 5.2s</span>
+          </div>
+          <div className="w-full h-1 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+            <div className="h-full bg-amber-400 w-[65%]" />
+          </div>
+          <div className="flex flex-col gap-1">
+            <div className="p-1 rounded bg-slate-950 border border-rose-500/50 flex justify-between text-[6.5px] text-rose-300">
+              <span>1. 정면 돌파를 감행한다</span>
+              <span className="text-[5.5px] bg-rose-950 px-0.5 rounded">전투 High</span>
+            </div>
+            <div className="p-1 rounded bg-slate-950 border border-cyan-500/50 flex justify-between text-[6.5px] text-cyan-300">
+              <span>2. 보안 해킹으로 문을 연다</span>
+              <span className="text-[5.5px] bg-cyan-950 px-0.5 rounded">지능 Int 14</span>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Timed Decision Deadline</span>
+            <span className="text-amber-300">Moral Alignment Path</span>
+          </div>
+        </div>
+      );
+
+    case 'quest_tracker':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-amber-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-amber-300 font-bold">
+            <span>Quest Tracker HUD</span>
+            <span className="bg-amber-950 text-amber-400 px-1 rounded text-[6.5px]">MAIN QUEST</span>
+          </div>
+          <div className="p-1.5 bg-slate-950 rounded border border-slate-800 flex flex-col gap-1">
+            <span className="text-[7.5px] text-white font-bold">고대 유적의 동력원 확보</span>
+            <div className="flex justify-between items-center text-[6.5px] p-0.5 bg-slate-900 rounded">
+              <span className="text-slate-300">○ 에너지 코어 수집</span>
+              <span className="text-amber-400 font-bold">3 / 5</span>
+            </div>
+            <div className="flex justify-between items-center text-[6.5px] p-0.5 bg-slate-900 rounded opacity-60">
+              <span className="line-through text-slate-400">✓ 정찰 드론 무력화</span>
+              <span className="text-emerald-400 font-bold">2 / 2</span>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Waypoint GPS: 140m NW</span>
+            <span className="text-emerald-400">Strike-through Finished</span>
+          </div>
+        </div>
+      );
+
+    case 'weapon_crosshair':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-emerald-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5 items-center">
+          <div className="w-full flex justify-between items-center text-[7.5px] text-emerald-300 font-bold">
+            <span>Dynamic Crosshair & Reticle</span>
+            <span className="bg-emerald-950 text-emerald-400 px-1 rounded text-[6.5px]">Bloom Spread: 16px</span>
+          </div>
+          <div className="relative w-16 h-16 bg-slate-950 rounded-lg border border-slate-800 flex items-center justify-center">
+            <div className="w-1 h-1 rounded-full bg-emerald-400" />
+            <div className="absolute top-2 w-[1.5px] h-2 bg-emerald-400" />
+            <div className="absolute bottom-2 w-[1.5px] h-2 bg-emerald-400" />
+            <div className="absolute left-2 h-[1.5px] w-2 bg-emerald-400" />
+            <div className="absolute right-2 h-[1.5px] w-2 bg-emerald-400" />
+            <span className="absolute font-black text-rose-500 text-xs opacity-80">✕</span>
+          </div>
+          <div className="w-full flex justify-between text-[6.5px] text-slate-400">
+            <span>Movement Bloom Spread</span>
+            <span className="text-rose-400">Hitmarker Feedback</span>
+          </div>
+        </div>
+      );
+
+    case 'virtual_joystick':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5 items-center">
+          <div className="w-full flex justify-between items-center text-[7.5px] text-indigo-300 font-bold">
+            <span>On-Screen Virtual Touch Joystick</span>
+            <span className="bg-indigo-950 text-indigo-400 px-1 rounded text-[6.5px]">Analog 360°</span>
+          </div>
+          <div className="relative w-16 h-16 rounded-full bg-slate-950 border-2 border-indigo-500/50 flex items-center justify-center">
+            <div className="w-6 h-6 rounded-full bg-indigo-600 border border-white/80 shadow translate-x-2 -translate-y-2 flex items-center justify-center">
+              <div className="w-1.5 h-1.5 rounded-full bg-white/60" />
+            </div>
+          </div>
+          <div className="w-full flex justify-between text-[6.5px] text-slate-400">
+            <span>Vector Magnitude: 85%</span>
+            <span className="text-indigo-300">Angle: 45° Heading</span>
+          </div>
+        </div>
+      );
+
+    case 'key_glyph_indicator':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-indigo-300 font-bold">
+            <span>Action Key Glyph Indicator</span>
+            <span className="bg-indigo-950 text-indigo-400 px-1 rounded text-[6.5px]">Device Adaptive</span>
+          </div>
+          <div className="grid grid-cols-2 gap-1 text-[6.5px]">
+            <div className="p-1 bg-slate-950 rounded border border-slate-800 flex justify-between items-center">
+              <span className="text-slate-300">Jump Action</span>
+              <kbd className="px-1 bg-slate-800 border border-slate-600 rounded text-white font-bold">Space</kbd>
+            </div>
+            <div className="p-1 bg-slate-950 rounded border border-slate-800 flex justify-between items-center">
+              <span className="text-slate-300">Gamepad Jump</span>
+              <span className="w-3.5 h-3.5 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-[6px]">A</span>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>PC Keyboard 3D KBD</span>
+            <span className="text-emerald-400">Xbox / DualShock Swap</span>
+          </div>
+        </div>
+      );
+
+    case 'key_remapping':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-amber-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-amber-300 font-bold">
+            <span>Key Remapping Matrix</span>
+            <span className="bg-amber-950 text-amber-400 px-1 rounded text-[6.5px]">Conflict Guard</span>
+          </div>
+          <div className="flex flex-col gap-0.5 text-[6.5px]">
+            <div className="flex justify-between p-0.5 bg-slate-950 rounded px-1">
+              <span className="text-slate-300">Move Forward</span>
+              <span className="bg-slate-800 text-white px-1 rounded font-bold">W</span>
+            </div>
+            <div className="flex justify-between p-0.5 bg-slate-950 rounded px-1 border border-amber-500/40">
+              <span className="text-slate-300">Primary Attack</span>
+              <span className="bg-amber-500 text-slate-950 px-1 rounded font-bold animate-pulse">Press Key...</span>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>KeyboardEvent Capturing</span>
+            <span className="text-amber-300">Duplicate Key Detector</span>
+          </div>
+        </div>
+      );
+
+    case 'title_screen_menu':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5 items-center">
+          <div className="w-full flex justify-between items-center text-[7.5px] text-indigo-300 font-bold">
+            <span>Game Title Screen Menu Stack</span>
+            <span className="bg-indigo-950 text-indigo-400 px-1 rounded text-[6.5px]">Fullscreen Splash</span>
+          </div>
+          <span className="text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
+            CYBER REALM 2088
+          </span>
+          <div className="w-full flex flex-col gap-0.5 text-[6.5px]">
+            <div className="p-0.5 rounded bg-indigo-600 text-white text-center font-bold">▶ START ADVENTURE</div>
+            <div className="p-0.5 rounded bg-slate-950 text-slate-300 text-center border border-slate-800">CONTINUE GAME</div>
+            <div className="p-0.5 rounded bg-slate-950 text-slate-300 text-center border border-slate-800">OPTIONS & SOUND</div>
+          </div>
+          <div className="w-full flex justify-between text-[6.5px] text-slate-400">
+            <span>Hover SFX Wave Trigger</span>
+            <span className="text-indigo-300">Glassmorphism Pillar</span>
+          </div>
+        </div>
+      );
+
+    case 'game_pause_modal':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-indigo-300 font-bold">
+            <span>Game Pause Overlay Modal</span>
+            <span className="bg-indigo-950 text-indigo-400 px-1 rounded text-[6.5px]">Esc Trigger</span>
+          </div>
+          <div className="p-1.5 bg-slate-950/90 border border-indigo-500/40 rounded flex flex-col items-center gap-1 text-[6.5px]">
+            <span className="font-bold text-white uppercase tracking-wider">GAME PAUSED</span>
+            <div className="w-full flex justify-between text-[6px] text-slate-400 px-1">
+              <span>BGM Volume: 70%</span>
+            </div>
+            <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+              <div className="w-[70%] h-full bg-indigo-500" />
+            </div>
+            <div className="w-full flex gap-1 mt-0.5">
+              <span className="flex-1 text-center bg-indigo-600 text-white rounded p-0.5 font-bold">Resume</span>
+              <span className="flex-1 text-center bg-slate-800 text-slate-300 rounded p-0.5">Settings</span>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Freeze Loop Physics</span>
+            <span className="text-indigo-300">Dimmed Backdrop Filter</span>
+          </div>
+        </div>
+      );
+
+    case 'game_result_screen':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-amber-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5 items-center">
+          <div className="w-full flex justify-between items-center text-[7.5px] text-amber-300 font-bold">
+            <span>Victory / Defeat Result Screen</span>
+            <span className="bg-amber-950 text-amber-400 px-1 rounded text-[6.5px]">Stage Clear</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full border-2 border-amber-400 flex items-center justify-center bg-amber-400/10 text-amber-400 font-black text-lg shadow-[0_0_12px_rgba(251,191,36,0.6)]">
+              S
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[6.5px] text-slate-400 uppercase font-bold">Score Countup</span>
+              <span className="text-white font-black text-xs">184,500 PTS</span>
+              <span className="text-amber-400 text-[8px]">★★★</span>
+            </div>
+          </div>
+          <div className="w-full flex justify-between text-[6.5px] text-slate-400">
+            <span>Rolling Digit Counter</span>
+            <span className="text-amber-400">Stamp Slam Animation</span>
+          </div>
+        </div>
+      );
+
+    case 'tip_loading_bar':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Tip Loading Bar & Carousel</span>
+            <span className="bg-cyan-950 text-cyan-400 px-1 rounded text-[6.5px]">Loading 65%</span>
+          </div>
+          <div className="p-1 bg-slate-950 rounded border border-slate-800 text-[6.5px] text-slate-300 leading-tight">
+            💡 TIP: 쉬프트 키를 누르면 부스트 대시가 발동됩니다.
+          </div>
+          <div className="w-full h-1.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+            <div className="h-full bg-gradient-to-r from-cyan-500 to-indigo-500 w-[65%]" />
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Rotating Gameplay Hints</span>
+            <span className="text-cyan-300">Glossy Progress Gauge</span>
+          </div>
+        </div>
+      );
+
+    case 'inventory_grid':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-indigo-300 font-bold">
+            <span>Inventory Slot Grid & Tooltip</span>
+            <span className="bg-indigo-950 text-indigo-400 px-1 rounded text-[6.5px]">4x4 Matrix</span>
+          </div>
+          <div className="grid grid-cols-4 gap-1">
+            <div className="h-6 rounded bg-amber-950/60 border border-amber-400 flex items-center justify-center text-[9px]">⚔️</div>
+            <div className="h-6 rounded bg-purple-950/60 border border-purple-400 flex items-center justify-center text-[9px]">🛡️</div>
+            <div className="h-6 rounded bg-cyan-950/60 border border-cyan-400 flex items-center justify-center text-[9px]">🧪</div>
+            <div className="h-6 rounded bg-slate-950 border border-slate-800" />
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span className="text-amber-400">Rarity Border Glow</span>
+            <span className="text-indigo-300">Equip Stat Comparison</span>
+          </div>
+        </div>
+      );
+
+    case 'currency_ledger_hud':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-amber-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-amber-300 font-bold">
+            <span>Currency Ledger HUD</span>
+            <span className="bg-amber-950 text-amber-400 px-1 rounded text-[6.5px]">Live Balance</span>
+          </div>
+          <div className="flex items-center justify-around p-1 bg-slate-950 rounded border border-slate-800 text-[7px]">
+            <div className="flex items-center gap-1">
+              <span className="text-amber-400">🪙</span>
+              <span className="text-white font-bold">1,250</span>
+            </div>
+            <div className="w-[1px] h-3 bg-slate-800" />
+            <div className="flex items-center gap-1">
+              <span className="text-cyan-400">💎</span>
+              <span className="text-white font-bold">45</span>
+            </div>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Rolling Number Increment</span>
+            <span className="text-amber-300">+500G Float Particle</span>
+          </div>
+        </div>
+      );
+
+    case 'l10n_length_gauge':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-indigo-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-indigo-300 font-bold">
+            <span>Localization 70% Budget Gauge</span>
+            <span className="bg-amber-950 text-amber-400 px-1 rounded text-[6.5px]">Warn: &gt;70%</span>
+          </div>
+          <div className="relative w-full h-2 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+            <div className="h-full bg-amber-400 w-[75%]" />
+            <div className="absolute top-0 bottom-0 left-[70%] w-[1.5px] bg-rose-500" />
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>KO 4자 ➔ EN 15자 ➔ DE 18자</span>
+            <span className="text-rose-400 font-bold">70% Danger Threshold</span>
+          </div>
+        </div>
+      );
+
+    case 'placeholder_protector':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-cyan-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-cyan-300 font-bold">
+            <span>Placeholder Token Protector</span>
+            <span className="bg-cyan-950 text-cyan-400 px-1 rounded text-[6.5px]">Atomic Chip</span>
+          </div>
+          <div className="p-1 bg-slate-950 rounded border border-slate-800 text-[6.5px] text-slate-200 flex flex-wrap items-center gap-1">
+            <span>남은 시간은</span>
+            <span className="px-1 bg-cyan-950 border border-cyan-400 text-cyan-300 rounded font-bold">
+              {'{count}'}
+            </span>
+            <span>초입니다.</span>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span>Immutable Variable Capsule</span>
+            <span className="text-cyan-300">Anti-Corruption Token</span>
+          </div>
+        </div>
+      );
+
+    case 'gentle_words_filter':
+      return (
+        <div className="w-full max-w-[270px] bg-slate-900 border-2 border-emerald-500/80 rounded-xl p-2 z-10 shadow-xl font-mono flex flex-col gap-1.5">
+          <div className="flex justify-between items-center text-[7.5px] text-emerald-300 font-bold">
+            <span>Gentle Words Real-time Filter</span>
+            <span className="bg-emerald-950 text-emerald-400 px-1 rounded text-[6.5px]">AI Clean Tag</span>
+          </div>
+          <div className="p-1 bg-slate-950 rounded border border-emerald-500/40 text-[6.5px] text-slate-200 flex flex-col gap-0.5">
+            <span className="text-[5.5px] text-slate-500">Filtered Output:</span>
+            <span className="font-sans text-slate-300">이런 *** 같은 팀원 때문에 졌네 ***</span>
+          </div>
+          <div className="flex justify-between text-[6.5px] text-slate-400">
+            <span className="text-rose-400">Regex / AI Masking (***)</span>
+            <span className="text-emerald-400 font-bold">🛡️ Safety Verified</span>
           </div>
         </div>
       );

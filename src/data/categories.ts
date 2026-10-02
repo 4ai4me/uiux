@@ -217,4 +217,13 @@ export const CATEGORIES: Category[] = [
     count: 64,
     iconName: 'Copy',
   },
+  {
+    id: 'cat-25',
+    catNumber: 25,
+    title: '25. Game UI & Heads-Up Display',
+    koreanTitle: '게임 UI & 헤즈업 디스플레이 (HUD)',
+    description: '실시간 체력·자원 게이지, 스킬 쿨다운 휠, 미니맵 레이더, 대사창 및 분기 선택지, 부유 데미지 숫자, 가상 조이스틱 등 게임 전용 인터랙티브 컴포넌트',
+    count: 20,
+    iconName: 'Gamepad2',
+  },
 ];

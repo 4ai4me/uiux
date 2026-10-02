@@ -35,6 +35,89 @@
    - All components, schematics, interactive widgets, modals, and tables must maintain high WCAG AA contrast in both light and dark modes.
 
 ## 3. Implementation History & Verification
+- **2026-10-02 (Category 25 Game UI & Heads-Up Display (HUD) Suite & Codebase Optimization - v2.34.0)**:
+  - **User Request & Option 1 Approved**:
+    1. `D:\000.AI\UI\학습\varco-platform-main` 분석 결과 누락된 게임 UI/UX 및 HUD 핵심 패턴 20종을 전용 카테고리(Category 25)로 신규 구축.
+    2. 불필요한 루트 바이너리(`downloaded_file`) 삭제 및 Dead Code/Duplicate Case 클린업.
+    3. 런타임 회귀 없는 번들 청크 최적화 (`manualChunks`).
+    4. 검증 완료 후 GitHub origin/main 푸시.
+  - **1. Cleanups & Bundle Optimization**:
+    - **Root Binary Deletion**: 1.49MB 크기의 임시 zip 압축 바이너리 `downloaded_file` 영구 삭제.
+    - **Dead Code Cleanup (`TermSchematic.tsx`)**:
+      - `two_pane` 및 `split_view` 레거시 폴백 제거 (L1633~1646).
+      - `modal_window` 중복/새도잉 케이스 제거 (L1880).
+      - #563 (Cat 23) 접두사/접미사 단위 인풋의 식별자를 `prefix_suffix_unit`으로 명확화하여 #382 충돌 해소.
+      - #412 (Cat 19) 독 패널의 식별자를 `dockable_floating_panel`로 명확화하여 #308 충돌 해소.
+      - esbuild duplicate case 경고 5건 완전 해결 (0 warnings).
+    - **Bundle Chunking (`vite.config.ts`)**:
+      - `manualChunks` 분할 설정 (`vendor-react`, `vendor-motion`, `vendor-lucide`, `data-terms`, `term-schematic`, `live-labs`).
+      - 기존 코드 런타임 실행 회귀 0건 보장.
+  - **2. Category 25: Game UI & Heads-Up Display (HUD) 20 Terms (#665 ~ #684)**:
+    - **#665 `Health / Mana Status Orb (체력 및 마력 스테이터스 구체 & 대미지 래그 바)`**:
+      - `schematicType`: `health_mana_orb` (구체 액체 레벨 눈금, 이중 레이어 대미지 래그 바 도면)
+      - `Live UX`: `LiveHealthManaOrbLab` (대미지/마나 소비/회복 실시간 시뮬레이터, 피격 시 흰색 플래시 및 래그 지연 감쇠)
+    - **#666 `Radial Cooldown Timer (원형 쿨다운 타이머 & 스택 카운터)`**:
+      - `schematicType`: `radial_cooldown_timer` (부채꼴 와이프 각도, 잔여 초 오버레이 및 충전 스택 도면)
+      - `Live UX`: `LiveRadialCooldownLab` (3개 스킬 Q/W/E 쿨다운 시계방향 스윕, 완충 시 골드 펄스 플래시)
+    - **#667 `Floating Combat Text (부유형 전투 수치 텍스트 & 크리티컬 팝)`**:
+      - `schematicType`: `floating_combat_text` (피격 지점 벡터 궤적, 폰트 크기 가중치 및 페이드아웃 곡선 도면)
+      - `Live UX`: `LiveFloatingCombatTextLab` (일반/크리티컬/힐/회피 텍스트 분수 파티클 팝업 애니메이션)
+    - **#668 `Minimap Fog of War & FOV Cone (전장의 안개 미니맵 & 시야각 콘)`**:
+      - `schematicType`: `minimap_fog_fov` (원형 레이더 프레임, 시야각 투사 부채꼴 콘, 핑 링 도면)
+      - `Live UX`: `LiveMinimapFogFovLab` (플레이어 360° 회전 시야각 콘, 안개 마스킹 렌더링, 전술 핑 생성기)
+    - **#669 `NPC Dialogue Box & Typewriter (NPC 대화창 & 타이프라이터 스킵)`**:
+      - `schematicType`: `npc_dialogue_box` (NPC 포트레이트 프레임, 화자 명패, 텍스트 버블 및 화살표 비콘 도면)
+      - `Live UX`: `LiveNpcDialogueBoxLab` (글자 단위 실시간 타이핑 효과음 애니메이션, 스킵/다음 버튼)
+    - **#670 `Branching Dialogue Tree (분기형 대화 선택지 & 호감도 게이지)`**:
+      - `schematicType`: `branching_dialogue_tree` (분기 노드 계층도, 스탯 체크 락 아이콘 및 결과 반영 도면)
+      - `Live UX`: `LiveBranchingDialogueLab` (3가지 성향 선택지, 지능/매력 스탯 체크 판정, 성향 점수 누적기)
+    - **#671 `Quest Objective Tracker (퀘스트 목표 트래커 & 나침반 마커)`**:
+      - `schematicType`: `quest_objective_tracker` (체크박스 프로그레스, 실시간 남은 거리 게이지 및 나침반 방위 도면)
+      - `Live UX`: `LiveQuestObjectiveTrackerLab` (메인/서브 퀘스트 진행도 실시간 카운트, 목표 달성 체크)
+    - **#672 `Dynamic Crosshair Bloom (동적 탄착군 조준선 & 반동 벌어짐)`**:
+      - `schematicType`: `dynamic_crosshair_bloom` (4방향 조준 갭 눈금, 히트마커 X축 오버레이 및 스프레드 각도 도면)
+      - `Live UX`: `LiveDynamicCrosshairLab` (정지/이동/사격 시 반동 애니메이션, 적 적중 시 X자 레드 히트마커)
+    - **#673 `Virtual Analog Joystick (가상 아날로그 조이스틱 & 터치 썸스틱)`**:
+      - `schematicType`: `virtual_analog_joystick` (데드존 원형 한계선, 360° 극좌표계 벡터 화살표 도면)
+      - `Live UX`: `LiveVirtualJoystickLab` (마우스/터치 드래그 스틱, 데드존 필터링, 정규화 X/Y 출력 벡터)
+    - **#674 `Gamepad Key Glyphs & Hotkey Remapping (게임패드 키 글리프 & 키 리매핑)`**:
+      - `schematicType`: `gamepad_key_glyphs` (ABXY 원형 버튼 글리프, 범퍼/트리거 및 리바인딩 충돌 도면)
+      - `Live UX`: `LiveKeyRemappingLab` (Xbox/PS/키보드 글리프 스타일 전환, 키 입력 감지 및 리매핑)
+    - **#675 `Main Title Screen Menu (게임 메인 타이틀 스크린 & 메뉴 덱)`**:
+      - `schematicType`: `main_title_menu` (시네마틱 배경 프레임, 메인 로고 타이포, 수직 메뉴 버튼 스택 도면)
+      - `Live UX`: `LiveMainTitleMenuLab` (시네마틱 파티클 배경, 버튼 호버 오디오 피드백 시각화, 서브메뉴 전환)
+    - **#676 `Pause Modal & Audio Slider (일시정지 모달 & 마스터 볼륨 슬라이더)`**:
+      - `schematicType`: `pause_modal_audio` (블러 딤드 백드롭, 3밴드 오디오 이퀄라이저 슬라이더 도면)
+      - `Live UX`: `LivePauseModalAudioLab` (BGM/SFX/Voice 데시벨 슬라이더, 음소거 토글, 설정 즉시 반영)
+    - **#677 `Stage Clear & Defeat Victory Splash (스테이지 클리어 & 패배 연출 스플래시)`**:
+      - `schematicType`: `stage_clear_splash` (황금 월계수 리본 배너, 별 3개 레이팅 랭크 도면)
+      - `Live UX`: `LiveStageClearDefeatLab` (승리 VICTORY 3스타 별점 연출 vs 패배 DEFEAT 흑백 슬로우 연출 토글)
+    - **#678 `Loading Screen Tip & Progress Bar (로딩 팁 순환 캐러셀 & 진행 바)`**:
+      - `schematicType`: `loading_screen_tip` (팁 텍스트 박스, 순환 인디케이터, 0~100% 빗금 게이지 도면)
+      - `Live UX`: `LiveLoadingTipProgressLab` (0~100% 실시간 에셋 프리로딩 게이지, 게임플레이 팁 자동 순환)
+    - **#679 `Grid Inventory & Item Drag-Drop (격자형 인벤토리 슬롯 & 아이템 이동)`**:
+      - `schematicType`: `grid_inventory_slots` (4x4 슬롯 매트릭스, 희귀도 등급 테두리, 수량 뱃지 도면)
+      - `Live UX`: `LiveGridInventoryLab` (장비/소모품 슬롯 간 드래그 앤 드롭 이동, 아이템 툴팁 및 무게 게이지)
+    - **#680 `In-Game Currency & Ledger Counter (재화 카운터 & 롤링 오도미터)`**:
+      - `schematicType`: `in_game_currency_counter` (골드/보석/토큰 다중 통화 행, 실시간 숫자 롤링 애니메이션 도면)
+      - `Live UX`: `LiveCurrencyLedgerLab` (골드/젬 획득/소비 트랜잭션, 롤링 넘버 애니메이션, 최근 장부 로그)
+    - **#681 `Localization Expansion Gauge (다국어 텍스트 70% 확장율 검증 게이지)`**:
+      - `schematicType`: `localization_expansion_gauge` (기준 원문 대비 독어/스페인어 +70% 안전 여유 경계선 도면)
+      - `Live UX`: `LiveLocalizationExpansionLab` (영어/한국어/독어/스페인어/일본어 텍스트 전환, 70% 오버플로 경고)
+    - **#682 `Text Placeholder Token Interpolation (토큰 치환 안전 포매터)`**:
+      - `schematicType`: `text_placeholder_token` (`{user}`, `{count}` 파싱 토큰 블록, 결측치 대비 안전 폴백 도면)
+      - `Live UX`: `LiveTokenInterpolationLab` (실시간 토큰 입력 폼, 구문 파싱, 누락 토큰 폴백 감지기)
+    - **#683 `Gentle Words Word Filter (온건어 단어 필터 & 마스킹 엔진)`**:
+      - `schematicType`: `gentle_words_filter` (금칙어 사전 Trie 매칭, `***` 또는 순화어 치환 도면)
+      - `Live UX`: `LiveGentleWordsFilterLab` (비속어 실시간 감지, 별표 마스킹 vs 유화된 완곡 표현 치환 토글)
+    - **#684 `Spatial Audio Radar & Sound Compass (공간 음향 방향 나침반 레이더)`**:
+      - `schematicType`: `spatial_audio_radar` (360° 음원 방위각 벡터, 발소리/총성/폭발 시각화 링 도면)
+      - `Live UX`: `LiveSpatialAudioRadarLab` (상/하/좌/우 360° 소리 발생 시각화, 음원 거리 감쇠 및 음향 종류별 펄스)
+  - **3. Verification Results**:
+    - `npm run lint` (`tsc --noEmit`): 0 errors.
+    - `npm run build` (Vite build): 0 errors, chunks cleanly emitted.
+    - Category total: 25 categories, 684 terms verified.
+
 - **2026-08-31 (Geospatial Intelligence, Tactical HUD & Render Governor 6 New Terms Addition - v2.33.0)**:
   - **User Request & Option A Approved**:
     1. "God's Eye View (GEV)" 고도 관측/관제 시스템 분석 결과 도출된 핵심 전술 UI/UX 패턴 6종 구현 승인.

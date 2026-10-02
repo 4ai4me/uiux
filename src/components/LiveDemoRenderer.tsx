@@ -566,6 +566,28 @@ import {
   LiveShortestPathTraversalLab,
   LiveTripleEditorOntologyTogglerLab,
 } from './LiveKnowledgeGraphLabs';
+import {
+  LiveGameHealthBarLab,
+  LiveRadialCooldownLab,
+  LiveFloatingDamageLab,
+  LiveGameMinimapLab,
+  LiveDialogueBoxLab,
+  LiveBranchingChoiceLab,
+  LiveQuestTrackerLab,
+  LiveCrosshairLab,
+  LiveVirtualJoystickLab,
+  LiveKeyGlyphLab,
+  LiveKeyRemappingLab,
+  LiveTitleScreenMenuLab,
+  LiveGamePauseModalLab,
+  LiveGameResultScreenLab,
+  LiveTipLoadingBarLab,
+  LiveInventoryGridLab,
+  LiveCurrencyLedgerLab,
+  LiveL10nLengthGaugeLab,
+  LivePlaceholderProtectorLab,
+  LiveGentleWordsFilterLab,
+} from './LiveGameHudLabs';
 import { 
   Play, Pause, RotateCcw, Check, Copy, Sliders, ChevronDown, ChevronRight,
   Eye, EyeOff, Sparkles, Volume2, ShieldCheck, AlertTriangle, Info, Bell,
@@ -625,6 +647,28 @@ function renderSpecializedDemo(term: TermItem) {
   // -------------------------------------------------------------
   // High-Priority Direct Term Dispatches
   // -------------------------------------------------------------
+  // Category 25: Game UI & Heads-Up Display (HUD) (#665 ~ #684)
+  if (term.num === 665 || sch === 'game_health_bar') return <LiveGameHealthBarLab />;
+  if (term.num === 666 || sch === 'radial_cooldown') return <LiveRadialCooldownLab />;
+  if (term.num === 667 || sch === 'floating_damage') return <LiveFloatingDamageLab />;
+  if (term.num === 668 || sch === 'game_minimap') return <LiveGameMinimapLab />;
+  if (term.num === 669 || sch === 'dialogue_box') return <LiveDialogueBoxLab />;
+  if (term.num === 670 || sch === 'branching_choice') return <LiveBranchingChoiceLab />;
+  if (term.num === 671 || sch === 'quest_tracker') return <LiveQuestTrackerLab />;
+  if (term.num === 672 || sch === 'weapon_crosshair') return <LiveCrosshairLab />;
+  if (term.num === 673 || sch === 'virtual_joystick') return <LiveVirtualJoystickLab />;
+  if (term.num === 674 || sch === 'key_glyph_indicator') return <LiveKeyGlyphLab />;
+  if (term.num === 675 || sch === 'key_remapping') return <LiveKeyRemappingLab />;
+  if (term.num === 676 || sch === 'title_screen_menu') return <LiveTitleScreenMenuLab />;
+  if (term.num === 677 || sch === 'game_pause_modal') return <LiveGamePauseModalLab />;
+  if (term.num === 678 || sch === 'game_result_screen') return <LiveGameResultScreenLab />;
+  if (term.num === 679 || sch === 'tip_loading_bar') return <LiveTipLoadingBarLab />;
+  if (term.num === 680 || sch === 'inventory_grid') return <LiveInventoryGridLab />;
+  if (term.num === 681 || sch === 'currency_ledger_hud') return <LiveCurrencyLedgerLab />;
+  if (term.num === 682 || sch === 'l10n_length_gauge') return <LiveL10nLengthGaugeLab />;
+  if (term.num === 683 || sch === 'placeholder_protector') return <LivePlaceholderProtectorLab />;
+  if (term.num === 684 || sch === 'gentle_words_filter') return <LiveGentleWordsFilterLab />;
+
   if (term.num === 652 || sch === 'idle_render_governor_monitor') return <LiveIdleRenderGovernorMonitorLab />;
   if (term.num === 651 || sch === 'altitude_adaptive_scope_mask') return <LiveAltitudeAdaptiveScopeMaskLab />;
   if (term.num === 650 || sch === 'cctv_frustum_viewshed') return <LiveCctvFrustumViewshedLab />;

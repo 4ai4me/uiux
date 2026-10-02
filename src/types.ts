@@ -72,6 +72,7 @@ export type DemoWidgetType =
   | 'icons_symbols_palette'
   | 'text_hints_microcopy'
   | 'zindex_overlay_stack'
+  | 'game_hud_lab'
   | 'generic_interactive';
 
 export interface TermItem {

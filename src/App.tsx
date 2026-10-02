@@ -161,6 +161,7 @@ export default function App() {
                       { id: 'cat-7', label: 'Cat 07 (Tree #121~140)' },
                       { id: 'cat-8', label: 'Cat 08 (Dialogs #141~160)' },
                       { id: 'cat-9', label: 'Cat 09 (Feedback #161~180) ✨' },
+                      { id: 'cat-25', label: 'Cat 25 (Game HUD #665~684) 🎮' },
                     ].map((catItem) => (
                       <button
                         key={catItem.id}

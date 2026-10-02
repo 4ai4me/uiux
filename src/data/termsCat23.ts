@@ -195,7 +195,7 @@ export const TERMS_CAT_23: TermItem[] = [
     visualPoint: '인풋 필드 내부 좌우측 끝에 고정된 연한 회색 단위 텍스트 블록',
     aiPrompt: '숫자 인풋 우측 내부에 "rpm" suffix 라벨을 고정 배치해줘.',
     demoType: 'text_hints_microcopy',
-    schematicType: 'prefix_suffix',
+    schematicType: 'prefix_suffix_unit',
   },
   {
     id: 'term-564',

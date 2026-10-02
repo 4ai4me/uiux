@@ -330,7 +330,7 @@ export const TERMS_CAT_19_TO_21: TermItem[] = [
     visualPoint: '패널 타이틀바 우측의 분리 사각 아이콘(↗)과 드래그 시 반투명 도킹 가이드 박스 표시',
     aiPrompt: '사이드바에서 밖으로 드래그하여 플로팅 창으로 분리하고 가장자리에 가져가면 도킹 프리뷰 영역이 나타나는 Dockable Panel을 구현해줘.',
     demoType: 'window_menu_bar',
-    schematicType: 'dockable_panel',
+    schematicType: 'dockable_floating_panel',
   },
   {
     id: 'term-413',
